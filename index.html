@@ -926,15 +926,16 @@
 				React.createElement("div", { className: "modal-content" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
 				  React.createElement("div", { className: "mb-4 text-center" },
-					React.createElement("div", { 
-					  className: "w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 rounded-lg flex flex-col items-center justify-center text-white border-2 border-yellow-400 shadow-lg",
-					 },
-					    React.createElement("img", {
+				  React.createElement("div", { 
+					  className: "w-64 h-64 mx-auto rounded-lg flex flex-col items-center justify-center text-white border-2 border-yellow-400 shadow-lg overflow-hidden"
+					},
+					  React.createElement("img", {
 					    src: `https://raw.githubusercontent.com/CryptoMatth/prova.github.io/main/foto/${FULL_CONSTELLATIONS[activeModal].name.replace(' ', '_')}.jpeg`,
 					    alt: FULL_CONSTELLATIONS[activeModal].name,
 					    className: "w-full h-full object-cover"
 					  })
-				  ),
+					)
+
 				  !progress[activeModal]?.solved && React.createElement(React.Fragment, null,
 					React.createElement("p", { className: "mb-4 text-lg" }, "Quale costellazione è questa?"),
 					React.createElement("div", { className: "flex flex-col gap-3" },
