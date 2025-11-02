@@ -465,16 +465,6 @@
 					]
 				},
 				{
-					name: "Orsa Minore",
-					options: ["Orsa Maggiore", "Orsa Minore", "Cassiopea", "Andromeda"],
-					description: "Una delle costellazioni più famose del cielo settentrionale, facilmente riconoscibile per la sua forma caratteristica a 'Grande Carro'.",
-					hints: [
-						"È conosciuta anche come 'Grande Carro'",
-						"Contiene sette stelle principali molto luminose", 
-						"Le sue stelle puntano verso la Stella Polare"
-					]
-				},
-				{
 					name: "Cassiopea",
 					options: ["Cassiopea", "Andromeda", "Perseo", "Cigno"],
 					description: "Riconoscibile per la sua forma a 'W' o 'M', è una costellazione circumpolare facilmente visibile tutto l'anno.",
@@ -928,12 +918,12 @@
 				  React.createElement("div", { className: "mb-4 text-center" },
 					React.createElement("div", { 
 					  className: "w-64 h-64 mx-auto bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 rounded-lg flex flex-col items-center justify-center text-white border-2 border-yellow-400 shadow-lg",
-					 },
-					    React.createElement("img", {
-					    src: `https://raw.githubusercontent.com/CryptoMatth/prova.github.io/main/foto/${FULL_CONSTELLATIONS[activeModal].name.replace(' ', '_')}.jpeg`,
-					    alt: FULL_CONSTELLATIONS[activeModal].name,
-					    className: "w-full h-full object-cover"
-					  })
+					  style: { backgroundImage: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle at 70% 70%, rgba(255,255,255,0.08) 1px, transparent 1px)' }
+					},
+					  React.createElement("div", { className: "text-6xl mb-2" }, "✨"),
+					  React.createElement("div", { className: "text-lg font-bold" }, FULL_CONSTELLATIONS[activeModal].name),
+					  React.createElement("div", { className: "text-sm text-gray-300 mt-2 px-4 text-center" }, "Osserva attentamente le stelle di questa costellazione")
+					)
 				  ),
 				  !progress[activeModal]?.solved && React.createElement(React.Fragment, null,
 					React.createElement("p", { className: "mb-4 text-lg" }, "Quale costellazione è questa?"),
