@@ -696,10 +696,6 @@
 				setProgress(savedProgress);
 				setInitialized(true);
 				
-				if (Object.keys(savedProgress).length > 0) {
-				  showToast('💾 Progressi in memoria trovati!', 'success');
-				}
-				
 			  } catch (error) {
 				console.error('❌ Errore inizializzazione:', error);
 				setProgress({});
@@ -1457,10 +1453,6 @@
 				const root = ReactDOM.createRoot(container);
 				root.render(React.createElement(App));
 				console.log('✅ App calendario inizializzata con successo');
-				
-				setTimeout(() => {
-				  showToast('🎄 Calendario dell\'Avvento caricato! Buon divertimento!', 'success');
-				}, 1000);
 			  }
 			} catch (error) {
 			  console.error('❌ Errore inizializzazione app:', error);
