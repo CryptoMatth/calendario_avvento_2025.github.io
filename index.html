@@ -981,10 +981,12 @@
 					  ),
 					  React.createElement("div", { className: "text-sm text-gray-400 mt-1" }, 
 						(() => {
+							/*
 						  const currentScore = progress[activeModal]?.score ?? 3;
 						  const hints = progress[activeModal]?.usedHints || 0;
 						  const errors = Math.max(0, (progress[activeModal]?.attempts || 0) - (progress[activeModal]?.solved ? 1 : 0));
 						  return `Formula: 3 - ${hints} indizi - ${errors} errori = ${currentScore}`;
+						  */
 						})()
 					  ),
 					  progress[activeModal]?.score < 0 && React.createElement("div", { className: "text-sm text-red-400 font-bold mt-1" }, 
