@@ -637,8 +637,8 @@
 					maxDay = currentDay;
 					console.log("🗓️ Modalità dicembre: giorni sbloccati fino al", maxDay);
 				} else if (currentMonth < 11 || currentYear < 2025) { //DA MODIFICARE
-					// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 5 giorni per TESTING
-					maxDay = 5; // FISSO per testing
+					// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 6 giorni per TESTING
+					maxDay = 6; // FISSO per testing
 					console.log("🧪 Modalità testing PRE-dicembre: giorni sbloccati:", maxDay);
 				} else {
 					// Se siamo DOPO dicembre, sblocca tutto
@@ -671,7 +671,7 @@
 			  return () => window.removeEventListener('openSettings', handleOpenSettings);
 			}, []);
 			
-	  
+	  		const [usedHintsDisplay, setUsedHintsDisplay] = useState({});
 			const [feedback, setFeedback] = useState("");
 			
 			// BUG FIX #2: Traccia TUTTE le risposte sbagliate per ogni giorno
@@ -809,19 +809,28 @@
 			// LOGICA INDIZI SEMPLIFICATA
 			function useHint(index) {
 			  setProgress(prev => {
-				const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-				if (entry.solved || entry.usedHints >= 3) return prev;
-				
-				entry.score = entry.score - 1;
-				entry.usedHints += 1;
-				
-				const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
-				const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
-				setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
-				
-				return { ...prev, [index]: entry };
+			    const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+			    if (entry.solved || entry.usedHints >= 3) return prev;
+			    
+			    entry.score = entry.score - 1;
+			    entry.usedHints += 1;
+			    
+			    const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
+			    const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+			    
+			    // Aggiungi l'indizio alla lista di indizi mostrati
+			    setUsedHintsDisplay(prev => ({
+			      ...prev,
+			      [index]: [...(prev[index] || []), hint]
+			    }));
+			    
+			    setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
+			    
+			    return { ...prev, [index]: entry };
 			  });
 			}
+
+
 	  
 	  
 	  
@@ -970,7 +979,15 @@
 					  })
 					),
 					feedback && React.createElement("div", { className: `feedback ${feedback.includes('Corretto') ? 'correct' : feedback.includes('sbagliata') ? 'wrong' : ''}` }, feedback),
-					// BUG FIX #2: DISPLAY CORRETTO DEI PUNTI
+					usedHintsDisplay[activeModal] && usedHintsDisplay[activeModal].length > 0 && 
+					React.createElement("div", { className: "mt-4 p-3 bg-yellow-900 rounded-lg border-l-4 border-yellow-400" },
+					  React.createElement("div", { className: "text-yellow-300 font-bold mb-2" }, "💡 Indizi usati:"),
+					  usedHintsDisplay[activeModal].map((h, i) => 
+					    React.createElement("div", { key: i, className: "text-sm text-yellow-100 mb-1" }, `${i+1}. ${h}`)
+					  )
+					),
+																							
+																		// BUG FIX #2: DISPLAY CORRETTO DEI PUNTI
 					React.createElement("div", { className: "mt-4 p-3 bg-gray-800 rounded-lg text-center" },
 					  React.createElement("div", { className: "text-lg font-bold text-yellow-300" }, 
 						(() => {
