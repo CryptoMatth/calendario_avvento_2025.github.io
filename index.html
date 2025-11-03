@@ -959,6 +959,13 @@
 				  ),
 				  !progress[activeModal]?.solved && React.createElement(React.Fragment, null,
 					React.createElement("p", { className: "mb-4 text-lg" }, "Quale costellazione è questa?"),
+					usedHintsDisplay[activeModal] && usedHintsDisplay[activeModal].length > 0 && 
+					React.createElement("div", { className: "mt-4 p-3 bg-yellow-900 rounded-lg border-l-4 border-yellow-400" },
+					  React.createElement("div", { className: "text-yellow-300 font-bold mb-2" }, "💡 Indizi usati:"),
+					  usedHintsDisplay[activeModal].map((h, i) => 
+					    React.createElement("div", { key: i, className: "text-sm text-yellow-100 mb-1" }, `${i+1}. ${h}`)
+					  )
+					),
 					React.createElement("div", { className: "flex flex-col gap-3" },
 					  // BUG FIX #1 & #2: Opzioni mescolate con risposte multiple sbagliate
 					  (shuffledOptions[activeModal] || FULL_CONSTELLATIONS[activeModal].options).map((opt, j) => {
