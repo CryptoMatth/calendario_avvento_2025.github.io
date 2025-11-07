@@ -894,12 +894,17 @@
 				FULL_CONSTELLATIONS.map((c, i) => {
 				  const index = i + 1;
 				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-				  const locked = index > maxDay;
+				  const dayNotYetAvailable = index > maxDay;
+				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				  const locked = dayNotYetAvailable || previousDayNotCompleted;
 				  
-				  // Debug per ogni giorno
-				  if (i < 10) { // Solo primi 10 giorni per evitare spam
-					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
-				  }
+					// Debug per ogni giorno
+					if (i < 10) { // Solo primi 10 giorni per evitare spam
+					  const reason = locked 
+						? (dayNotYetAvailable ? 'non ancora nel calendario' : 'giorno precedente non completato')
+						: 'sbloccato';
+					  console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (${reason}, maxDay=${maxDay}, prev solved=${index > 1 ? progress[i-1]?.solved : 'N/A'})`);
+					}
 	  
 				  function openModal() {
 					if (!locked) {
@@ -929,7 +934,9 @@
 					),
 					React.createElement("div", { className: "day-status" },
 					  locked 
-						? `Bloccato fino al ${index} dicembre`
+						? (dayNotYetAvailable 
+						    ? `Bloccato fino al ${index} dicembre`
+						    : `Completa prima il giorno ${index - 1}`)
 						: entry.solved 
 						  ? (() => {
 							  const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
