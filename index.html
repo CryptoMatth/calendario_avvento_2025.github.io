@@ -18,791 +18,703 @@
 			--color-gray-200: rgba(245, 245, 245, 1);
 			--color-gray-300: rgba(167, 169, 169, 1);
 			--color-gray-400: rgba(119, 124, 124, 1);
-			--color-slate-500: rgba(98, 108, 114, 1);
+			--color-slate-500: rgba(98, 108, 108, 1);
+			--color-red-500: rgba(239, 68, 68, 1);
+			--color-green-500: rgba(34, 197, 94, 1);
+			--color-green-600: rgba(22, 163, 74, 1);
+			--color-green-700: rgba(21, 128, 61, 1);
+			--color-orange-500: rgba(249, 115, 22, 1);
+			--color-blue-500: rgba(59, 130, 246, 1);
 			
 			/* Semantic Color Tokens */
-			--color-primary-50: rgba(235, 249, 255, 1);
-			--color-primary-100: rgba(199, 237, 255, 1);
-			--color-primary-400: rgba(64, 150, 206, 1);
-			--color-primary-500: rgba(20, 110, 167, 1);
-			--color-primary-600: rgba(8, 77, 131, 1);
-			--color-primary-800: rgba(5, 50, 85, 1);
-			--color-secondary-300: rgba(255, 219, 108, 1);
-			--color-secondary-500: rgba(255, 179, 0, 1);
-			--color-error-500: rgba(220, 38, 38, 1);
-			--color-success-500: rgba(16, 185, 129, 1);
+			--color-primary: var(--color-green-600);
+			--color-primary-hover: var(--color-green-700);
+			--color-secondary: var(--color-red-500);
+			--color-background: var(--color-cream-100);
+			--color-surface: var(--color-white);
+			--color-text-primary: var(--color-slate-500);
+			--color-text-secondary: var(--color-gray-400);
+			--color-text-white: var(--color-white);
+			--color-border: var(--color-gray-200);
+			--color-success: var(--color-green-500);
+			--color-error: var(--color-red-500);
+			--color-warning: var(--color-orange-500);
 			
-			/* Special Advent Colors */
-			--color-star: #FFD700; /* Oro */
-			--color-space-bg: #0A0A1F; /* Blu scuro spaziale */
-			--color-door-unopened: #1A374D; /* Blu notte per porta chiusa */
-			--color-door-hover: #3D5A80;
-			--color-door-opened: #0077B6; /* Blu più chiaro per porta aperta */
-			--color-glow: rgba(255, 255, 255, 0.5); /* Effetto bagliore */
+			/* Tailwind Customization */
+			--tw-ring-color: var(--color-primary);
 		  }
 		  
+		  /* Utility Classes for Tailwind */
+		  .bg-primary { background-color: var(--color-primary); }
+		  .hover\:bg-primary-hover:hover { background-color: var(--color-primary-hover); }
+		  .text-primary { color: var(--color-primary); }
+		  .bg-secondary { background-color: var(--color-secondary); }
+		  .bg-background { background-color: var(--color-background); }
+		  .text-text-primary { color: var(--color-text-primary); }
+		  
+		  /* Global Styles */
 		  body {
 			font-family: 'Inter', sans-serif;
-			background-color: var(--color-space-bg);
-			color: var(--color-white);
+			background-color: var(--color-background);
+			min-height: 100vh;
 		  }
 		  
-		  .advent-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-			gap: 16px;
-			padding: 24px;
-		  }
-		  
-		  .star-bg {
-			background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-			background-size: 50px 50px;
-		  }
-		  
-		  .quiz-modal-bg {
-			backdrop-filter: blur(5px);
-			background-color: rgba(10, 10, 31, 0.8);
-		  }
-		  
-		  @keyframes pulse-glow {
-			0%, 100% { box-shadow: 0 0 5px var(--color-star), 0 0 10px var(--color-star); }
-			50% { box-shadow: 0 0 10px var(--color-star), 0 0 20px var(--color-star); }
-		  }
-		  
-		  .glowing-button {
-			animation: pulse-glow 2s infinite ease-in-out;
-		  }
-
-          /* Stile per il toast */
-		  #toast-container {
+		  /* Custom Toast Styles */
+		  #toastContainer {
 			position: fixed;
-			top: 20px;
-			right: 20px;
+			top: 1rem;
+			right: 1rem;
 			z-index: 1000;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5rem;
+			max-width: 300px;
 		  }
 		  .toast {
-			padding: 12px 20px;
-			margin-bottom: 10px;
-			border-radius: 8px;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+			padding: 0.75rem 1rem;
+			border-radius: 0.5rem;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+			color: var(--color-text-white);
+			transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 			opacity: 0;
-			transition: opacity 0.5s, transform 0.5s;
 			transform: translateX(100%);
 		  }
 		  .toast.show {
 			opacity: 1;
 			transform: translateX(0);
 		  }
-		  .toast-success { background-color: var(--color-success-500); color: var(--color-white); }
-		  .toast-error { background-color: var(--color-error-500); color: var(--color-white); }
-
+		  .toast.success { background-color: var(--color-success); }
+		  .toast.error { background-color: var(--color-error); }
+		  .toast.warning { background-color: var(--color-warning); }
+		  
+		  /* Button styles */
+		  .advent-button {
+			background-color: var(--color-primary);
+			color: var(--color-text-white);
+			padding: 0.75rem 1.5rem;
+			border-radius: 0.75rem;
+			font-weight: 600;
+			transition: background-color 0.2s, transform 0.1s;
+			box-shadow: 0 4px var(--color-green-700);
+		  }
+		  .advent-button:hover {
+			background-color: var(--color-primary-hover);
+		  }
+		  .advent-button:active {
+			transform: translateY(2px);
+			box-shadow: 0 2px var(--color-green-700);
+		  }
+		  .advent-button:disabled {
+			background-color: var(--color-gray-300);
+			box-shadow: none;
+			cursor: not-allowed;
+			transform: none;
+		  }
+		  
+		  /* Grid for days */
+		  .advent-grid {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 1rem;
+			padding: 1rem;
+		  }
+		  
+		  @media (min-width: 640px) {
+			.advent-grid {
+			  grid-template-columns: repeat(6, 1fr);
+			}
+		  }
+		  
+		  @media (min-width: 1024px) {
+			.advent-grid {
+			  grid-template-columns: repeat(8, 1fr);
+			}
+		  }
+		  
+		  /* Day Card */
+		  .day-card {
+			background-color: var(--color-surface);
+			border-radius: 1rem;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			padding: 1rem;
+			aspect-ratio: 1 / 1;
+			cursor: pointer;
+			transition: transform 0.2s, box-shadow 0.2s;
+			position: relative;
+			overflow: hidden;
+		  }
+		  
+		  .day-card:hover:not(.locked) {
+			transform: scale(1.05);
+			box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+		  }
+		  
+		  .day-card.locked {
+			background-color: var(--color-gray-200);
+			color: var(--color-gray-300);
+			cursor: not-allowed;
+		  }
+		  
+		  .day-card.unlocked {
+			border: 2px solid var(--color-primary);
+		  }
+		  
+		  .day-card.completed {
+			background-color: #f0fdf4; /* A light green for completion */
+			border: 2px solid var(--color-success);
+			color: var(--color-success);
+		  }
+		  
+		  .day-number {
+			font-size: 1.5rem;
+			font-weight: 800;
+			z-index: 10;
+		  }
+		  
+		  /* Overlay for locked state */
+		  .day-card.locked::after {
+			content: '🔒';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 2.5rem;
+			opacity: 0.5;
+		  }
+		  
+		  /* Constellation Icon Placeholder (Star) */
+		  .constellation-icon {
+			font-size: 2rem;
+			line-height: 1;
+			margin-top: 0.5rem;
+			color: var(--color-primary);
+		  }
+		  .day-card.completed .constellation-icon {
+			color: var(--color-success);
+		  }
+		  .day-card.locked .constellation-icon {
+			color: var(--color-gray-300);
+		  }
+		  
+		  /* Modal Styles */
+		  .modal-overlay {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.7);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			z-index: 50;
+			transition: opacity 0.3s;
+		  }
+		  .modal-content {
+			background-color: var(--color-surface);
+			border-radius: 1rem;
+			padding: 2rem;
+			max-width: 90%;
+			max-height: 90%;
+			overflow-y: auto;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+			transform: scale(0.9);
+			opacity: 0;
+			transition: transform 0.3s, opacity 0.3s;
+		  }
+		  .modal-overlay.show .modal-content {
+			transform: scale(1);
+			opacity: 1;
+		  }
+		  
+		  /* Leaderboard Styles */
+		  #leaderboardModal .modal-content {
+			max-width: 400px;
+		  }
+		  .leaderboard-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0.5rem 0;
+			border-bottom: 1px solid var(--color-border);
+		  }
+		  .leaderboard-item:last-child {
+			border-bottom: none;
+		  }
+		  .leaderboard-rank {
+			font-weight: 700;
+			width: 20px;
+			text-align: center;
+		  }
+		  .leaderboard-score {
+			font-weight: 700;
+			color: var(--color-primary);
+		  }
+		  
 		</style>
 		
-		<!-- Importazioni Firebase CDN per un'applicazione React a file singolo -->
+		<!-- Font Awesome for Icons -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+		
+		<!-- React Libraries -->
+		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+		
+		<!-- Firebase SDK (Version 11.6.1) -->
 		<script type="module">
-			import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-			import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-			import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, limit, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-			import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+		  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+		  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+		  import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+		  import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
 
-			// Imposta il livello di log per Firestore (utile per il debugging)
-			setLogLevel('debug');
+		  // Global variables
+		  window.db = null;
+		  window.auth = null;
+		  window.storage = null;
+		  window.userId = null;
+		  window.COLLECTION_NAME = 'advent_calendar_progress';
+		  window.LEADERBOARD_COLLECTION = 'advent_leaderboard';
+		  
+		  // Firebase Configuration (Injected by Canvas)
+		  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+		  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+		  const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+		  
+		  if (firebaseConfig) {
+			const app = initializeApp(firebaseConfig);
+			window.db = getFirestore(app);
+			window.auth = getAuth(app);
+			// window.storage = getStorage(app); // Storage non necessario per ora
 			
-			window.firebase = {
-				initializeApp,
-				getAuth,
-				signInAnonymously,
-				signInWithCustomToken,
-				onAuthStateChanged,
-				getFirestore,
-				doc,
-				getDoc,
-				setDoc,
-				onSnapshot,
-				collection,
-				query,
-				limit,
-				orderBy
-			};
+			// Authentication
+			async function authenticate() {
+			  try {
+				if (initialAuthToken) {
+				  const userCredential = await signInWithCustomToken(window.auth, initialAuthToken);
+				  window.userId = userCredential.user.uid;
+				  console.log('✅ Autenticazione con token personalizzato riuscita. User ID:', window.userId);
+				} else {
+				  const userCredential = await signInAnonymously(window.auth);
+				  window.userId = userCredential.user.uid;
+				  console.log('✅ Autenticazione anonima riuscita. User ID:', window.userId);
+				}
+			  } catch (error) {
+				console.error('❌ Errore durante l\'autenticazione:', error);
+				showToast('Errore di autenticazione critico.', 'error');
+			  }
+			}
+			
+			// Esegui autenticazione all'avvio
+			authenticate();
+		  } else {
+			console.warn('⚠️ Configurazione Firebase non trovata. L\'app funzionerà in modalità offline/simulata.');
+		  }
 		</script>
 	</head>
 	
 	<body>
-		<div id="toast-container"></div>
-		<div id="app" class="min-h-screen star-bg">
-			<!-- L'app React verrà montata qui -->
+		<div id="toastContainer"></div>
+		
+		<div id="mainApp" class="hidden min-h-screen flex flex-col items-center justify-center p-4 bg-background">
+			<div id="app" class="w-full max-w-4xl">
+				<!-- Il contenuto React verrà montato qui -->
+			</div>
+			
+			<!-- Modal per il Contenuto -->
+			<div id="contentModal" class="modal-overlay hidden" onclick="window.closeContentModal()">
+				<div class="modal-content" onclick="event.stopPropagation()">
+					<h2 id="modalTitle" class="text-2xl font-bold mb-4 text-text-primary"></h2>
+					<p id="modalDescription" class="mb-6 text-text-primary"></p>
+					<div class="flex justify-end">
+						<button class="advent-button" onclick="window.closeContentModal()">Chiudi</button>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Modal per la Classifica -->
+			<div id="leaderboardModal" class="modal-overlay hidden" onclick="window.closeLeaderboardModal()">
+				<div class="modal-content" onclick="event.stopPropagation()">
+					<h2 class="text-2xl font-bold mb-4 text-text-primary">🏆 Classifica Costellazioni</h2>
+					<div id="leaderboardList" class="flex flex-col gap-2">
+						<!-- Elementi classifica inseriti qui -->
+						<p class="text-gray-400">Caricamento...</p>
+					</div>
+					<div class="mt-6 flex justify-end">
+						<button class="advent-button" onclick="window.closeLeaderboardModal()">Chiudi</button>
+					</div>
+				</div>
+			</div>
 		</div>
-
-		<!-- Script React -->
-		<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+		
+		
 		
 		<script type="text/babel">
-			const { useState, useEffect, useCallback, useMemo, createContext, useContext } = React;
+		  // Array di dati simulati per i giorni
+		  const ADVENT_DAYS_DATA = Array.from({ length: 24 }, (_, i) => ({
+			day: i + 1,
+			title: `Costellazione del Giorno ${i + 1}`,
+			description: `Oggi esploriamo la costellazione ${i + 1}. Scopri i suoi miti e le sue stelle principali.`,
+			icon: '⭐', // Placeholder icon
+			isCompleted: false, // Sarà aggiornato dallo stato
+		  }));
+		  
+		  // Stato Globale e Funzioni di Interazione
+		  
+		  // Funzione per mostrare un toast (la definiamo fuori da React)
+		  window.showToast = (message, type = 'info') => {
+			const container = document.getElementById('toastContainer');
+			if (!container) return;
+
+			const toast = document.createElement('div');
+			toast.className = `toast ${type}`;
+			toast.textContent = message;
 			
-			// Variabili globali fornite dall'ambiente (Devono essere sempre definite)
-			const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-			const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-			const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-			// --- Funzioni di Utilità Globali ---
+			container.prepend(toast);
 			
-			// Mostra un messaggio toast
-			function showToast(message, type = 'info') {
-				const toastContainer = document.getElementById('toast-container');
-				if (!toastContainer) return;
-
-				const toast = document.createElement('div');
-				toast.className = `toast toast-${type} z-50`;
-				toast.textContent = message;
-
-				toastContainer.appendChild(toast);
-
-				// Mostra e nascondi
-				setTimeout(() => {
-					toast.classList.add('show');
-				}, 50);
-
-				setTimeout(() => {
-					toast.classList.remove('show');
-					setTimeout(() => {
-						toastContainer.removeChild(toast);
-					}, 500); // Rimuovi dopo la transizione di fade-out
-				}, 5000);
-			}
-
-			// Ottiene la data corrente di Advent (semplificata a novembre/dicembre)
-			const getAdventDay = () => {
-				const now = new Date();
-				const month = now.getMonth();
-				const day = now.getDate();
-
-				// Calendario dell'Avvento va dal 1 al 24 dicembre
-				if (month === 11 && day >= 1 && day <= 24) {
-					return day;
-				}
-				
-				// Per i test, se è novembre, usiamo i giorni da 1 a 24 come fittizi
-				if (month === 10 && day >= 1 && day <= 24) {
-					// Mappa novembre a giorni fittizi di dicembre
-					return day; 
-				}
-
-				return 0; // Fuori dal periodo di Advent
-			};
+			// Forza il reflow per l'animazione
+			void toast.offsetWidth; 
+			toast.classList.add('show');
 			
-			const TOTAL_ADVENT_DAYS = 24;
+			setTimeout(() => {
+			  toast.classList.remove('show');
+			  toast.addEventListener('transitionend', () => toast.remove());
+			}, 3000);
+		  };
+		  
+		  // Funzione per chiudere i modali (usate globalmente)
+		  window.closeContentModal = () => {
+			document.getElementById('contentModal').classList.add('hidden');
+			document.getElementById('contentModal').classList.remove('show');
+		  };
+		  
+		  window.closeLeaderboardModal = () => {
+			document.getElementById('leaderboardModal').classList.add('hidden');
+		  };
+		  
+		  // --- Componenti React ---
+		  
+		  const { useState, useEffect, useCallback, useMemo } = React;
+		  
+		  // Componente per il singolo giorno
+		  function AdventDay({ day, title, description, icon, isCompleted, isAvailable, onDayClick }) {
+			const className = `day-card ${isCompleted ? 'completed' : isAvailable ? 'unlocked' : 'locked'} transition-all`;
 			
-			// --- Contesto Firebase ---
-			const FirebaseContext = createContext(null);
-
-			const useFirebase = () => {
-				return useContext(FirebaseContext);
+			const handleClick = () => {
+			  if (isAvailable) {
+				onDayClick(day, title, description);
+			  } else {
+				showToast('Questo giorno non è ancora disponibile!', 'warning');
+			  }
 			};
 
-			// --- Componente per la gestione dello Stato Firebase ---
-			const FirebaseProvider = ({ children }) => {
-				const [db, setDb] = useState(null);
-				const [auth, setAuth] = useState(null);
-				const [userId, setUserId] = useState(null);
-				const [isDbReady, setIsDbReady] = useState(false);
-
-				useEffect(() => {
-					const initializeFirebase = async () => {
-						try {
-							console.log("⚙️ Tentativo di inizializzazione Firebase...");
-							if (!window.firebase) {
-								console.error("Firebase SDK non caricato correttamente.");
-								showToast("Errore: Firebase SDK mancante.", 'error');
-								return;
-							}
-							
-							const app = window.firebase.initializeApp(firebaseConfig);
-							const firestore = window.firebase.getFirestore(app);
-							const authService = window.firebase.getAuth(app);
-
-							setDb(firestore);
-							setAuth(authService);
-							
-							// Gestione dell'autenticazione
-							const unsubscribe = window.firebase.onAuthStateChanged(authService, async (user) => {
-								if (user) {
-									setUserId(user.uid);
-									console.log("✅ Utente autenticato. UID:", user.uid);
-									setIsDbReady(true);
-								} else {
-									try {
-										if (initialAuthToken) {
-											await window.firebase.signInWithCustomToken(authService, initialAuthToken);
-										} else {
-											// Fallback: Autenticazione anonima se il token non è disponibile (per i test)
-											const anonymousUser = await window.firebase.signInAnonymously(authService);
-											setUserId(anonymousUser.user.uid);
-											console.log("⚠️ Accesso anonimo. UID:", anonymousUser.user.uid);
-											setIsDbReady(true);
-										}
-									} catch (error) {
-										console.error("❌ Errore durante l'autenticazione:", error);
-										showToast("Errore di autenticazione: " + error.message, 'error');
-										setUserId(crypto.randomUUID()); // ID fittizio in caso di fallimento
-										setIsDbReady(true);
-									}
-								}
-							});
-							
-							// Cleanup function
-							return () => unsubscribe();
-
-						} catch (error) {
-							console.error("❌ Errore durante l'inizializzazione o l'autenticazione di Firebase:", error);
-							showToast("Errore critico di Firebase: Controlla la console.", 'error');
-							setUserId(crypto.randomUUID());
-							setIsDbReady(true);
-						}
-					};
-
-					initializeFirebase();
-				}, []); // Esegui solo al mount
-
-				const contextValue = { db, auth, userId, isDbReady };
-
-				return (
-					<FirebaseContext.Provider value={contextValue}>
-						{children}
-					</FirebaseContext.Provider>
-				);
-			};
-
-			// --- Componente CalendarDay ---
-			
-			const CalendarDay = ({ day, currentDay, onOpenDoor, progress, setProgress, onCompleteQuiz }) => {
-				const { db, userId, isDbReady } = useFirebase();
-				const isDayOpen = progress[day] && progress[day].opened;
-				const isQuizPassed = progress[day] && progress[day].quizPassed;
-				const isAvailable = day <= currentDay;
-				const isToday = day === currentDay;
-				
-				const [showQuiz, setShowQuiz] = useState(false);
-				const [showFeedback, setShowFeedback] = useState(null); // 'correct' or 'incorrect'
-				const [dayProgress, setDayProgress] = useState(null); // Stato locale per il progresso
-				
-				const dayId = day.toString().padStart(2, '0');
-				const collectionPath = `artifacts/${appId}/users/${userId}/advent_progress`;
-				const docPath = window.firebase.doc(db, collectionPath, dayId);
-
-				// Funzione per caricare il progresso del giorno specifico
-				const loadDayProgress = useCallback(async () => {
-					if (!isDbReady || !db || !userId) return;
-
-					try {
-						const docSnap = await window.firebase.getDoc(docPath);
-						if (docSnap.exists()) {
-							const data = docSnap.data();
-							setDayProgress(data);
-							
-							// Sincronizza lo stato globale con il dato locale
-							setProgress(prev => ({
-								...prev,
-								[day]: {
-									opened: data.opened || false,
-									quizPassed: data.quizPassed || false
-								}
-							}));
-						}
-					} catch (error) {
-						console.error(`❌ Errore caricamento progresso giorno ${day}:`, error);
-						// Gestione errore o fallback a stato predefinito
-					}
-				}, [isDbReady, db, userId, day, docPath, setProgress]);
-
-
-				// Ascolta i cambiamenti di stato in tempo reale (Lifecycle/Firestore)
-				useEffect(() => {
-					// FIX: Esegui solo se db e userId sono pronti
-					if (!isDbReady || !db || !userId) {
-						console.log(`🟡 Day ${day}: Inizializzazione Firebase non pronta. Salto l'ascolto.`);
-						return; 
-					}
-					
-					console.log(`👂 Day ${day}: Avvio ascolto in tempo reale per ${dayId}`);
-
-					const unsubscribe = window.firebase.onSnapshot(docPath, (docSnap) => {
-						if (docSnap.exists()) {
-							const data = docSnap.data();
-							setDayProgress(data);
-							
-							// Aggiorna lo stato globale
-							setProgress(prev => ({
-								...prev,
-								[day]: {
-									opened: data.opened || false,
-									quizPassed: data.quizPassed || false
-								}
-							}));
-						} else {
-							// Se il documento non esiste, impostalo come non aperto
-							setDayProgress({ opened: false, quizPassed: false });
-						}
-					}, (error) => {
-						console.error(`❌ Errore onSnapshot per il giorno ${day}:`, error);
-						showToast(`Errore sincronizzazione giorno ${day}`, 'error');
-					});
-
-					// Pulizia dell'abbonamento
-					return () => unsubscribe();
-				}, [isDbReady, db, userId, day, docPath, setProgress]); // Dipendenze chiare
-
-				const handleDoorClick = async () => {
-					if (!isAvailable) {
-						showToast(`Devi aspettare il giorno ${day}!`, 'info');
-						return;
-					}
-					
-					if (!isDbReady || !db || !userId) {
-						showToast("Database non pronto, riprova tra poco.", 'error');
-						return;
-					}
-
-					if (!isDayOpen) {
-						// Apertura della porta
-						try {
-							const newData = { opened: true, quizPassed: false };
-							await window.firebase.setDoc(docPath, newData, { merge: true });
-							onOpenDoor(day); // Notifica l'apertura all'App principale
-							showToast(`Hai aperto la porta del giorno ${day}!`, 'success');
-							setShowQuiz(true); // Mostra il quiz subito dopo l'apertura
-						} catch (error) {
-							console.error(`❌ Errore apertura porta giorno ${day}:`, error);
-							showToast(`Errore: impossibile aprire la porta del giorno ${day}.`, 'error');
-						}
-					} else if (isDayOpen && !isQuizPassed) {
-						// La porta è aperta ma il quiz non è stato completato
-						setShowQuiz(true);
-					}
-					// Se il quiz è superato, non succede nulla o si mostra la costellazione
-				};
-
-				const handleQuizCompletion = async (isCorrect) => {
-					if (!isDbReady || !db || !userId) {
-						showToast("Database non pronto, impossibile salvare il quiz.", 'error');
-						return;
-					}
-					
-					setShowQuiz(false);
-					setShowFeedback(isCorrect ? 'correct' : 'incorrect');
-					
-					if (isCorrect) {
-						try {
-							const newData = { quizPassed: true, score: 1 };
-							await window.firebase.setDoc(docPath, newData, { merge: true });
-							onCompleteQuiz(day);
-						} catch (error) {
-							console.error(`❌ Errore salvataggio quiz giorno ${day}:`, error);
-							showToast(`Errore: impossibile salvare il risultato del quiz.`, 'error');
-						}
-					}
-					
-					setTimeout(() => setShowFeedback(null), 3000);
-				};
-				
-				// Stili dinamici
-				let doorClass = 'bg-primary-600 hover:bg-door-hover';
-				let content = day;
-				let icon = '✨';
-
-				if (isAvailable && !isDayOpen) {
-					// Porta disponibile ma chiusa
-					doorClass = 'bg-door-unopened hover:bg-door-hover cursor-pointer shadow-xl transition duration-300';
-					if (isToday) {
-						doorClass += ' glowing-button border-4 border-star';
-						icon = '🎁';
-					}
-				} else if (isDayOpen) {
-					// Porta aperta
-					doorClass = 'bg-door-opened cursor-default shadow-lg border-2 border-star';
-					content = isQuizPassed ? '✅' : '❓'; // Metti un simbolo di costellazione (o quiz in attesa)
-					icon = '🌌';
-					if (isQuizPassed) {
-						icon = '🏆';
-					}
-				} else {
-					// Porta non disponibile
-					doorClass = 'bg-slate-500 cursor-not-allowed border-2 border-gray-400 opacity-60';
-					icon = '🔒';
-				}
-
-				return (
-					<div className="relative aspect-square">
-						<div
-							className={`w-full h-full flex flex-col items-center justify-center p-2 rounded-xl text-center ${doorClass}`}
-							onClick={isAvailable ? handleDoorClick : null}
-						>
-							<div className="text-4xl mb-1">{icon}</div>
-							<div className="text-2xl font-bold">{day}</div>
-						</div>
-						
-						{showQuiz && (
-							<QuizModal
-								day={day}
-								onClose={() => setShowQuiz(false)}
-								onQuizCompletion={handleQuizCompletion}
-							/>
-						)}
-						
-						{/* Feedback sul Quiz */}
-						{showFeedback && (
-							<div 
-								className={`absolute inset-0 z-20 flex items-center justify-center rounded-xl transition-opacity duration-300 ${showFeedback === 'correct' ? 'bg-success-500/90' : 'bg-error-500/90'}`}
-								style={{ pointerEvents: 'none' }}
-							>
-								<div className="text-4xl font-extrabold text-white">
-									{showFeedback === 'correct' ? 'Corretto! +1 Punto' : 'Riprova!'}
-								</div>
-							</div>
-						)}
-						
-						{/* Dettagli della costellazione dopo il superamento del quiz */}
-						{(isDayOpen && isQuizPassed && !showQuiz) && (
-							<div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-space-bg/80 p-2 rounded-xl text-center border-2 border-star">
-								<div className="text-3xl">🔭</div>
-								<div className="text-xs font-semibold mt-1">Costellazione del Giorno</div>
-							</div>
-						)}
-					</div>
-				);
-			};
-
-			// --- Componente QuizModal ---
-			
-			// Mock di domande del quiz (da 1 a 24)
-			const MOCK_QUIZ_QUESTIONS = {};
-			for (let i = 1; i <= TOTAL_ADVENT_DAYS; i++) {
-				MOCK_QUIZ_QUESTIONS[i] = {
-					question: `Qual è il nome della costellazione associata al giorno ${i} dell'Avvento? (Mock)`,
-					options: ['Orione', 'Cassiopea', 'Orsa Maggiore', 'Sconosciuta'],
-					correctAnswer: 'Sconosciuta' // Risposta mock
-				};
-			}
-
-			const QuizModal = ({ day, onClose, onQuizCompletion }) => {
-				const quizData = MOCK_QUIZ_QUESTIONS[day] || { question: "Nessun quiz trovato.", options: [], correctAnswer: null };
-				const [selectedOption, setSelectedOption] = useState(null);
-				const [isSubmitting, setIsSubmitting] = useState(false);
-
-				const handleSubmit = () => {
-					setIsSubmitting(true);
-					setTimeout(() => {
-						const isCorrect = selectedOption === quizData.correctAnswer;
-						onQuizCompletion(isCorrect);
-						setIsSubmitting(false);
-					}, 1000); // Simulazione di ritardo di rete
-				};
-				
-				return (
-					<div className="fixed inset-0 z-50 flex items-center justify-center quiz-modal-bg p-4">
-						<div className="bg-primary-800 p-6 rounded-2xl w-full max-w-lg shadow-2xl border border-primary-500">
-							<h3 className="text-2xl font-bold text-star mb-4">Quiz del Giorno {day}</h3>
-							<p className="mb-6 text-cream-100">{quizData.question}</p>
-							
-							<div className="space-y-3 mb-6">
-								{quizData.options.map((option, index) => (
-									<button
-										key={index}
-										className={`w-full text-left p-3 rounded-lg transition-all duration-200 border-2 ${
-											selectedOption === option
-												? 'bg-secondary-500 text-black border-secondary-300 shadow-md'
-												: 'bg-primary-600 text-white border-primary-500 hover:bg-primary-500'
-										}`}
-										onClick={() => setSelectedOption(option)}
-										disabled={isSubmitting}
-									>
-										{option}
-									</button>
-								))}
-							</div>
-							
-							<div className="flex justify-end space-x-3">
-								<button
-									className="px-4 py-2 bg-gray-400 text-primary-800 rounded-lg font-semibold hover:bg-gray-300 transition duration-200"
-									onClick={onClose}
-									disabled={isSubmitting}
-								>
-									Annulla
-								</button>
-								<button
-									className={`px-6 py-2 rounded-lg font-bold transition duration-200 ${
-										selectedOption && !isSubmitting
-											? 'bg-star text-primary-800 hover:bg-white'
-											: 'bg-gray-500 text-gray-300 cursor-not-allowed'
-									}`}
-									onClick={handleSubmit}
-									disabled={!selectedOption || isSubmitting}
-								>
-									{isSubmitting ? 'Invio...' : 'Invia Risposta'}
-								</button>
-							</div>
-						</div>
-					</div>
-				);
-			};
-
-			// --- Componente Leaderboard ---
-			const Leaderboard = ({ isOpen, onClose }) => {
-				const { db, isDbReady } = useFirebase();
-				const [leaderboard, setLeaderboard] = useState([]);
-				const [isLoading, setIsLoading] = useState(true);
-
-				const loadLeaderboard = useCallback(async () => {
-					// FIX: Controlla se il DB è pronto
-					if (!isDbReady || !db) {
-						console.log("🟡 Leaderboard: Database non pronto. Ritorno.");
-						return; 
-					}
-					
-					setIsLoading(true);
-					try {
-						const collectionPath = `artifacts/${appId}/public/data/advent_leaderboard`;
-						// FIX: Uso delle funzioni Firestore importate tramite window.firebase
-						const q = window.firebase.query(
-							window.firebase.collection(db, collectionPath),
-							window.firebase.orderBy('totalScore', 'desc'),
-							window.firebase.limit(10)
-						);
-						
-						// Usa onSnapshot per l'aggiornamento in tempo reale
-						const unsubscribe = window.firebase.onSnapshot(q, (querySnapshot) => {
-							const entries = [];
-							querySnapshot.forEach((doc) => {
-								entries.push({ id: doc.id, ...doc.data() });
-							});
-							
-							// FIX: Ordinamento lato client per evitare errori di indice se necessario, ma qui Firestore query è usato
-							setLeaderboard(entries);
-							setIsLoading(false);
-						}, (error) => {
-							console.error('❌ Errore caricamento classifica:', error);
-							showToast('Errore caricamento classifica', 'error');
-							setIsLoading(false);
-						});
-						
-						return () => unsubscribe();
-
-					} catch (error) {
-						console.error('❌ Errore caricamento classifica:', error);
-						showToast('Errore caricamento classifica', 'error');
-						setIsLoading(false);
-					}
-				}, [isDbReady, db]);
-
-				useEffect(() => {
-					if (isOpen && isDbReady) {
-						return loadLeaderboard();
-					}
-				}, [isOpen, isDbReady, loadLeaderboard]);
-				
-				if (!isOpen) return null;
-
-				return (
-					<div className="fixed inset-0 z-50 flex items-center justify-center quiz-modal-bg p-4">
-						<div className="bg-primary-800 p-6 rounded-2xl w-full max-w-lg shadow-2xl border border-star h-4/5 overflow-y-auto">
-							<h3 className="text-3xl font-extrabold text-star text-center mb-6">
-								Classifica Esploratori Stellari 🏆
-							</h3>
-							
-							{isLoading && (
-								<div className="text-center py-8">Caricamento classifica...</div>
-							)}
-							
-							{!isLoading && leaderboard.length === 0 && (
-								<div className="text-center py-8 text-gray-300">Nessun punteggio ancora! Sii il primo.</div>
-							)}
-
-							{!isLoading && leaderboard.length > 0 && (
-								<table className="w-full text-left table-auto">
-									<thead>
-										<tr className="border-b border-primary-500 text-secondary-300">
-											<th className="py-2">Pos.</th>
-											<th className="py-2">Esploratore (ID Utente)</th>
-											<th className="py-2 text-right">Punteggio</th>
-										</tr>
-									</thead>
-									<tbody>
-										{leaderboard.map((entry, index) => (
-											<tr key={entry.id} className={`border-b border-primary-600 ${index % 2 === 0 ? 'bg-primary-700' : 'bg-primary-800'}`}>
-												<td className="py-3 font-bold text-lg">{index + 1}</td>
-												<td className="py-3 truncate max-w-xs">{entry.id}</td>
-												<td className="py-3 text-right font-extrabold text-star">{entry.totalScore}</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-							)}
-							
-							<div className="mt-6 flex justify-center">
-								<button
-									className="px-6 py-2 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-500 transition duration-200 border-2 border-primary-500"
-									onClick={onClose}
-								>
-									Chiudi Classifica
-								</button>
-							</div>
-						</div>
-					</div>
-				);
-			};
-
-			// --- Componente App Principale ---
-			const App = () => {
-				const [progress, setProgress] = useState({});
-				const currentDay = getAdventDay();
-				const [currentPage, setCurrentPage] = useState('calendar'); // 'calendar', 'quiz', 'leaderboard'
-				const [currentQuizDay, setCurrentQuizDay] = useState(null);
-				const [isLeaderboardOpen, setIsLeaderboardOpen] = useState(false);
-				const { db, userId, isDbReady } = useFirebase(); // Usa il contesto
-
-				const totalScore = useMemo(() => {
-					return Object.values(progress).filter(day => day.quizPassed).length;
-				}, [progress]);
-
-				// Aggiornamento del punteggio pubblico nella Leaderboard
-				const updateLeaderboardScore = useCallback(async (score) => {
-					// FIX: Esegui solo se db e userId sono pronti
-					if (!isDbReady || !db || !userId) return;
-
-					try {
-						const collectionPath = `artifacts/${appId}/public/data/advent_leaderboard`;
-						const docPath = window.firebase.doc(db, collectionPath, userId);
-						
-						const newScore = score || totalScore;
-
-						await window.firebase.setDoc(docPath, { 
-							totalScore: newScore,
-							lastUpdate: window.firebase.serverTimestamp ? window.firebase.serverTimestamp() : new Date(),
-							// L'ID utente è già il doc id, non serve salvarlo come campo a meno che non sia necessario per l'ordinamento
-						}, { merge: true });
-						
-						console.log(`🚀 Classifica aggiornata per l'utente ${userId} con punteggio ${newScore}`);
-					} catch (error) {
-						console.error("❌ Errore aggiornamento classifica:", error);
-						showToast("Errore aggiornamento classifica", 'error');
-					}
-				}, [isDbReady, db, userId, totalScore]);
-
-
-				// Effetto per sincronizzare lo score totale quando il progresso cambia
-				useEffect(() => {
-					if (isDbReady && userId) {
-						updateLeaderboardScore(totalScore);
-					}
-				}, [totalScore, isDbReady, userId, updateLeaderboardScore]);
-
-				// Funzioni di callback
-				const handleOpenDoor = (day) => {
-					// L'aggiornamento dello stato avviene in CalendarDay e tramite onSnapshot
-					// qui possiamo solo innescare la visualizzazione del quiz se necessario
-					setCurrentQuizDay(day);
-				};
-
-				const handleCompleteQuiz = (day) => {
-					// L'aggiornamento del punteggio totale avviene tramite l'useEffect
-					showToast("Quiz superato! Punti aggiunti alla classifica.", 'success');
-				};
-
-				const renderCalendar = () => (
-					<div className="advent-grid">
-						{Array.from({ length: TOTAL_ADVENT_DAYS }, (_, i) => i + 1).map(day => (
-							<CalendarDay
-								key={day}
-								day={day}
-								currentDay={currentDay}
-								onOpenDoor={handleOpenDoor}
-								progress={progress}
-								setProgress={setProgress}
-								onCompleteQuiz={handleCompleteQuiz}
-							/>
-						))}
-					</div>
-				);
-
-				const renderContent = () => {
-					if (!isDbReady) {
-						return (
-							<div className="text-center pt-20">
-								<div className="text-xl text-star animate-pulse">🌌 Connessione con le stelle...</div>
-								<p className="mt-4 text-gray-300">Inizializzazione del sistema di autenticazione e database.</p>
-							</div>
-						);
-					}
-
-					return (
-						<>
-							<div className="flex justify-center p-4 space-x-4">
-								<button 
-									onClick={() => setIsLeaderboardOpen(true)}
-									className="px-6 py-2 bg-star text-primary-800 font-bold rounded-full shadow-lg hover:shadow-xl transition duration-300"
-								>
-									🏆 Classifica ({totalScore})
-								</button>
-								<div className="px-4 py-2 bg-primary-600 text-white rounded-full flex items-center shadow-lg">
-									<span className="font-semibold mr-2">Utente ID:</span> 
-									<span className="text-sm font-mono truncate max-w-[200px] sm:max-w-none">{userId || 'Anonimo'}</span>
-								</div>
-							</div>
-							
-							<div className="max-w-5xl mx-auto">
-								{renderCalendar()}
-							</div>
-							
-							<Leaderboard isOpen={isLeaderboardOpen} onClose={() => setIsLeaderboardOpen(false)} />
-						</>
-					);
-				};
-				
-				return (
-					<div className="container mx-auto p-4">
-						<header className="text-center py-8">
-							<h1 className="text-5xl font-extrabold text-star leading-tight shadow-text-md">
-								Calendario dell'Avvento 2025: Esploratori Stellari
-							</h1>
-							<p className="text-xl text-primary-100 mt-2">Apri la finestra del giorno {currentDay} per scoprire la costellazione!</p>
-						</header>
-						
-						<main>
-							{renderContent()}
-						</main>
-					</div>
-				);
-			};
-
-			// --- Componente Root dell'Applicazione ---
-			const Root = () => (
-				<FirebaseProvider>
-					<App />
-				</FirebaseProvider>
+			return (
+			  <div className={className} onClick={handleClick}>
+				<div className="day-number">{day}</div>
+				{isCompleted && <div className="constellation-icon">{icon}</div>}
+				{!isCompleted && isAvailable && <div className="constellation-icon">⭐</div>}
+			  </div>
 			);
-
-			// Inizializzazione DOM e rendering di React
-			document.addEventListener('DOMContentLoaded', function() {
-				console.log('🚀 DOM caricato, avvio calendario React...');
+		  }
+		  
+		  // Componente principale dell'App
+		  const App = () => {
+			const [progress, setProgress] = useState({});
+			const [loading, setLoading] = useState(true);
+			const currentDay = useMemo(() => new Date().getDate(), []);
+			// Simula il mese di dicembre per l'avvento
+			const isDecember = useMemo(() => new Date().getMonth() === 11, []);
+			
+			// Riferimenti ai percorsi Firestore
+			const getDayDocPath = useCallback((day) => {
+				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+				const collectionPath = `artifacts/${appId}/users/${window.userId}/${window.COLLECTION_NAME}`;
+				return doc(window.db, collectionPath, `day_${day}`);
+			}, []);
+			
+			const getLeaderboardDocPath = useCallback(() => {
+				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+				const collectionPath = `artifacts/${appId}/public/data/${window.LEADERBOARD_COLLECTION}`;
+				return doc(window.db, collectionPath, window.userId); // Documento specifico per l'utente nella classifica pubblica
+			}, []);
+			
+			const saveProgress = useCallback(async (newProgress) => {
+			  if (!window.db || !window.userId) {
+				console.warn('⚠️ Firebase non pronto, salvataggio non eseguito.');
+				return;
+			  }
+			  
+			  try {
+				// Salvataggio del progresso giorno per giorno
+				for (const day in newProgress) {
+					const dayDocRef = getDayDocPath(day);
+					await setDoc(dayDocRef, { 
+						completed: newProgress[day].completed, 
+						timestamp: new Date() 
+					}, { merge: true });
+				}
+				
+				setProgress(newProgress);
+				console.log('✅ Progresso salvato con successo per', Object.keys(newProgress).length, 'giorni.');
+				
+				// Aggiornamento classifica dopo salvataggio
+				await updateLeaderboard(newProgress);
+				
+			  } catch (error) {
+				console.error('❌ Errore durante il salvataggio del progresso:', error);
+				showToast('Errore salvataggio progresso.', 'error');
+			  }
+			}, [getDayDocPath]);
+			
+			const loadProgress = useCallback(async () => {
+			  if (!window.db || !window.userId) {
+				console.warn('⚠️ Firebase non pronto, caricamento non eseguito.');
+				return {};
+			  }
+			  
+			  try {
+				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+				const collectionPath = `artifacts/${appId}/users/${window.userId}/${window.COLLECTION_NAME}`;
+				const q = collection(window.db, collectionPath);
+				const querySnapshot = await getDocs(q);
+				
+				const loadedProgress = {};
+				querySnapshot.forEach((doc) => {
+					const dayNumber = parseInt(doc.id.replace('day_', ''), 10);
+					loadedProgress[dayNumber] = doc.data();
+				});
+				
+				console.log('✅ Progresso caricato:', Object.keys(loadedProgress).length, 'giorni.');
+				return loadedProgress;
+				
+			  } catch (error) {
+				console.error('❌ Errore durante il caricamento del progresso:', error);
+				showToast('Errore caricamento progresso.', 'error');
+				return {};
+			  }
+			}, []);
+			
+			const updateLeaderboard = useCallback(async (currentProgress) => {
+				if (!window.db || !window.userId) return;
 				
 				try {
-					const container = document.getElementById('app');
-					if (container) {
-						const root = ReactDOM.createRoot(container);
-						root.render(React.createElement(Root));
-						console.log('✅ App calendario inizializzata con successo');
-						
-						setTimeout(() => {
-							showToast('🎄 Calendario dell\'Avvento caricato! Buon divertimento!', 'success');
-						}, 1000);
-					}
+					const score = Object.values(currentProgress).filter(p => p.completed).length;
+					const leaderboardDocRef = getLeaderboardDocPath();
+					
+					// Nome utente simulato/anonimo per la classifica (usa una parte dell'ID)
+					const username = `Explorer-${window.userId.substring(0, 6)}`;
+					
+					await setDoc(leaderboardDocRef, {
+						userId: window.userId,
+						username: username,
+						score: score,
+						lastUpdated: new Date()
+					}, { merge: true });
+					
+					console.log('✅ Classifica aggiornata. Punteggio:', score);
 				} catch (error) {
-					console.error('❌ Errore durante il rendering di React:', error);
-					showToast('Errore critico di rendering.', 'error');
+					console.error('❌ Errore aggiornamento classifica:', error);
+					showToast('Errore aggiornamento classifica.', 'error');
 				}
-			});
+			}, [getLeaderboardDocPath]);
 			
+			useEffect(() => {
+			  // Inizializzazione dati e caricamento
+			  if (window.db && window.userId && loading) {
+				loadProgress().then(loadedProgress => {
+				  setProgress(loadedProgress);
+				  updateLeaderboard(loadedProgress);
+				  setLoading(false);
+				});
+			  }
+			}, [loadProgress, updateLeaderboard, loading]);
+			
+			// Gestore Click su Giorno
+			const handleDayClick = useCallback((day, title, description) => {
+			  // 1. Mostra il contenuto del giorno nel modale
+			  document.getElementById('modalTitle').textContent = title;
+			  document.getElementById('modalDescription').textContent = description;
+			  const modal = document.getElementById('contentModal');
+			  modal.classList.remove('hidden');
+			  // Forza un reflow per l'animazione
+			  void modal.offsetWidth;
+			  modal.classList.add('show');
+			  
+			  // 2. Marca il giorno come completato
+			  const newProgress = { 
+				...progress, 
+				[day]: { completed: true, timestamp: new Date() }
+			  };
+			  
+			  // 3. Salva il nuovo progresso in Firestore
+			  saveProgress(newProgress);
+			  
+			  showToast(`Hai esplorato la ${title}! Complimenti.`, 'success');
+			}, [progress, saveProgress]);
+			
+			// Renderizza i giorni
+			const adventDays = useMemo(() => ADVENT_DAYS_DATA.map(dayData => {
+			  const isCompleted = progress[dayData.day]?.completed || false;
+			  // Un giorno è disponibile se siamo in Dicembre E il giorno corrente è >= del giorno della casella
+			  const isAvailable = isDecember && currentDay >= dayData.day;
+			  
+			  return (
+				<AdventDay
+				  key={dayData.day}
+				  {...dayData}
+				  isCompleted={isCompleted}
+				  isAvailable={isAvailable}
+				  onDayClick={handleDayClick}
+				/>
+			  );
+			}), [progress, currentDay, isDecember, handleDayClick]);
+			
+			
+			if (loading || !window.userId) {
+			  return (
+				<div className="flex items-center justify-center p-8 bg-surface rounded-xl shadow-lg">
+				  <i className="fas fa-spinner fa-spin text-primary mr-3"></i>
+				  <span className="text-text-primary font-medium">Caricamento progressi...</span>
+				</div>
+			  );
+			}
+			
+			return (
+			  <div className="bg-surface rounded-xl shadow-2xl p-6 md:p-10 w-full">
+				<h1 className="text-3xl font-extrabold text-primary mb-2 text-center">Calendario dell'Avvento Stellare 🎄</h1>
+				<p className="text-center text-text-secondary mb-6">Apri una casella ogni giorno (fino al {currentDay} se siamo in Dicembre)!</p>
+				
+				<div className="flex justify-center space-x-4 mb-8">
+					<button 
+						className="advent-button flex items-center"
+						onClick={window.showLeaderboardModal}
+						disabled={!window.db}
+					>
+						<i className="fas fa-trophy mr-2"></i> Classifica
+					</button>
+					<div className="advent-button bg-gray-400 cursor-default shadow-none">
+						<i className="fas fa-user mr-2"></i> {`ID Utente: ${window.userId ? window.userId.substring(0, 8) + '...' : 'Anonimo'}`}
+					</div>
+				</div>
+				
+				<div className="advent-grid">
+				  {adventDays}
+				</div>
+				
+			  </div>
+			);
+		  };
+		  
+		  // Funzione per caricare e mostrare la classifica
+		  window.showLeaderboardModal = async () => {
+			const modal = document.getElementById('leaderboardModal');
+			const listContainer = document.getElementById('leaderboardList');
+			
+			if (!window.db) {
+				showToast('La classifica richiede una connessione al database.', 'error');
+				return;
+			}
+			
+			listContainer.innerHTML = '<p class="text-gray-400 flex items-center"><i class="fas fa-spinner fa-spin mr-2"></i>Caricamento classifica...</p>';
+			modal.classList.remove('hidden');
+
+			try {
+				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+				const collectionPath = `artifacts/${appId}/public/data/${window.LEADERBOARD_COLLECTION}`;
+				
+				// Query per i primi 10, ordinati per score decrescente
+				const q = query(
+					collection(window.db, collectionPath),
+					// NOTE: L'uso di orderBy è disabilitato come da istruzioni, si ordina lato client.
+					// orderBy('score', 'desc'), 
+					// limit(10)
+				);
+				
+				const querySnapshot = await getDocs(q);
+				
+				let results = [];
+				querySnapshot.forEach((doc) => {
+					results.push(doc.data());
+				});
+				
+				// Ordina i risultati lato client
+				results.sort((a, b) => b.score - a.score);
+				const topResults = results.slice(0, 10);
+				
+				if (topResults.length === 0) {
+					listContainer.innerHTML = '<p class="text-text-secondary">Nessun punteggio ancora registrato.</p>';
+					return;
+				}
+				
+				listContainer.innerHTML = topResults.map((item, index) => {
+					const rank = index + 1;
+					const isUser = item.userId === window.userId;
+					const itemClass = isUser ? 'bg-yellow-100 font-bold rounded-lg px-2' : '';
+					
+					return `
+						<div class="leaderboard-item ${itemClass}">
+							<span class="leaderboard-rank">${rank}</span>
+							<span class="flex-grow ml-3 text-text-primary">${item.username} ${isUser ? '(Tu)' : ''}</span>
+							<span class="leaderboard-score">${item.score}</span>
+						</div>
+					`;
+				}).join('');
+				
+				showToast('Classifica aggiornata.', 'success');
+				
+			} catch (error) {
+			  console.error('❌ Errore caricamento classifica:', error);
+			  showToast('Errore caricamento classifica', 'error');
+			  listContainer.innerHTML = '<p class="text-error">Errore nel caricamento della classifica.</p>';
+			}
+		  };
+		  
+		  // Inizializzazione semplificata
+		  function initializeApp() {
+			console.log('🚀 Inizializzando Calendario dell\'Avvento semplificato...');
+			
+			// Carica progresso dalla memoria se presente
+			/* La logica di caricamento è stata spostata nel componente React
+			const progress = loadProgress();
+			if (Object.keys(progress).length > 0) {
+			  console.log('💾 Progressi trovati in memoria JavaScript:', Object.keys(progress).length, 'giorni');
+			}
+			*/
+		  }
+	  
+		  // Inizializzazione DOM semplificata
+		  document.addEventListener('DOMContentLoaded', function() {
+			console.log('🚀 DOM caricato, avvio calendario semplificato...');
+			
+			initializeApp();
+			
+			// Nascondi elementi non necessari e mostra app
+			const mainApp = document.getElementById('mainApp');
+			if (mainApp) {
+			  mainApp.style.display = 'flex';
+			}
+			
+			// Avvia app React direttamente
+			try {
+			  const container = document.getElementById('app');
+			  if (container) {
+				const root = ReactDOM.createRoot(container);
+				root.render(React.createElement(App));
+				console.log('✅ App calendario inizializzata con successo');
+				
+				setTimeout(() => {
+				  showToast('🎄 Calendario dell\'Avvento caricato! Buon divertimento!', 'success');
+				}, 1000);
+			  }
+			} catch (error) {
+			  console.error('❌ Errore critico nell\'avvio dell\'app React:', error);
+			  showToast('Errore critico nell\'avvio dell\'app.', 'error');
+			}
+		  });
 		</script>
 	</body>
 </html>
