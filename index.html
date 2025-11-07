@@ -571,7 +571,6 @@
 			// NUOVA STRUTTURA: TEST PERIODICI OGNI 5 GIORNI
 			// ========================================
 			
-											 
 			function createTestQuestions(dayRange, constellations) {
 				return constellations.map((constellation, index) => ({
 					dayNumber: dayRange[index],
@@ -582,7 +581,6 @@
 				}));
 			}
 			
-								  
 			const PERIODIC_TESTS = [
 				{
 					testNumber: 1,
@@ -627,79 +625,6 @@
 			// ========================================
 			// Utility functions
 			// ========================================
-											  
-										   
-											  
-   
-								  
-													   
-	
-   
-									  
-													  
-											 
-	
-   
-													 
-												
-														 
-	
-						 
-												 
-													 
-					 
-	  
-	   
-	
-												 
-																  
-	
-			
-						   
-						   
-				  
-																  
-	  
-	
-   
-																   
-							 
-			 
-									
-		
-	
-   
-										  
-																
-	
-							 
-			 
-						  
-		
-	
-							   
-			 
-					   
-		
-	
-										 
-							 
-				 
-				 
-				   
-						   
-							   
-						   
-										   
-	  
-	  
-	
-								 
-													   
-	
-																				 
-	
-   
 			function shuffleArray(array) {
 				const shuffled = [...array]; 
 				for (let i = shuffled.length - 1; i > 0; i--) {
@@ -749,10 +674,10 @@
 			// ========================================
 
 			// ========================================
-			// COMPONENTE REACT: TEST A CROCETTE (FUORI da App)
+			// COMPONENTE REACT: TEST A CROCETTE
 			// ========================================
 			
-			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
+			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, testResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
 				if (!test) return null;
 				
 				const isSubmitted = testSubmitted[testNumber] || false;
@@ -782,7 +707,7 @@
 									React.createElement("p", { style: { marginBottom: "1rem", color: "#ccc", fontSize: "0.9rem" } }, q.constellation.description),
 									React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" } },
 										q.options.map((opt, oi) => 
-											React.createElement("label", { key: oi, style: { display: "flex", alignItems: "center", padding: "0.75rem", backgroundColor: testAnswers[qi] === opt ? "#2d5a6c" : "#222", borderRadius: "0.35rem", cursor: "pointer", transition: "all 0.2s" } },
+											React.createElement("label", { key: oi, style: { display: "flex", alignItems: "center", padding: "0.75rem", backgroundColor: testAnswers[qi] === opt ? "#2d5a6c" : "#222", borderRadius: "0.35rem", cursor: "pointer" } },
 												React.createElement("input", { type: "radio", name: `q${qi}`, value: opt, checked: testAnswers[qi] === opt, onChange: () => handleTestAnswerChange(qi, opt), style: { marginRight: "0.75rem" } }),
 												React.createElement("span", null, opt)
 											)
@@ -815,13 +740,11 @@
 			function App() {
 			
 				const [initialized, setInitialized] = useState(false);
-			// State per i test periodici
 			const [activeTest, setActiveTest] = useState(null);
 			const [testAnswers, setTestAnswers] = useState({});
 			const [testSubmitted, setTestSubmitted] = useState({});
 			const [testResults, setTestResults] = useState({});
 			
-			// Handlers per i test
 			const handleTestAnswerChange = (questionIndex, selectedAnswer) => {
 				setTestAnswers(prev => ({...prev, [questionIndex]: selectedAnswer}));
 			};
@@ -854,10 +777,12 @@
 				console.log(`✅ Test ${testNumber} inviato! Punteggio: ${results.score}/3`);
 			};
 			
-			
 				const today = new Date();
 				const currentDay = today.getDate();
 				const currentMonth = today.getMonth(); // 0-based (dicembre = 11)
+				const currentYear = today.getFullYear();
+			
+				// ========================================
 
 			// ========================================
 			// FUNZIONI PER GESTIRE I TEST PERIODICI
@@ -867,34 +792,6 @@
 				return [5, 10, 15, 20, 25, 30].includes(dayNumber);
 			}
 			
-			function getTestForDay(dayNumber) {
-				const testIndex = Math.floor((dayNumber - 1) / 5);
-				return PERIODIC_TESTS[testIndex] || null;
-			}
-			
-			function calculateTestScore(testAnswers) {
-				const testNumber = this?.testNumber;
-				if (!testNumber) return { correct: 0, total: 0, score: 0 };
-				
-				const test = PERIODIC_TESTS[testNumber - 1];
-				let correctCount = 0;
-				test.questions.forEach((question, index) => {
-					if (testAnswers[index] === question.correctAnswer) correctCount++;
-				});
-				
-				const totalQuestions = test.questions.length;
-				const score = Math.round((correctCount / totalQuestions) * 3);
-				return {
-					correct: correctCount,
-					total: totalQuestions,
-					score: score,
-					percentage: Math.round((correctCount / totalQuestions) * 100)
-				};
-			}
-			
-				const currentYear = today.getFullYear();
-			
-				// ========================================
 				// CONTROLLO GIORNO
 				// ========================================
 				let maxDay;
@@ -1108,53 +1005,6 @@
 	  
 			// Loading screen semplificato
 			if (!initialized) {
-
-											  
-								 
-											  
-															   
-						   
-														   
-											
-																						   
-											   
-				   
-																		  
-																						   
-															
-																									   
-																																								 
-	   
-	 
-																		 
-																						  
-																							
-																																							 
-																																   
-															  
-																																							   
-																																																												  
-																											  
-																																	  
-																										  
-																																																										
-																																																			
-																																
-																						   
-																																									  
-																																	  
-																														  
-		 
-																			 
-									  
-															  
-																																																						  
-																							
-																																																																																																																																																																				 
-																																																						  
-	  
-	
-   
 			  return React.createElement('div', { className: 'text-center py-20' }, 
 				React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
 				React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
@@ -1206,112 +1056,178 @@
 				  id: "calendarGrid",
 				  className: "w-full"
 				},
-				FULL_CONSTELLATIONS.map((c, i) => {
-				  const index = i + 1;
-				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-				  // Controllo se il giorno è bloccato:
-				  // 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
-				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)
+[
+				  ...FULL_CONSTELLATIONS.slice(0, 5).map((c, i) => {
+				    const index = i + 1;
+				    const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				    const dayNotYetAvailable = index > maxDay;
+				    const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				    const locked = dayNotYetAvailable || previousDayNotCompleted;
+				    
+				    function openModal() {
+				      if (!locked) {
+				        setActiveModal(i);
+				        setFeedback("");
+				        if (!shuffledOptions[i]) {
+				          const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
+				          setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
+				        }
+				      }
+				    }
+				    
+				    return React.createElement("div", { key: i, className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`, onClick: openModal, 'data-day': index },
+				      React.createElement("h2", null, `Giorno ${index}`),
+				      React.createElement("div", { className: "day-icon" }, locked ? "🔒" : entry.solved ? "🎆" : "✨"),
+				      React.createElement("div", { className: "day-status" },
+				        locked ? (dayNotYetAvailable ? `Bloccato fino al ${index} dicembre` : `Completa prima il giorno ${index - 1}`)
+				        : entry.solved ? (() => { const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score; const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`; return `Completato! ⭐ ${displayScore}`; })()
+				        : "🔹 Clicca per iniziare!"
+				      )
+				    );
+				  }),
+				  
+				  // TEST 1
+				  React.createElement("div", {
+				    key: "test-1",
+				    className: `calendar-day ${testSubmitted[1] ? 'completed' : PERIODIC_TESTS[0].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`,
+				    onClick: () => PERIODIC_TESTS[0].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(1),
+				    style: { cursor: PERIODIC_TESTS[0].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" }
+				  },
+				    React.createElement("h2", null, "Test 1"),
+				    React.createElement("div", { className: "day-icon" }, testSubmitted[1] ? "🎓" : PERIODIC_TESTS[0].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				    React.createElement("div", { className: "day-status" },
+				      testSubmitted[1] ? (() => { const r = testResults[1]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[0].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 1-5"
+				    )
+				  ),
+				  
+				  // GIORNI 6-10
+				  ...FULL_CONSTELLATIONS.slice(5, 10).map((c, i) => {
+				    const index = i + 6;
+				    const entry = progress[i + 5] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				    const dayNotYetAvailable = index > maxDay;
+				    const previousDayNotCompleted = index > 1 && !(progress[index - 2]?.solved);
+				    const locked = dayNotYetAvailable || previousDayNotCompleted;
+				    
+				    function openModal() {
+				      if (!locked) {
+				        setActiveModal(i + 5);
+				        setFeedback("");
+				        if (!shuffledOptions[i + 5]) {
+				          const mixed = shuffleArray([...FULL_CONSTELLATIONS[i + 5].options]);
+				          setShuffledOptions(prev => ({ ...prev, [i + 5]: mixed }));
+				        }
+				      }
+				    }
+				    
+				    return React.createElement("div", { key: `day-${i + 5}`, className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`, onClick: openModal, 'data-day': index },
+				      React.createElement("h2", null, `Giorno ${index}`),
+				      React.createElement("div", { className: "day-icon" }, locked ? "🔒" : entry.solved ? "🎆" : "✨"),
+				      React.createElement("div", { className: "day-status" },
+				        locked ? (dayNotYetAvailable ? `Bloccato fino al ${index} dicembre` : `Completa prima il giorno ${index - 1}`)
+				        : entry.solved ? (() => { const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score; const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`; return `Completato! ⭐ ${displayScore}`; })()
+				        : "🔹 Clicca per iniziare!"
+				      )
+				    );
+				  }),
+				  
+				  // TEST 2
+				  React.createElement("div", {
+				    key: "test-2",
+				    className: `calendar-day ${testSubmitted[2] ? 'completed' : PERIODIC_TESTS[1].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`,
+				    onClick: () => PERIODIC_TESTS[1].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(2),
+				    style: { cursor: PERIODIC_TESTS[1].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" }
+				  },
+				    React.createElement("h2", null, "Test 2"),
+				    React.createElement("div", { className: "day-icon" }, testSubmitted[2] ? "🎓" : PERIODIC_TESTS[1].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				    React.createElement("div", { className: "day-status" },
+				      testSubmitted[2] ? (() => { const r = testResults[2]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[1].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 6-10"
+				    )
+				  ),
+				].concat([...FULL_CONSTELLATIONS.slice(10, 31)].map((c, i) => {
+				  const index = i + 11;
+				  const entry = progress[i + 10] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
 				  const dayNotYetAvailable = index > maxDay;
-				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				  const previousDayNotCompleted = index > 1 && !(progress[index - 2]?.solved);
 				  const locked = dayNotYetAvailable || previousDayNotCompleted;
 				  
+				  // Aggiungi i test nelle posizioni corrette
+				  const elementsToReturn = [];
 				  
-				  // Debug per ogni giorno
-				  if (i < 10) { // Solo primi 10 giorni per evitare spam
-					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
-				  }
-	  
+				  // Renderizza il giorno
 				  function openModal() {
-					if (!locked) {
-					  setActiveModal(i);
-					  setFeedback("");
-					  
-					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
-					  if (!shuffledOptions[i]) {
-						const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
-						setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
-						console.log(`🎲 Opzioni mescolate per giorno ${i + 1}:`, mixed);
-					  }
-					}
+				    if (!locked) {
+				      setActiveModal(i + 10);
+				      setFeedback("");
+				      if (!shuffledOptions[i + 10]) {
+				        const mixed = shuffleArray([...FULL_CONSTELLATIONS[i + 10].options]);
+				        setShuffledOptions(prev => ({ ...prev, [i + 10]: mixed }));
+				      }
+				    }
 				  }
-	  
-				  return React.createElement(
-					"div",
-					{
-					  key: i,
-					  className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`,
-					  onClick: openModal,
-					  'data-day': index
-					},
-					React.createElement("h2", null, `Giorno ${index}`),
-					React.createElement("div", { className: "day-icon" }, 
-					  locked ? "🔒" : entry.solved ? "🎆" : "✨"
-					),
-					React.createElement("div", { className: "day-status" },
-					  locked 
-						? `Bloccato fino al ${index} dicembre`
-						: entry.solved 
-						  ? (() => {
-							  const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
-							  const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`;
-							  return `Completato! ⭐ ${displayScore}`;
-							})()
-						  : "🔹 Clicca per iniziare!"
-					)
+				  
+				  elementsToReturn.push(
+				    React.createElement("div", { key: `day-${i + 10}`, className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`, onClick: openModal, 'data-day': index },
+				      React.createElement("h2", null, `Giorno ${index}`),
+				      React.createElement("div", { className: "day-icon" }, locked ? "🔒" : entry.solved ? "🎆" : "✨"),
+				      React.createElement("div", { className: "day-status" },
+				        locked ? (dayNotYetAvailable ? `Bloccato fino al ${index} dicembre` : `Completa prima il giorno ${index - 1}`)
+				        : entry.solved ? (() => { const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score; const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`; return `Completato! ⭐ ${displayScore}`; })()
+				        : "🔹 Clicca per iniziare!"
+				      )
+				    )
 				  );
-				})
-			  ),
+				  
+				  // Aggiungi il test dopo il giorno giusto
+				  if (index === 15) {
+				    elementsToReturn.push(
+				      React.createElement("div", { key: "test-3", className: `calendar-day ${testSubmitted[3] ? 'completed' : PERIODIC_TESTS[2].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`, onClick: () => PERIODIC_TESTS[2].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(3), style: { cursor: PERIODIC_TESTS[2].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" } },
+				        React.createElement("h2", null, "Test 3"),
+				        React.createElement("div", { className: "day-icon" }, testSubmitted[3] ? "🎓" : PERIODIC_TESTS[2].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				        React.createElement("div", { className: "day-status" }, testSubmitted[3] ? (() => { const r = testResults[3]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[2].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 11-15")
+				      )
+				    );
+				  } else if (index === 20) {
+				    elementsToReturn.push(
+				      React.createElement("div", { key: "test-4", className: `calendar-day ${testSubmitted[4] ? 'completed' : PERIODIC_TESTS[3].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`, onClick: () => PERIODIC_TESTS[3].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(4), style: { cursor: PERIODIC_TESTS[3].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" } },
+				        React.createElement("h2", null, "Test 4"),
+				        React.createElement("div", { className: "day-icon" }, testSubmitted[4] ? "🎓" : PERIODIC_TESTS[3].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				        React.createElement("div", { className: "day-status" }, testSubmitted[4] ? (() => { const r = testResults[4]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[3].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 16-20")
+				      )
+				    );
+				  } else if (index === 25) {
+				    elementsToReturn.push(
+				      React.createElement("div", { key: "test-5", className: `calendar-day ${testSubmitted[5] ? 'completed' : PERIODIC_TESTS[4].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`, onClick: () => PERIODIC_TESTS[4].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(5), style: { cursor: PERIODIC_TESTS[4].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" } },
+				        React.createElement("h2", null, "Test 5"),
+				        React.createElement("div", { className: "day-icon" }, testSubmitted[5] ? "🎓" : PERIODIC_TESTS[4].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				        React.createElement("div", { className: "day-status" }, testSubmitted[5] ? (() => { const r = testResults[5]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[4].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 21-25")
+				      )
+				    );
+				  } else if (index === 30) {
+				    elementsToReturn.push(
+				      React.createElement("div", { key: "test-6", className: `calendar-day ${testSubmitted[6] ? 'completed' : PERIODIC_TESTS[5].dayRange.every(day => progress[day - 1]?.solved) ? 'available' : 'locked'}`, onClick: () => PERIODIC_TESTS[5].dayRange.every(day => progress[day - 1]?.solved) && setActiveTest(6), style: { cursor: PERIODIC_TESTS[5].dayRange.every(day => progress[day - 1]?.solved) ? "pointer" : "not-allowed" } },
+				        React.createElement("h2", null, "Test 6"),
+				        React.createElement("div", { className: "day-icon" }, testSubmitted[6] ? "🎓" : PERIODIC_TESTS[5].dayRange.every(day => progress[day - 1]?.solved) ? "📝" : "🔒"),
+				        React.createElement("div", { className: "day-status" }, testSubmitted[6] ? (() => { const r = testResults[6]; return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`; })() : PERIODIC_TESTS[5].dayRange.every(day => progress[day - 1]?.solved) ? "🔹 Clicca!" : "Completa giorni 26-30")
+				      )
+				    );
+				  }
+				  
+				  return elementsToReturn;
+			})).flat()
 			  
-
-			  // ========================================
-			  // RENDERING TEST PERIODICI
-			  // ========================================
 			  
-			  // Bottoni per i test
-			  React.createElement("div", { style: { marginTop: "3rem", marginBottom: "2rem" } },
-				React.createElement("h2", { style: { marginBottom: "1.5rem", color: "#fbbf24" } }, "📚 Test Periodici"),
-				React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" } },
-					PERIODIC_TESTS.map((test) => {
-						const testCompleted = testSubmitted[test.testNumber];
-						const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
-						
-						return React.createElement(
-							"div",
-							{
-								key: `test-${test.testNumber}`,
-								className: `calendar-day ${testCompleted ? 'completed' : canDoTest ? 'available' : 'locked'}`,
-								onClick: () => canDoTest && setActiveTest(test.testNumber),
-								style: { cursor: canDoTest ? "pointer" : "not-allowed" }
-							},
-							React.createElement("h2", null, `Test ${test.testNumber}`),
-							React.createElement("div", { className: "day-icon" }, testCompleted ? "🎓" : canDoTest ? "📝" : "🔒"),
-							React.createElement("div", { className: "day-status" },
-								testCompleted
-									? (() => {
-										const r = testResults[test.testNumber];
-										return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`;
-									  })()									: canDoTest									  ? `🔹 Clicca!`									  : `Completa giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`
-							)
-						);
-					})
-				)
-			  ),
-			  
-			  // Modal del test
+			  // Modal per il test
 			  activeTest && React.createElement(TestModalComponent, {
-				  test: PERIODIC_TESTS[activeTest - 1],
-				  testNumber: activeTest,
-				  testAnswers: testAnswers,
-				  setTestAnswers: setTestAnswers,
-				  testSubmitted: testSubmitted,
-				  setTestSubmitted: setTestSubmitted,
-				  testResults: testResults,
-				  setTestResults: setTestResults,
-				  progress: progress,
-				  handleTestAnswerChange: handleTestAnswerChange,
-				  handleTestSubmit: handleTestSubmit,
-				  PERIODIC_TESTS: PERIODIC_TESTS
+				test: PERIODIC_TESTS[activeTest - 1],
+				testNumber: activeTest,
+				testAnswers: testAnswers,
+				setTestAnswers: setTestAnswers,
+				testSubmitted: testSubmitted,
+				testResults: testResults,
+				progress: progress,
+				handleTestAnswerChange: handleTestAnswerChange,
+				handleTestSubmit: handleTestSubmit,
+				PERIODIC_TESTS: PERIODIC_TESTS
 			  }),
 			  
 			  // Modal gioco
