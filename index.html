@@ -571,6 +571,7 @@
 			// NUOVA STRUTTURA: TEST PERIODICI OGNI 5 GIORNI
 			// ========================================
 			
+			
 			function createTestQuestions(dayRange, constellations) {
 				return constellations.map((constellation, index) => ({
 					dayNumber: dayRange[index],
@@ -581,6 +582,7 @@
 				}));
 			}
 			
+		  
 			const PERIODIC_TESTS = [
 				{
 					testNumber: 1,
@@ -625,6 +627,79 @@
 			// ========================================
 			// Utility functions
 			// ========================================
+			 
+			 
+			 
+   
+		  
+				
+ 
+   
+		   
+			   
+			
+ 
+   
+			  
+			
+			   
+ 
+	   
+			 
+			  
+	  
+   
+	
+ 
+			 
+				  
+ 
+   
+		 
+		 
+	  
+				  
+   
+ 
+   
+				   
+		
+	
+		 
+  
+ 
+   
+			
+				
+ 
+		
+	
+		
+  
+ 
+		  
+	
+		
+  
+ 
+		   
+		
+	 
+	 
+	   
+		 
+		  
+		 
+			 
+   
+   
+ 
+		 
+				
+ 
+					 
+ 
+   
 			function shuffleArray(array) {
 				const shuffled = [...array]; 
 				for (let i = shuffled.length - 1; i > 0; i--) {
@@ -740,11 +815,13 @@
 			function App() {
 			
 				const [initialized, setInitialized] = useState(false);
+								
 			const [activeTest, setActiveTest] = useState(null);
 			const [testAnswers, setTestAnswers] = useState({});
 			const [testSubmitted, setTestSubmitted] = useState({});
 			const [testResults, setTestResults] = useState({});
 			
+						 
 			const handleTestAnswerChange = (questionIndex, selectedAnswer) => {
 				setTestAnswers(prev => ({...prev, [questionIndex]: selectedAnswer}));
 			};
@@ -777,6 +854,7 @@
 				console.log(`✅ Test ${testNumber} inviato! Punteggio: ${results.score}/3`);
 			};
 			
+   
 				const today = new Date();
 				const currentDay = today.getDate();
 				const currentMonth = today.getMonth(); // 0-based (dicembre = 11)
@@ -791,7 +869,35 @@
 			function isTestDay(dayNumber) {
 				return [5, 10, 15, 20, 25, 30].includes(dayNumber);
 			}
+   
+									  
+													  
+											 
+	
+   
+											 
+										
+															   
+	
+												
+						 
+												 
+																	   
+	   
+	
+												 
+																  
 			
+						   
+						   
+				  
+																  
+	  
+	
+			
+											
+   
+											   
 				// CONTROLLO GIORNO
 				// ========================================
 				let maxDay;
@@ -1005,6 +1111,53 @@
 	  
 			// Loading screen semplificato
 			if (!initialized) {
+
+			 
+		 
+			 
+				  
+		 
+				 
+		   
+						 
+			  
+	   
+					
+						 
+			   
+							
+										 
+	
+  
+				   
+						
+					   
+										
+								   
+				 
+										  
+															  
+							 
+								   
+							
+														  
+												   
+								
+						 
+										   
+								   
+								
+   
+					
+		   
+				 
+														
+					   
+																																									 
+														
+   
+ 
+   
 			  return React.createElement('div', { className: 'text-center py-20' }, 
 				React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
 				React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
@@ -1154,24 +1307,45 @@
 				  const elementsToReturn = [];
 				  
 				  // Renderizza il giorno
+															
+																							 
+	   
+   
 				  function openModal() {
 				    if (!locked) {
 				      setActiveModal(i + 10);
 				      setFeedback("");
+	   
+																	  
 				      if (!shuffledOptions[i + 10]) {
 				        const mixed = shuffleArray([...FULL_CONSTELLATIONS[i + 10].options]);
 				        setShuffledOptions(prev => ({ ...prev, [i + 10]: mixed }));
+																		
 				      }
 				    }
 				  }
 				  
 				  elementsToReturn.push(
+		   
+	  
+			  
 				    React.createElement("div", { key: `day-${i + 10}`, className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`, onClick: openModal, 'data-day': index },
+						  
+						
+	   
 				      React.createElement("h2", null, `Giorno ${index}`),
 				      React.createElement("div", { className: "day-icon" }, locked ? "🔒" : entry.solved ? "🎆" : "✨"),
+													  
+	   
 				      React.createElement("div", { className: "day-status" },
+			  
 				        locked ? (dayNotYetAvailable ? `Bloccato fino al ${index} dicembre` : `Completa prima il giorno ${index - 1}`)
+					 
+				  
 				        : entry.solved ? (() => { const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score; const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`; return `Completato! ⭐ ${displayScore}`; })()
+																				   
+												  
+		   
 				        : "🔹 Clicca per iniziare!"
 				      )
 				    )
@@ -1215,15 +1389,51 @@
 				  return elementsToReturn;
 			})).flat()
 			  
+
+												
+								
+												
 			  
 			  // Modal per il test
+																					   
+																											  
+																																		
+								   
+														   
+																			  
+	  
+								 
+			 
+		
+									   
+																									  
+																   
+																
+		 
+																  
+																												   
+															  
+					 
+				   
+												 
+																
+																																						   
+		
+		
+	   
+	 
+	   
+	 
+					  
 			  activeTest && React.createElement(TestModalComponent, {
 				test: PERIODIC_TESTS[activeTest - 1],
 				testNumber: activeTest,
 				testAnswers: testAnswers,
 				setTestAnswers: setTestAnswers,
 				testSubmitted: testSubmitted,
+										 
 				testResults: testResults,
+									 
 				progress: progress,
 				handleTestAnswerChange: handleTestAnswerChange,
 				handleTestSubmit: handleTestSubmit,
