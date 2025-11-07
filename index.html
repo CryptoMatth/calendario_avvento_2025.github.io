@@ -18,672 +18,2029 @@
 			--color-gray-200: rgba(245, 245, 245, 1);
 			--color-gray-300: rgba(167, 169, 169, 1);
 			--color-gray-400: rgba(119, 124, 124, 1);
-			--color-slate-500: rgba(98, 108, 108, 1);
-			--color-red-500: rgba(239, 68, 68, 1);
-			--color-green-500: rgba(34, 197, 94, 1);
-			--color-green-600: rgba(22, 163, 74, 1);
-			--color-green-700: rgba(21, 128, 61, 1);
-			--color-orange-500: rgba(249, 115, 22, 1);
-			--color-blue-500: rgba(59, 130, 246, 1);
-			
-			/* Semantic Color Tokens */
-			--color-primary: var(--color-green-600);
-			--color-primary-hover: var(--color-green-700);
-			--color-secondary: var(--color-red-500);
-			--color-background: var(--color-cream-100);
-			--color-surface: var(--color-white);
-			--color-text-primary: var(--color-slate-500);
-			--color-text-secondary: var(--color-gray-400);
-			--color-text-white: var(--color-white);
-			--color-border: var(--color-gray-200);
-			--color-success: var(--color-green-500);
-			--color-error: var(--color-red-500);
-			--color-warning: var(--color-orange-500);
-			
-			/* Tailwind Customization */
-			--tw-ring-color: var(--color-primary);
+			--color-slate-500: rgba(98, 108, 113, 1);
+			--color-brown-600: rgba(94, 82, 64, 1);
+			--color-charcoal-700: rgba(31, 33, 33, 1);
+			--color-charcoal-800: rgba(38, 40, 40, 1);
+			--color-slate-900: rgba(19, 52, 59, 1);
+			--color-teal-300: rgba(50, 184, 198, 1);
+			--color-teal-400: rgba(45, 166, 178, 1);
+			--color-teal-500: rgba(33, 128, 141, 1);
+			--color-teal-600: rgba(29, 116, 128, 1);
+			--color-teal-700: rgba(26, 104, 115, 1);
+			--color-teal-800: rgba(41, 150, 161, 1);
+			--color-red-400: rgba(255, 84, 89, 1);
+			--color-red-500: rgba(192, 21, 47, 1);
+			--color-orange-400: rgba(230, 129, 97, 1);
+			--color-orange-500: rgba(168, 75, 47, 1);
+	  
+			/* Christmas colors */
+			--christmas-red: #8B0000;
+			--christmas-green: #228B22;
+			--christmas-gold: #FFD700;
+			--christmas-silver: #C0C0C0;
+			--winter-blue: #4169E1;
 		  }
 		  
-		  /* Utility Classes for Tailwind */
-		  .bg-primary { background-color: var(--color-primary); }
-		  .hover\:bg-primary-hover:hover { background-color: var(--color-primary-hover); }
-		  .text-primary { color: var(--color-primary); }
-		  .bg-secondary { background-color: var(--color-secondary); }
-		  .bg-background { background-color: var(--color-background); }
-		  .text-text-primary { color: var(--color-text-primary); }
-		  
-		  /* Global Styles */
 		  body {
-			font-family: 'Inter', sans-serif;
-			background-color: var(--color-background);
+			background: linear-gradient(135deg, #000428 0%, #004e92 100%);
 			min-height: 100vh;
+			overflow-x: hidden;
 		  }
-		  
-		  /* Custom Toast Styles */
-		  #toastContainer {
-			position: fixed;
-			top: 1rem;
-			right: 1rem;
-			z-index: 1000;
-			display: flex;
-			flex-direction: column;
-			gap: 0.5rem;
-			max-width: 300px;
-		  }
-		  .toast {
-			padding: 0.75rem 1rem;
-			border-radius: 0.5rem;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-			color: var(--color-text-white);
-			transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-			opacity: 0;
-			transform: translateX(100%);
-		  }
-		  .toast.show {
-			opacity: 1;
-			transform: translateX(0);
-		  }
-		  .toast.success { background-color: var(--color-success); }
-		  .toast.error { background-color: var(--color-error); }
-		  .toast.warning { background-color: var(--color-warning); }
-		  
-		  /* Button styles */
-		  .advent-button {
-			background-color: var(--color-primary);
-			color: var(--color-text-white);
-			padding: 0.75rem 1.5rem;
-			border-radius: 0.75rem;
-			font-weight: 600;
-			transition: background-color 0.2s, transform 0.1s;
-			box-shadow: 0 4px var(--color-green-700);
-		  }
-		  .advent-button:hover {
-			background-color: var(--color-primary-hover);
-		  }
-		  .advent-button:active {
-			transform: translateY(2px);
-			box-shadow: 0 2px var(--color-green-700);
-		  }
-		  .advent-button:disabled {
-			background-color: var(--color-gray-300);
-			box-shadow: none;
-			cursor: not-allowed;
-			transform: none;
-		  }
-		  
-		  /* Grid for days */
-		  .advent-grid {
-			display: grid;
-			grid-template-columns: repeat(4, 1fr);
-			gap: 1rem;
-			padding: 1rem;
-		  }
-		  
-		  @media (min-width: 640px) {
-			.advent-grid {
-			  grid-template-columns: repeat(6, 1fr);
-			}
-		  }
-		  
-		  @media (min-width: 1024px) {
-			.advent-grid {
-			  grid-template-columns: repeat(8, 1fr);
-			}
-		  }
-		  
-		  /* Day Card */
-		  .day-card {
-			background-color: var(--color-surface);
-			border-radius: 1rem;
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-			padding: 1rem;
-			aspect-ratio: 1 / 1;
-			cursor: pointer;
-			transition: transform 0.2s, box-shadow 0.2s;
-			position: relative;
-			overflow: hidden;
-		  }
-		  
-		  .day-card:hover:not(.locked) {
-			transform: scale(1.05);
-			box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-		  }
-		  
-		  .day-card.locked {
-			background-color: var(--color-gray-200);
-			color: var(--color-gray-300);
-			cursor: not-allowed;
-		  }
-		  
-		  .day-card.unlocked {
-			border: 2px solid var(--color-primary);
-		  }
-		  
-		  .day-card.completed {
-			background-color: #f0fdf4; /* A light green for completion */
-			border: 2px solid var(--color-success);
-			color: var(--color-success);
-		  }
-		  
-		  .day-number {
-			font-size: 1.5rem;
-			font-weight: 800;
-			z-index: 10;
-		  }
-		  
-		  /* Overlay for locked state */
-		  .day-card.locked::after {
-			content: '🔒';
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-			font-size: 2.5rem;
-			opacity: 0.5;
-		  }
-		  
-		  /* Constellation Icon Placeholder (Star) */
-		  .constellation-icon {
-			font-size: 2rem;
-			line-height: 1;
-			margin-top: 0.5rem;
-			color: var(--color-primary);
-		  }
-		  .day-card.completed .constellation-icon {
-			color: var(--color-success);
-		  }
-		  .day-card.locked .constellation-icon {
-			color: var(--color-gray-300);
-		  }
-		  
-		  /* Modal Styles */
-		  .modal-overlay {
+		  .overlay {
 			position: fixed;
 			top: 0;
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background-color: rgba(0, 0, 0, 0.7);
+			background: rgba(0,0,0,0.6);
+			z-index: -1;
+		  }
+		  .stars, .snow {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: transparent;
+			overflow: hidden;
+			z-index: -1;
+			pointer-events: none;
+		  }
+		  .star, .flake {
+			position: absolute;
+			border-radius: 50%;
+			opacity: 0.8;
+		  }
+		  .star {
+			width: 2px;
+			height: 2px;
+			background: white;
+			animation: twinkle 2s infinite ease-in-out;
+		  }
+		  @keyframes twinkle {
+			0%, 100% { opacity: 0.2; }
+			50% { opacity: 1; }
+		  }
+		  .flake {
+			width: 6px;
+			height: 6px;
+			background: white;
+			opacity: 0.7;
+			animation: fall linear infinite;
+		  }
+		  @keyframes fall {
+			0% { transform: translateY(-10px); opacity: 0; }
+			20% { opacity: 1; }
+			100% { transform: translateY(100vh); opacity: 0; }
+		  }
+	  
+		  .celebration {
+			animation: glow 1s ease-in-out infinite alternate;
+		  }
+		  @keyframes glow {
+			from { box-shadow: 0 0 10px #fbbf24, 0 0 20px #fbbf24; }
+			to { box-shadow: 0 0 20px #f59e0b, 0 0 30px #f59e0b; }
+		  }
+	  
+		  .full-screen-modal {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: rgba(0, 0, 0, 0.95);
+			color: white;
 			display: flex;
-			align-items: center;
 			justify-content: center;
+			align-items: center;
+			flex-direction: column;
 			z-index: 50;
-			transition: opacity 0.3s;
+			padding: 2rem;
+			overflow-y: auto;
+			animation: fadeIn 0.3s ease-in-out;
+		  }
+		  .close-button {
+			position: absolute;
+			top: 1rem;
+			right: 1rem;
+			font-size: 2rem;
+			cursor: pointer;
+			background: none;
+			border: none;
+			color: white;
+			transition: transform 0.2s ease;
+		  }
+		  .close-button:hover {
+			transform: scale(1.2);
+			color: #f87171;
+		  }
+		  @keyframes fadeIn {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		  }
+		  @keyframes slideUp {
+			from { transform: translateY(20px); opacity: 0; }
+			to { transform: translateY(0); opacity: 1; }
 		  }
 		  .modal-content {
-			background-color: var(--color-surface);
+			animation: slideUp 0.3s ease-in-out;
+			max-width: 700px;
+			width: 100%;
+			background: #1f2937;
 			border-radius: 1rem;
 			padding: 2rem;
-			max-width: 90%;
-			max-height: 90%;
-			overflow-y: auto;
-			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-			transform: scale(0.9);
-			opacity: 0;
-			transition: transform 0.3s, opacity 0.3s;
+			box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 		  }
-		  .modal-overlay.show .modal-content {
-			transform: scale(1);
-			opacity: 1;
+		  .option-button {
+			transition: all 0.2s ease;
 		  }
-		  
-		  /* Leaderboard Styles */
-		  #leaderboardModal .modal-content {
-			max-width: 400px;
+		  .option-button:hover {
+			transform: scale(1.05);
 		  }
-		  .leaderboard-item {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			padding: 0.5rem 0;
-			border-bottom: 1px solid var(--color-border);
-		  }
-		  .leaderboard-item:last-child {
-			border-bottom: none;
-		  }
-		  .leaderboard-rank {
-			font-weight: 700;
-			width: 20px;
+		  .feedback {
+			margin-top: 1rem;
+			font-size: 1.1rem;
+			font-weight: bold;
 			text-align: center;
 		  }
-		  .leaderboard-score {
-			font-weight: 700;
-			color: var(--color-primary);
+		  .feedback.correct { color: #4ade80; }
+		  .feedback.wrong { color: #f87171; }
+		  
+		  .toast {
+			position: fixed;
+			top: 20px;
+			right: 20px;
+			z-index: 1000;
+			background: #1f2937;
+			color: white;
+			padding: 1rem 1.5rem;
+			border-radius: 0.5rem;
+			box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+			animation: slideInRight 0.3s ease-out;
+		  }
+		  @keyframes slideInRight {
+			from { transform: translateX(100%); opacity: 0; }
+			to { transform: translateX(0); opacity: 1; }
 		  }
 		  
-		</style>
 		
-		<!-- Font Awesome for Icons -->
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-		
-		<!-- React Libraries -->
-		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-		
-		<!-- Firebase SDK (Version 11.6.1) -->
-		<script type="module">
-		  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-		  import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-		  import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-		  import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
-
-		  // Global variables
-		  window.db = null;
-		  window.auth = null;
-		  window.storage = null;
-		  window.userId = null;
-		  window.COLLECTION_NAME = 'advent_calendar_progress';
-		  window.LEADERBOARD_COLLECTION = 'advent_leaderboard';
+		  /* Christmas Card Styles */
+		  .christmas-card {
+			background: linear-gradient(135deg, var(--christmas-red) 0%, var(--christmas-green) 100%);
+			border: 2px solid var(--christmas-gold);
+			box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.2);
+			transition: all 0.3s ease;
+		  }
 		  
-		  // Firebase Configuration (Injected by Canvas)
-		  const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-		  const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-		  const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+		  .christmas-card:hover {
+			transform: translateY(-5px) scale(1.02);
+			box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.4);
+		  }
 		  
-		  if (firebaseConfig) {
-			const app = initializeApp(firebaseConfig);
-			window.db = getFirestore(app);
-			window.auth = getAuth(app);
-			// window.storage = getStorage(app); // Storage non necessario per ora
-			
-			// Authentication
-			async function authenticate() {
-			  try {
-				if (initialAuthToken) {
-				  const userCredential = await signInWithCustomToken(window.auth, initialAuthToken);
-				  window.userId = userCredential.user.uid;
-				  console.log('✅ Autenticazione con token personalizzato riuscita. User ID:', window.userId);
-				} else {
-				  const userCredential = await signInAnonymously(window.auth);
-				  window.userId = userCredential.user.uid;
-				  console.log('✅ Autenticazione anonima riuscita. User ID:', window.userId);
-				}
-			  } catch (error) {
-				console.error('❌ Errore durante l\'autenticazione:', error);
-				showToast('Errore di autenticazione critico.', 'error');
-			  }
+		  .christmas-card.completed {
+			background: linear-gradient(135deg, var(--christmas-gold) 0%, #ffa500 100%);
+			animation: sparkle 2s infinite ease-in-out;
+		  }
+		  
+		  @keyframes sparkle {
+			0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.3); }
+			50% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.6); }
+		  }
+		  
+		  /* Header Styles */
+		  .app-header {
+		    position: relative;
+			background: rgba(0, 0, 0, 0.3);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 215, 0, 0.3);
+			border-radius: 1rem;
+			padding: 1.5rem;
+			margin-bottom: 2rem;
+		  }
+		  
+		  /* Pulsante "Rileggi messaggio" in alto a destra */
+			.welcome-reopen-btn {
+			  position: absolute;
+			  top: 0.75rem;
+			  right: 0.75rem;
+			  background: #fbbf24;
+			  color: #111827;
+			  border: none;
+			  border-radius: 0.5rem;
+			  padding: 0.4rem 0.8rem;
+			  font-weight: 600;
+			  cursor: pointer;
+			  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+			  transition: transform 0.15s ease, background 0.15s ease;
+			}
+			.welcome-reopen-btn:hover { transform: scale(1.05); background: #f59e0b; }
+		  
+		  .header-title {
+			color: var(--christmas-gold);
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+			font-family: serif;
+		  }
+		  
+		  /* Calendar Grid Styles */
+		  #calendarGrid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 1rem;
+			padding: 1rem;
+			width: 100%;
+			max-width: 1200px;
+			margin: 0 auto;
+		  }
+		  
+		  .calendar-day {
+			padding: 1.5rem;
+			border-radius: 12px;
+			text-align: center;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			border: 2px solid transparent;
+			min-height: 120px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		  }
+		  
+		  .calendar-day.available {
+			background: linear-gradient(135deg, #4ade80 0%, #22d3ee 100%);
+			color: white;
+			border-color: rgba(255, 255, 255, 0.3);
+			box-shadow: 0 4px 15px rgba(34, 211, 238, 0.3);
+		  }
+		  
+		  .calendar-day.locked {
+			background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+			color: #9ca3af;
+			cursor: not-allowed;
+			opacity: 0.7;
+		  }
+		  
+		  .calendar-day.completed {
+			background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+			color: #1f2937;
+			border-color: #fbbf24;
+			box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+			animation: sparkle 2s infinite ease-in-out;
+		  }
+		  
+		  .calendar-day:hover.available {
+			transform: translateY(-2px) scale(1.02);
+			box-shadow: 0 8px 25px rgba(34, 211, 238, 0.4);
+		  }
+		  
+		  .calendar-day:hover.completed {
+			transform: translateY(-2px) scale(1.02);
+			box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
+		  }
+		  
+		  .calendar-day h2 {
+			font-size: 1.25rem;
+			font-weight: bold;
+			margin-bottom: 0.5rem;
+		  }
+		  
+		  .calendar-day .day-icon {
+			font-size: 2rem;
+			margin-bottom: 0.5rem;
+		  }
+		  
+		  .calendar-day .day-status {
+			font-size: 0.875rem;
+			font-weight: 600;
+		  }
+		  
+		  @media (max-width: 768px) {
+			#calendarGrid {
+			  grid-template-columns: repeat(2, 1fr);
+			  gap: 0.75rem;
+			  padding: 0.75rem;
 			}
 			
-			// Esegui autenticazione all'avvio
-			authenticate();
-		  } else {
-			console.warn('⚠️ Configurazione Firebase non trovata. L\'app funzionerà in modalità offline/simulata.');
+			.calendar-day {
+			  padding: 1rem;
+			  min-height: 100px;
+			}
 		  }
-		</script>
+		  
+		  @media (max-width: 480px) {
+			#calendarGrid {
+			  grid-template-columns: 1fr 1fr;
+			  gap: 0.5rem;
+			  padding: 0.5rem;
+			}
+			
+			.calendar-day {
+			  padding: 0.75rem;
+			  min-height: 80px;
+			}
+			
+			.calendar-day h2 {
+			  font-size: 1rem;
+			}
+			
+			.calendar-day .day-icon {
+			  font-size: 1.5rem;
+			}
+		  }
+		</style>
 	</head>
-	
-	<body>
-		<div id="toastContainer"></div>
-		
-		<div id="mainApp" class="hidden min-h-screen flex flex-col items-center justify-center p-4 bg-background">
-			<div id="app" class="w-full max-w-4xl">
-				<!-- Il contenuto React verrà montato qui -->
-			</div>
-			
-			<!-- Modal per il Contenuto -->
-			<div id="contentModal" class="modal-overlay hidden" onclick="window.closeContentModal()">
-				<div class="modal-content" onclick="event.stopPropagation()">
-					<h2 id="modalTitle" class="text-2xl font-bold mb-4 text-text-primary"></h2>
-					<p id="modalDescription" class="mb-6 text-text-primary"></p>
-					<div class="flex justify-end">
-						<button class="advent-button" onclick="window.closeContentModal()">Chiudi</button>
-					</div>
-				</div>
-			</div>
-			
-			<!-- Modal per la Classifica -->
-			<div id="leaderboardModal" class="modal-overlay hidden" onclick="window.closeLeaderboardModal()">
-				<div class="modal-content" onclick="event.stopPropagation()">
-					<h2 class="text-2xl font-bold mb-4 text-text-primary">🏆 Classifica Costellazioni</h2>
-					<div id="leaderboardList" class="flex flex-col gap-2">
-						<!-- Elementi classifica inseriti qui -->
-						<p class="text-gray-400">Caricamento...</p>
-					</div>
-					<div class="mt-6 flex justify-end">
-						<button class="advent-button" onclick="window.closeLeaderboardModal()">Chiudi</button>
+
+	<body class="text-white min-h-screen flex flex-col items-center p-4 overflow-y-auto relative">
+		<div class="overlay"></div>
+		<div class="stars" id="stars"></div>
+		<div class="snow" id="snow"></div>
+	  
+		<!-- Main App Content -->
+		<div id="mainApp" class="w-full max-w-6xl relative z-10">
+			<!-- ======================================== -->
+			<!-- Header -->
+			<!-- ======================================== -->
+			<div class="app-header">
+				<div class="flex justify-center items-center">
+					<div class="text-center">
+						<h1 class="header-title text-4xl font-extrabold mb-2">🎄 Calendario dell'Avvento - Costellazioni ✨</h1>
+						<h2 id="totalScore" class="text-2xl font-semibold text-white">⭐ Punteggio Totale: 0</h2>
 					</div>
 				</div>
 			</div>
 		</div>
+	  
+		<div id="app" class="w-full max-w-6xl relative z-10"></div>
 		
+		<!-- ======================================== -->
+		<!-- Toast Container -->
+		<!-- ======================================== -->
+		<div id="toast-container"></div> <!-- questa area viene popolata dinamicamente con notifiche che appaiono in alto a destra dello schermo -->
+	  
+		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
 		
-		
-		<script type="text/babel">
-		  // Array di dati simulati per i giorni
-		  const ADVENT_DAYS_DATA = Array.from({ length: 24 }, (_, i) => ({
-			day: i + 1,
-			title: `Costellazione del Giorno ${i + 1}`,
-			description: `Oggi esploriamo la costellazione ${i + 1}. Scopri i suoi miti e le sue stelle principali.`,
-			icon: '⭐', // Placeholder icon
-			isCompleted: false, // Sarà aggiornato dallo stato
-		  }));
+		<script>
+			// Stelle scintillanti
+			const starContainer = document.getElementById('stars');
+			for (let i = 0; i < 150; i++) {
+			const star = document.createElement('div');
+				star.classList.add('star');
+				star.style.top = Math.random() * 100 + '%';
+				star.style.left = Math.random() * 100 + '%';
+				starContainer.appendChild(star);
+			}
+			
+			// Fiocchi di neve
+			const snowContainer = document.getElementById('snow');
+			for (let i = 0; i < 50; i++) {
+				const flake = document.createElement('div');
+				flake.classList.add('flake');
+				flake.style.left = Math.random() * 100 + '%';
+				flake.style.animationDuration = 5 + Math.random() * 5 + 's';
+				flake.style.animationDelay = Math.random() * 5 + 's';
+				snowContainer.appendChild(flake);
+			}
+	  
+			const { useState, useEffect } = React;
+	  
+			// ========================================
+			// SISTEMA SALVATAGGIO CON LOCALSTORAGE
+			// ========================================
+			const STORAGE_KEY = 'calendarioAvventoProgress';
 		  
-		  // Stato Globale e Funzioni di Interazione
-		  
-		  // Funzione per mostrare un toast (la definiamo fuori da React)
-		  window.showToast = (message, type = 'info') => {
-			const container = document.getElementById('toastContainer');
-			if (!container) return;
-
-			const toast = document.createElement('div');
-			toast.className = `toast ${type}`;
-			toast.textContent = message;
-			
-			container.prepend(toast);
-			
-			// Forza il reflow per l'animazione
-			void toast.offsetWidth; 
-			toast.classList.add('show');
-			
-			setTimeout(() => {
-			  toast.classList.remove('show');
-			  toast.addEventListener('transitionend', () => toast.remove());
-			}, 3000);
-		  };
-		  
-		  // Funzione per chiudere i modali (usate globalmente)
-		  window.closeContentModal = () => {
-			document.getElementById('contentModal').classList.add('hidden');
-			document.getElementById('contentModal').classList.remove('show');
-		  };
-		  
-		  window.closeLeaderboardModal = () => {
-			document.getElementById('leaderboardModal').classList.add('hidden');
-		  };
-		  
-		  // --- Componenti React ---
-		  
-		  const { useState, useEffect, useCallback, useMemo } = React;
-		  
-		  // Componente per il singolo giorno
-		  function AdventDay({ day, title, description, icon, isCompleted, isAvailable, onDayClick }) {
-			const className = `day-card ${isCompleted ? 'completed' : isAvailable ? 'unlocked' : 'locked'} transition-all`;
-			
-			const handleClick = () => {
-			  if (isAvailable) {
-				onDayClick(day, title, description);
-			  } else {
-				showToast('Questo giorno non è ancora disponibile!', 'warning');
-			  }
-			};
-
-			return (
-			  <div className={className} onClick={handleClick}>
-				<div className="day-number">{day}</div>
-				{isCompleted && <div className="constellation-icon">{icon}</div>}
-				{!isCompleted && isAvailable && <div className="constellation-icon">⭐</div>}
-			  </div>
-			);
-		  }
-		  
-		  // Componente principale dell'App
-		  const App = () => {
-			const [progress, setProgress] = useState({});
-			const [loading, setLoading] = useState(true);
-			const currentDay = useMemo(() => new Date().getDate(), []);
-			// Simula il mese di dicembre per l'avvento
-			const isDecember = useMemo(() => new Date().getMonth() === 11, []);
-			
-			// Riferimenti ai percorsi Firestore
-			const getDayDocPath = useCallback((day) => {
-				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-				const collectionPath = `artifacts/${appId}/users/${window.userId}/${window.COLLECTION_NAME}`;
-				return doc(window.db, collectionPath, `day_${day}`);
-			}, []);
-			
-			const getLeaderboardDocPath = useCallback(() => {
-				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-				const collectionPath = `artifacts/${appId}/public/data/${window.LEADERBOARD_COLLECTION}`;
-				return doc(window.db, collectionPath, window.userId); // Documento specifico per l'utente nella classifica pubblica
-			}, []);
-			
-			const saveProgress = useCallback(async (newProgress) => {
-			  if (!window.db || !window.userId) {
-				console.warn('⚠️ Firebase non pronto, salvataggio non eseguito.');
-				return;
-			  }
-			  
-			  try {
-				// Salvataggio del progresso giorno per giorno
-				for (const day in newProgress) {
-					const dayDocRef = getDayDocPath(day);
-					await setDoc(dayDocRef, { 
-						completed: newProgress[day].completed, 
-						timestamp: new Date() 
-					}, { merge: true });
-				}
-				
-				setProgress(newProgress);
-				console.log('✅ Progresso salvato con successo per', Object.keys(newProgress).length, 'giorni.');
-				
-				// Aggiornamento classifica dopo salvataggio
-				await updateLeaderboard(newProgress);
-				
-			  } catch (error) {
-				console.error('❌ Errore durante il salvataggio del progresso:', error);
-				showToast('Errore salvataggio progresso.', 'error');
-			  }
-			}, [getDayDocPath]);
-			
-			const loadProgress = useCallback(async () => {
-			  if (!window.db || !window.userId) {
-				console.warn('⚠️ Firebase non pronto, caricamento non eseguito.');
-				return {};
-			  }
-			  
-			  try {
-				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-				const collectionPath = `artifacts/${appId}/users/${window.userId}/${window.COLLECTION_NAME}`;
-				const q = collection(window.db, collectionPath);
-				const querySnapshot = await getDocs(q);
-				
-				const loadedProgress = {};
-				querySnapshot.forEach((doc) => {
-					const dayNumber = parseInt(doc.id.replace('day_', ''), 10);
-					loadedProgress[dayNumber] = doc.data();
-				});
-				
-				console.log('✅ Progresso caricato:', Object.keys(loadedProgress).length, 'giorni.');
-				return loadedProgress;
-				
-			  } catch (error) {
-				console.error('❌ Errore durante il caricamento del progresso:', error);
-				showToast('Errore caricamento progresso.', 'error');
-				return {};
-			  }
-			}, []);
-			
-			const updateLeaderboard = useCallback(async (currentProgress) => {
-				if (!window.db || !window.userId) return;
-				
+			function loadProgressFromStorage() {
 				try {
-					const score = Object.values(currentProgress).filter(p => p.completed).length;
-					const leaderboardDocRef = getLeaderboardDocPath();
-					
-					// Nome utente simulato/anonimo per la classifica (usa una parte dell'ID)
-					const username = `Explorer-${window.userId.substring(0, 6)}`;
-					
-					await setDoc(leaderboardDocRef, {
-						userId: window.userId,
-						username: username,
-						score: score,
-						lastUpdated: new Date()
-					}, { merge: true });
-					
-					console.log('✅ Classifica aggiornata. Punteggio:', score);
+					const savedData = localStorage.getItem(STORAGE_KEY);
+					if (savedData) {
+						const loadedData = JSON.parse(savedData);
+						console.log('✅ Progressi caricati da localStorage:', loadedData);
+						return loadedData;
+					}
 				} catch (error) {
-					console.error('❌ Errore aggiornamento classifica:', error);
-					showToast('Errore aggiornamento classifica.', 'error');
+					console.error('❌ Errore nel caricamento da localStorage:', error);
 				}
-			}, [getLeaderboardDocPath]);
-			
-			useEffect(() => {
-			  // Inizializzazione dati e caricamento
-			  if (window.db && window.userId && loading) {
-				loadProgress().then(loadedProgress => {
-				  setProgress(loadedProgress);
-				  updateLeaderboard(loadedProgress);
-				  setLoading(false);
-				});
-			  }
-			}, [loadProgress, updateLeaderboard, loading]);
-			
-			// Gestore Click su Giorno
-			const handleDayClick = useCallback((day, title, description) => {
-			  // 1. Mostra il contenuto del giorno nel modale
-			  document.getElementById('modalTitle').textContent = title;
-			  document.getElementById('modalDescription').textContent = description;
-			  const modal = document.getElementById('contentModal');
-			  modal.classList.remove('hidden');
-			  // Forza un reflow per l'animazione
-			  void modal.offsetWidth;
-			  modal.classList.add('show');
-			  
-			  // 2. Marca il giorno come completato
-			  const newProgress = { 
-				...progress, 
-				[day]: { completed: true, timestamp: new Date() }
-			  };
-			  
-			  // 3. Salva il nuovo progresso in Firestore
-			  saveProgress(newProgress);
-			  
-			  showToast(`Hai esplorato la ${title}! Complimenti.`, 'success');
-			}, [progress, saveProgress]);
-			
-			// Renderizza i giorni
-			const adventDays = useMemo(() => ADVENT_DAYS_DATA.map(dayData => {
-			  const isCompleted = progress[dayData.day]?.completed || false;
-			  // Un giorno è disponibile se siamo in Dicembre E il giorno corrente è >= del giorno della casella
-			  const isAvailable = isDecember && currentDay >= dayData.day;
-			  
-			  return (
-				<AdventDay
-				  key={dayData.day}
-				  {...dayData}
-				  isCompleted={isCompleted}
-				  isAvailable={isAvailable}
-				  onDayClick={handleDayClick}
-				/>
-			  );
-			}), [progress, currentDay, isDecember, handleDayClick]);
-			
-			
-			if (loading || !window.userId) {
-			  return (
-				<div className="flex items-center justify-center p-8 bg-surface rounded-xl shadow-lg">
-				  <i className="fas fa-spinner fa-spin text-primary mr-3"></i>
-				  <span className="text-text-primary font-medium">Caricamento progressi...</span>
-				</div>
-			  );
+				return {};
 			}
-			
-			return (
-			  <div className="bg-surface rounded-xl shadow-2xl p-6 md:p-10 w-full">
-				<h1 className="text-3xl font-extrabold text-primary mb-2 text-center">Calendario dell'Avvento Stellare 🎄</h1>
-				<p className="text-center text-text-secondary mb-6">Apri una casella ogni giorno (fino al {currentDay} se siamo in Dicembre)!</p>
-				
-				<div className="flex justify-center space-x-4 mb-8">
-					<button 
-						className="advent-button flex items-center"
-						onClick={window.showLeaderboardModal}
-						disabled={!window.db}
-					>
-						<i className="fas fa-trophy mr-2"></i> Classifica
-					</button>
-					<div className="advent-button bg-gray-400 cursor-default shadow-none">
-						<i className="fas fa-user mr-2"></i> {`ID Utente: ${window.userId ? window.userId.substring(0, 8) + '...' : 'Anonimo'}`}
-					</div>
-				</div>
-				
-				<div className="advent-grid">
-				  {adventDays}
-				</div>
-				
-			  </div>
-			);
-		  };
 		  
-		  // Funzione per caricare e mostrare la classifica
-		  window.showLeaderboardModal = async () => {
-			const modal = document.getElementById('leaderboardModal');
-			const listContainer = document.getElementById('leaderboardList');
+			function saveProgressToStorage() {
+				try {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(gameProgress));
+					console.log('💾 Progressi salvati in localStorage:', gameProgress);
+				} catch (error) {
+					console.error('❌ Errore nel salvataggio in localStorage:', error);
+				}
+			}
+	
+			let gameProgress = loadProgressFromStorage(); // Carica dati salvati
+	  
+			let totalGameScore = 0; // Punteggio totale in memoria
 			
-			if (!window.db) {
-				showToast('La classifica richiede una connessione al database.', 'error');
-				return;
+	  
+			// ========================================
+			// SALVATAGGIO SEMPLIFICATO - MEMORIA JAVASCRIPT
+			// ========================================
+			function saveProgress(dayIndex, finalScore, attempts, hintsUsed) {
+				gameProgress[dayIndex] = {
+					solved: true,
+					finalScore: finalScore,
+					attempts: attempts,
+					hintsUsed: hintsUsed,
+					completedAt: new Date().toISOString()
+				};
+				console.log(`💾 Progresso salvato giorno ${dayIndex + 1}:`, gameProgress[dayIndex]);
+				saveProgressToStorage();
+			}
+	  
+			function loadProgress() {
+				return { ...gameProgress }; // Copia dell'oggetto in memoria
+			}
+	  
+			function getTotalScore() {
+				return Object.values(gameProgress).reduce((sum, day) => sum + (day.finalScore || 0), 0);
+			}
+	  
+			function saveDayProgress(dayIndex, dayData) {
+				gameProgress[dayIndex] = dayData;
+				console.log(`💾 Dati giorno ${dayIndex + 1} aggiornati:`, dayData);
+				saveProgressToStorage();
+			}
+	  
+	  
+			// ========================================
+			// Dati delle costellazioni con informazioni dettagliate (aggiornati con dati reali)
+			// ========================================
+			const CONSTELLATIONS = [
+				{
+					name: "Orsa Minore",
+					image: "foto/Orsa_Minore.jpg",
+					options: ["Orsa Minore", "Orsa Maggiore", "Cassiopea", "Andromeda"],
+					description: "Visibile tra maggio e giugno, contiene la stella polare. Comunemente definita Piccolo Carro, contiene la stella Kochab (l'antica stella polare). Secondo la mitologia, le due Orse salvarono Zeus dall'ira del padre Crono.",
+					hints: [
+						"Questo animale ha salvato Zeus dall'ira del padre Crono",
+						"Kochab era l'antica stella polare",
+						"È conosciuta come Piccolo Carro",
+					]
+				},
+				{
+					name: "Cassiopea",
+					options: ["Cassiopea", "Andromeda", "Perseo", "Cigno"],
+					description: "Riconoscibile per la sua forma a 'W' o 'M', è una costellazione circumpolare facilmente visibile tutto l'anno.",
+					hints: [
+						"Ha la forma di una 'W' o di una 'M'",
+						"È circumpolare, sempre visibile alle nostre latitudini",
+						"Prende il nome da una regina della mitologia greca"
+					]
+				},
+				{
+					name: "Orione",
+					options: ["Orione", "Scorpione", "Leone", "Sagittario"],
+					description: "La costellazione del cacciatore, una delle più spettacolari del cielo invernale, con la famosa Nebulosa di Orione.",
+					hints: [
+						"È la costellazione del cacciatore nella mitologia",
+						"Contiene la famosa cintura di tre stelle",
+						"È visibile principalmente in inverno"
+					]
+				},
+				{
+					name: "Andromeda",
+					options: ["Andromeda", "Cassiopea", "Perseo", "Pegaso"],
+					description: "Costellazione che contiene la famosa Galassia di Andromeda, visibile a occhio nudo in cieli bui.",
+					hints: [
+						"Contiene la galassia più vicina alla Via Lattea",
+						"È collegata al mito di Perseo e della principessa",
+						"La sua galassia è visibile a occhio nudo"
+					]
+				},
+				{
+					name: "Perseo",
+					options: ["Perseo", "Andromeda", "Cassiopea", "Auriga"],
+					description: "Costellazione che rappresenta l'eroe della mitologia greca che salvò Andromeda.",
+					hints: [
+						"È l'eroe che salvò Andromeda nella mitologia",
+						"Contiene l'ammasso stellare delle Pleiadi nelle vicinanze",
+						"È visibile in autunno e inverno"
+					]
+				},
+				{
+					name: "Cigno",
+					options: ["Cigno", "Aquila", "Lira", "Drago"],
+					description: "Una grande costellazione estiva, facilmente riconoscibile per la sua forma a croce.",
+					hints: [
+						"Ha la forma di una grande croce nel cielo",
+						"È una delle costellazioni più grandi",
+						"Contiene la stella Deneb, una delle più luminose"
+					]
+				},
+				{
+					name: "Aquila",
+					options: ["Aquila", "Cigno", "Lira", "Freccia"],
+					description: "Costellazione che rappresenta l'aquila di Zeus nella mitologia greca.",
+					hints: [
+						"Rappresenta l'aquila di Zeus",
+						"Contiene la stella brillante Altair",
+						"È parte del triangolo estivo"
+					]
+				},
+				{
+					name: "Lira",
+					options: ["Lira", "Cigno", "Aquila", "Ercole"],
+					description: "Piccola costellazione che contiene Vega, una delle stelle più brillanti del cielo.",
+					hints: [
+						"Contiene Vega, stella molto brillante",
+						"Rappresenta lo strumento musicale di Orfeo",
+						"È piccola ma molto riconoscibile"
+					]
+				},
+				{
+					name: "Drago",
+					options: ["Drago", "Orsa Minore", "Cefeo", "Giraffa"],
+					description: "Una grande costellazione circumpolare che si avvolge attorno al polo nord celeste.",
+					hints: [
+						"Si avvolge attorno al polo nord celeste",
+						"È una costellazione molto estesa",
+						"È sempre visibile alle nostre latitudini"
+					]
+				},
+				{
+					name: "Boote",
+					options: ["Boote", "Vergine", "Corona Boreale", "Ercole"],
+					description: "Costellazione primaverile che contiene Arturo, una delle stelle più brillanti.",
+					hints: [
+						"Contiene Arturo, stella molto brillante",
+						"È chiamato anche il Pastore",
+						"È ben visibile in primavera"
+					]
+				}
+			];
+		  
+			// Generiamo 31 costellazioni utilizzando quelle base: DA MODIFICARE
+			const FULL_CONSTELLATIONS = Array.from({ length: 31 }, (_, i) => {
+				const base = CONSTELLATIONS[i % CONSTELLATIONS.length];
+				return {
+				...base,
+				name: i < CONSTELLATIONS.length ? base.name : `${base.name} ${Math.floor(i / CONSTELLATIONS.length) + 1}`,
+				description: i < CONSTELLATIONS.length ? base.description : `${base.description} (Variazione ${Math.floor(i / CONSTELLATIONS.length) + 1})`
+				};
+			});
+
+			// ========================================
+			// NUOVA STRUTTURA: TEST PERIODICI OGNI 5 GIORNI
+			// ========================================
+			
+											 
+			function createTestQuestions(dayRange, constellations) {
+				return constellations.map((constellation, index) => ({
+					dayNumber: dayRange[index],
+					constellation: constellation,
+					name: constellation.name,
+					options: constellation.options,
+					correctAnswer: constellation.name
+				}));
 			}
 			
-			listContainer.innerHTML = '<p class="text-gray-400 flex items-center"><i class="fas fa-spinner fa-spin mr-2"></i>Caricamento classifica...</p>';
-			modal.classList.remove('hidden');
+								  
+			const PERIODIC_TESTS = [
+				{
+					testNumber: 1,
+					dayRange: [1, 2, 3, 4, 5],
+					daysBetween: "Tra il 5 e il 6 dicembre",
+					questions: createTestQuestions([1, 2, 3, 4, 5], FULL_CONSTELLATIONS.slice(0, 5))
+				},
+				{
+					testNumber: 2,
+					dayRange: [6, 7, 8, 9, 10],
+					daysBetween: "Tra il 10 e l'11 dicembre",
+					questions: createTestQuestions([6, 7, 8, 9, 10], FULL_CONSTELLATIONS.slice(5, 10))
+				},
+				{
+					testNumber: 3,
+					dayRange: [11, 12, 13, 14, 15],
+					daysBetween: "Tra il 15 e il 16 dicembre",
+					questions: createTestQuestions([11, 12, 13, 14, 15], FULL_CONSTELLATIONS.slice(10, 15))
+				},
+				{
+					testNumber: 4,
+					dayRange: [16, 17, 18, 19, 20],
+					daysBetween: "Tra il 20 e il 21 dicembre",
+					questions: createTestQuestions([16, 17, 18, 19, 20], FULL_CONSTELLATIONS.slice(15, 20))
+				},
+				{
+					testNumber: 5,
+					dayRange: [21, 22, 23, 24, 25],
+					daysBetween: "Tra il 25 e il 26 dicembre",
+					questions: createTestQuestions([21, 22, 23, 24, 25], FULL_CONSTELLATIONS.slice(20, 25))
+				},
+				{
+					testNumber: 6,
+					dayRange: [26, 27, 28, 29, 30],
+					daysBetween: "Tra il 30 e il 31 dicembre",
+					questions: createTestQuestions([26, 27, 28, 29, 30], FULL_CONSTELLATIONS.slice(25, 30))
+				}
+			];
 
-			try {
-				const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-				const collectionPath = `artifacts/${appId}/public/data/${window.LEADERBOARD_COLLECTION}`;
+	  
+	  
+			// ========================================
+			// Utility functions
+			// ========================================
+											  
+										   
+											  
+   
+								  
+													   
+	
+   
+									  
+													  
+											 
+	
+   
+													 
+												
+														 
+	
+						 
+												 
+													 
+					 
+	  
+	   
+	
+												 
+																  
+	
+			
+						   
+						   
+				  
+																  
+	  
+	
+   
+																   
+							 
+			 
+									
+		
+	
+   
+										  
+																
+	
+							 
+			 
+						  
+		
+	
+							   
+			 
+					   
+		
+	
+										 
+							 
+				 
+				 
+				   
+						   
+							   
+						   
+										   
+	  
+	  
+	
+								 
+													   
+	
+																				 
+	
+   
+			function shuffleArray(array) {
+				const shuffled = [...array]; 
+				for (let i = shuffled.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+				}
+				return shuffled;
+			}
+	  
+			function generateBackupCode(data) {
+				const jsonString = JSON.stringify(data);
+				return btoa(encodeURIComponent(jsonString));
+			}
+	  
+			function parseBackupCode(code) {
+				try {
+					const jsonString = decodeURIComponent(atob(code));
+					return JSON.parse(jsonString);
+				} catch (error) {
+					throw new Error('Codice di backup non valido');
+				}
+			}
+	  
+			function showToast(message, type = 'info') {
+				/*
+				const container = document.getElementById('toast-container');
+				const toast = document.createElement('div');
+				toast.className = 'toast';
+				const colors = {
+					success: '#4ade80',
+					error: '#f87171',
+					warning: '#facc15',
+					info: '#60a5fa'
+				};
+				toast.style.borderLeft = `4px solid ${colors[type]}`;
+				toast.textContent = message;
+				container.appendChild(toast);
+				setTimeout(() => {
+					toast.remove();
+				}, 3000);
+				*/
+			}
+	  
+			
+			// ========================================
+			// App semplificata - inizializzazione diretta
+			// ========================================
+
+			// ========================================
+			// COMPONENTE REACT: TEST A CROCETTE (FUORI da App)
+			// ========================================
+			
+			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
+				if (!test) return null;
 				
-				// Query per i primi 10, ordinati per score decrescente
-				const q = query(
-					collection(window.db, collectionPath),
-					// NOTE: L'uso di orderBy è disabilitato come da istruzioni, si ordina lato client.
-					// orderBy('score', 'desc'), 
-					// limit(10)
+				const isSubmitted = testSubmitted[testNumber] || false;
+				const results = testResults[testNumber];
+				const allPreviousDaysCompleted = test.dayRange.every(day => progress[day - 1]?.solved);
+				const isLocked = !allPreviousDaysCompleted;
+				
+				if (isLocked) {
+					return React.createElement("div", { className: "full-screen-modal" },
+						React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+						React.createElement("h1", null, `Test ${testNumber}`),
+						React.createElement("p", { style: { fontSize: "1.2rem", marginTop: "2rem", color: "#f87171" } }, "🔒 Questo test è bloccato!"),
+						React.createElement("p", { style: { marginTop: "1rem", color: "#ccc" } }, `Devi completare prima i giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`)
+					);
+				}
+				
+				return React.createElement("div", { className: "full-screen-modal" },
+					React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+					React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
+					React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
+					React.createElement("div", { className: "modal-content", style: { maxWidth: "800px", maxHeight: "70vh", overflowY: "auto" } },
+						!isSubmitted ? React.createElement(React.Fragment, null,
+							React.createElement("p", { style: { marginBottom: "2rem", color: "#4ade80" } }, `${Object.keys(testAnswers).length}/${test.questions.length} risposte`),
+							test.questions.map((q, qi) => 
+								React.createElement("div", { key: qi, style: { marginBottom: "2rem", padding: "1.5rem", backgroundColor: "#111", borderRadius: "0.5rem", borderLeft: `4px solid ${testAnswers[qi] ? "#4ade80" : "#666"}` } },
+									React.createElement("h3", { style: { marginBottom: "1rem", color: "#fff" } }, `${qi + 1}. ${q.name}?`),
+									React.createElement("p", { style: { marginBottom: "1rem", color: "#ccc", fontSize: "0.9rem" } }, q.constellation.description),
+									React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" } },
+										q.options.map((opt, oi) => 
+											React.createElement("label", { key: oi, style: { display: "flex", alignItems: "center", padding: "0.75rem", backgroundColor: testAnswers[qi] === opt ? "#2d5a6c" : "#222", borderRadius: "0.35rem", cursor: "pointer", transition: "all 0.2s" } },
+												React.createElement("input", { type: "radio", name: `q${qi}`, value: opt, checked: testAnswers[qi] === opt, onChange: () => handleTestAnswerChange(qi, opt), style: { marginRight: "0.75rem" } }),
+												React.createElement("span", null, opt)
+											)
+										)
+									)
+								)
+							)
+						) : React.createElement(React.Fragment, null,
+							React.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } },
+								React.createElement("h2", { style: { fontSize: "2rem", marginBottom: "1rem" } }, results.percentage >= 80 ? "🎉 Ottimo!" : results.percentage >= 60 ? "👍 Bene!" : "💪 Continua!"),
+								React.createElement("p", { style: { fontSize: "1.8rem", color: "#4ade80", marginBottom: "0.5rem" } }, `${results.correct}/${results.total} corrette`),
+								React.createElement("p", { style: { fontSize: "1.2rem", color: "#fbbf24" } }, `Punteggio: ${results.score}/3 ⭐`)
+							),
+							React.createElement("h3", { style: { marginTop: "2rem", marginBottom: "1rem" } }, "Review"),
+							test.questions.map((q, qi) => {
+								const isCorrect = testAnswers[qi] === q.correctAnswer;
+								return React.createElement("div", { key: qi, style: { marginBottom: "1rem", padding: "1rem", backgroundColor: isCorrect ? "#1a3a1a" : "#3a1a1a", borderLeft: `4px solid ${isCorrect ? "#4ade80" : "#f87171"}`, borderRadius: "0.35rem" } },
+									React.createElement("p", { style: { marginBottom: "0.5rem" } }, (isCorrect ? "✅" : "❌") + ` Domanda ${qi + 1}`),
+									React.createElement("p", { style: { color: "#ccc", marginBottom: "0.5rem" } }, `La tua: ${testAnswers[qi]}`),
+									!isCorrect && React.createElement("p", { style: { color: "#4ade80" } }, `Corretta: ${q.correctAnswer}`)
+								);
+							})
+						),
+						!isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(testNumber), disabled: Object.keys(testAnswers).length < test.questions.length, style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: Object.keys(testAnswers).length < test.questions.length ? "#666" : "#4ade80", color: "#000", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", fontWeight: "bold", cursor: "pointer" } }, "Invia Risposte"),
+						isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(null), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
+					)
 				);
-				
-				const querySnapshot = await getDocs(q);
-				
-				let results = [];
-				querySnapshot.forEach((doc) => {
-					results.push(doc.data());
-				});
-				
-				// Ordina i risultati lato client
-				results.sort((a, b) => b.score - a.score);
-				const topResults = results.slice(0, 10);
-				
-				if (topResults.length === 0) {
-					listContainer.innerHTML = '<p class="text-text-secondary">Nessun punteggio ancora registrato.</p>';
+			}
+			
+			function App() {
+			
+				const [initialized, setInitialized] = useState(false);
+			// State per i test periodici
+			const [activeTest, setActiveTest] = useState(null);
+			const [testAnswers, setTestAnswers] = useState({});
+			const [testSubmitted, setTestSubmitted] = useState({});
+			const [testResults, setTestResults] = useState({});
+			
+			// Handlers per i test
+			const handleTestAnswerChange = (questionIndex, selectedAnswer) => {
+				setTestAnswers(prev => ({...prev, [questionIndex]: selectedAnswer}));
+			};
+			
+			const handleTestSubmit = (testNumber) => {
+				if (testNumber === null) {
+					setActiveTest(null);
+					setTestAnswers({});
 					return;
 				}
 				
-				listContainer.innerHTML = topResults.map((item, index) => {
-					const rank = index + 1;
-					const isUser = item.userId === window.userId;
-					const itemClass = isUser ? 'bg-yellow-100 font-bold rounded-lg px-2' : '';
+				const test = PERIODIC_TESTS[testNumber - 1];
+				let correctCount = 0;
+				test.questions.forEach((question, index) => {
+					if (testAnswers[index] === question.correctAnswer) correctCount++;
+				});
+				
+				const totalQuestions = test.questions.length;
+				const score = Math.round((correctCount / totalQuestions) * 3);
+				const results = { correct: correctCount, total: totalQuestions, score: score, percentage: Math.round((correctCount / totalQuestions) * 100) };
+				
+				setTestResults(prev => ({...prev, [testNumber]: results}));
+				setTestSubmitted(prev => ({...prev, [testNumber]: true}));
+				
+				const testKey = `test_${testNumber}`;
+				const updatedProgress = {...progress, [testKey]: { solved: true, score: results.score, correct: results.correct, total: results.total, completedAt: new Date().toISOString() }};
+				setProgress(updatedProgress);
+				saveDayProgress(testKey, updatedProgress[testKey]);
+				
+				console.log(`✅ Test ${testNumber} inviato! Punteggio: ${results.score}/3`);
+			};
+			
+			
+				const today = new Date();
+				const currentDay = today.getDate();
+				const currentMonth = today.getMonth(); // 0-based (dicembre = 11)
+											
+   
+											   
+
+			// ========================================
+			// FUNZIONI PER GESTIRE I TEST PERIODICI
+			// ========================================
+			
+			function isTestDay(dayNumber) {
+				return [5, 10, 15, 20, 25, 30].includes(dayNumber);
+			}
+			
+			function getTestForDay(dayNumber) {
+				const testIndex = Math.floor((dayNumber - 1) / 5);
+				return PERIODIC_TESTS[testIndex] || null;
+			}
+			
+			function calculateTestScore(testAnswers) {
+				const testNumber = this?.testNumber;
+				if (!testNumber) return { correct: 0, total: 0, score: 0 };
+				
+				const test = PERIODIC_TESTS[testNumber - 1];
+				let correctCount = 0;
+				test.questions.forEach((question, index) => {
+					if (testAnswers[index] === question.correctAnswer) correctCount++;
+				});
+				
+				const totalQuestions = test.questions.length;
+				const score = Math.round((correctCount / totalQuestions) * 3);
+				return {
+					correct: correctCount,
+					total: totalQuestions,
+					score: score,
+					percentage: Math.round((correctCount / totalQuestions) * 100)
+				};
+			}
+			
+				const currentYear = today.getFullYear();
+			
+				// ========================================
+				// CONTROLLO GIORNO
+				// ========================================
+				let maxDay;
+				console.log("📅 Data corrente:", today);
+				console.log("📅 Mese corrente:", currentMonth, "(0=gen, 9=ott, 11=dic)");
+				console.log("📅 Giorno corrente:", currentDay);
+				if (currentMonth === 11 && currentYear === 2025) {
+					// Se siamo a dicembre 2025, sblocca fino al giorno corrente
+					maxDay = currentDay;
+					console.log("🗓️ Modalità dicembre: giorni sbloccati fino al", maxDay);
+				} else if (currentMonth < 11 || currentYear < 2025) { //DA MODIFICARE
+					// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 6 giorni per TESTING
+					maxDay = 10; // FISSO per testing
+					console.log("🧪 Modalità testing PRE-dicembre: giorni sbloccati:", maxDay);
+				} else {
+					// Se siamo DOPO dicembre, sblocca tutto
+					maxDay = 31;
+					console.log("🎉 Modalità post-dicembre: tutti i giorni sbloccati");
+				}
+				console.log("✅ Giorni max disponibili:", maxDay);
+			
+			// FALLBACK DI EMERGENZA come richiesto
+			if (typeof maxDay !== 'number' || isNaN(maxDay) || maxDay < 0) {
+			  console.warn("⚠️ FALLBACK ATTIVATO: Logica date fallita, forzando 5 giorni per testing");
+			  maxDay = 5;
+			}
+			
+			const [progress, setProgress] = useState(gameProgress);
+	  
+			useEffect(() => {
+			  gameProgress = { ...progress };
+			  saveProgressToStorage();
+			}, [progress]);
+			
+			const [activeModal, setActiveModal] = useState(null);
+			const [settingsModal, setSettingsModal] = useState(false);
+			const [initError, setInitError] = useState(null);
+			const [enlargedImage, setEnlargedImage] = useState(null);
+			
+			// Gestione apertura settings da pulsante esterno
+			useEffect(() => {
+			  const handleOpenSettings = () => setSettingsModal(true);
+			  window.addEventListener('openSettings', handleOpenSettings);
+			  return () => window.removeEventListener('openSettings', handleOpenSettings);
+			}, []);
+			
+	  		const [usedHintsDisplay, setUsedHintsDisplay] = useState({});
+			const [feedback, setFeedback] = useState("");
+			
+			// BUG FIX #2: Traccia TUTTE le risposte sbagliate per ogni giorno
+			const [wrongAnswers, setWrongAnswers] = useState({});
+			
+			const [totalScore, setTotalScore] = useState(0);
+			const [stats, setStats] = useState({});
+			
+			// BUG FIX #1: Stato per opzioni mescolate una sola volta per modal
+			const [shuffledOptions, setShuffledOptions] = useState({});
+			
+			// BUG FIX #1: Traccia TUTTI i tentativi (non solo errori)
+			const [totalAttempts, setTotalAttempts] = useState({});
+	  
+			// INIZIALIZZAZIONE SEMPLIFICATA
+			useEffect(() => {
+			  console.log('🚀 Inizializzando calendario semplificato...');
+			  
+			  try {
+				// Carica progresso dalla memoria JavaScript
+				const savedProgress = loadProgress();
+				console.log('✅ Progresso caricato dalla memoria:', Object.keys(savedProgress).length, 'giorni');
+				
+				setProgress(savedProgress);
+				setInitialized(true);
+				
+				if (Object.keys(savedProgress).length > 0) {
+				  showToast('💾 Progressi in memoria trovati!', 'success');
+				}
+				
+			  } catch (error) {
+				console.error('❌ Errore inizializzazione:', error);
+				setProgress({});
+				setInitialized(true);
+			  }
+			}, []);
+	  
+			// SALVATAGGIO AUTOMATICO IN MEMORIA
+			useEffect(() => {
+			  if (!initialized) return;
+			  
+			  // Aggiorna lo stato globale in memoria
+			  gameProgress = { ...progress };
+			  console.log('💾 Progresso aggiornato in memoria JavaScript');
+			}, [progress, initialized]);
+	  
+			// Calcolo statistiche semplificato
+			useEffect(() => {
+			  let score = 0;
+			  let completed = 0;
+			  
+			  Object.entries(progress).forEach(([dayIndex, entry]) => {
+				const entryScore = entry.finalScore !== undefined ? entry.finalScore : (entry.score || 0);
+				score += entryScore;
+				
+				if (entry.solved) completed++;
+			  });
+			  
+			  setTotalScore(score);
+			  
+			  console.log('📈 Statistiche aggiornate:', {
+				punteggio: score,
+				completati: completed
+			  });
+			}, [progress]);
+	  
+			// Aggiornamento UI semplificato
+			useEffect(() => {
+			  const totalScoreEl = document.getElementById("totalScore");
+			  
+			  if (totalScoreEl) {
+				totalScoreEl.innerText = `⭐ Punteggio Totale: ${totalScore}`;
+			  }
+			}, [totalScore]);
+	  
+			// BUG FIX #1 & #2: LOGICA RISPOSTA CORRETTA
+			function handleAnswer(index, choice) {
+			  const correct = FULL_CONSTELLATIONS[index].name;
+			  
+			  setProgress(prev => {
+				const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				if (entry.solved) return prev;
+				
+				// BUG FIX #1: INCREMENTA SEMPRE totalAttempts
+				setTotalAttempts(prevAttempts => ({
+				  ...prevAttempts,
+				  [index]: (prevAttempts[index] || 0) + 1
+				}));
+				
+				if (choice === correct) {
+				  // Risposta corretta
+				  entry.solved = true;
+				  entry.attempts = (totalAttempts[index] || 0) + 1; // BUG FIX #1: Salva conteggio corretto
+				  entry.finalScore = entry.score;
+				  entry.completedAt = new Date().toISOString();
+				  
+				  console.log(`✅ RISPOSTA CORRETTA Giorno ${index + 1}:`, {
+					tentativi_totali: entry.attempts,
+					punteggio_finale: entry.score
+				  });
+				  
+				  setFeedback("✅ Corretto! Ottimo lavoro!");
+				  
+				  // BUG FIX #2: Pulisci risposte sbagliate per questo giorno
+				  setWrongAnswers(prev => ({ ...prev, [index]: [] }));
+				  
+				  const scoreText = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				  showToast(`🎆 Giorno ${index + 1} completato! ${scoreText} punti`, 'success');
+				  
+				} else {
+				  // Risposta sbagliata
+				  entry.score = entry.score - 1;
+				  
+				  // BUG FIX #2: Aggiungi alla lista delle risposte sbagliate
+				  setWrongAnswers(prev => ({
+					...prev,
+					[index]: [...(prev[index] || []), choice]
+				  }));
+				  
+				  console.log(`❌ RISPOSTA SBAGLIATA Giorno ${index + 1}:`, {
+					risposta_data: choice,
+					risposta_corretta: correct,
+					punti_rimasti: entry.score,
+					tentativi_attuali: (totalAttempts[index] || 0) + 1
+				  });
+				  
+				  const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				  setFeedback(`❌ Risposta sbagliata! Punti rimasti: ${scoreDisplay}`);
+				}
+				
+				return { ...prev, [index]: entry };
+			  });
+			}
+	  
+			// LOGICA INDIZI SEMPLIFICATA
+			function useHint(index) {
+			  setProgress(prev => {
+			    const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+			    if (entry.solved || entry.usedHints >= 3) return prev;
+			    
+			    entry.score = entry.score - 1;
+			    entry.usedHints += 1;
+			    
+			    const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
+			    const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+			    
+			    // Aggiungi l'indizio alla lista di indizi mostrati
+			    setUsedHintsDisplay(prev => ({
+			      ...prev,
+			      [index]: [...(prev[index] || []), hint]
+			    }));
+			    
+			    setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
+			    
+			    return { ...prev, [index]: entry };
+			  });
+			}
+
+
+	  
+	  
+	  
+	  
+	  
+			// Loading screen semplificato
+			if (!initialized) {
+
+											  
+								 
+											  
+															   
+						   
+														   
+											
+																						   
+											   
+				   
+																		  
+																						   
+															
+																									   
+																																								 
+	   
+	 
+																		 
+																						  
+																							
+																																							 
+																																   
+															  
+																																							   
+																																																												  
+																											  
+																																	  
+																										  
+																																																										
+																																																			
+																																
+																						   
+																																									  
+																																	  
+																														  
+		 
+																			 
+									  
+															  
+																																																						  
+																							
+																																																																																																																																																																				 
+																																																						  
+	  
+	
+   
+			  return React.createElement('div', { className: 'text-center py-20' }, 
+				React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
+				React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
+			  );
+			}
+			
+			console.log('✅ App completamente caricata, rendering calendario con maxDay:', maxDay);
+	  
+			return React.createElement(
+			  React.Fragment,
+			  null,
+			  
+			  // Banner informativo semplificato
+			  React.createElement(
+				"div",
+				{ className: "info-banner mb-4 p-4 bg-gradient-to-r from-blue-900 to-green-900 bg-opacity-70 rounded-xl border-2 border-blue-400 border-opacity-50" },
+				React.createElement("div", { className: "flex items-center gap-3 text-blue-100" },
+				  React.createElement("span", { className: "text-2xl" }, "💡"),
+				  React.createElement("div", { className: "flex-1" },
+					React.createElement("p", { className: "text-base font-semibold mb-1" }, 
+					  "I tuoi progressi vengono salvati automaticamente in questa sessione."
+					),
+					React.createElement("p", { className: "text-sm opacity-90" }, 
+					  "I progressi sono salvati in memoria durante questa sessione. Sistema semplificato senza login."
+					)
+				  )
+				)
+			  ),
+			  
+			  // Messaggio di stato del calendario
+			  React.createElement(
+				"div",
+				{ className: "mb-6 p-4 bg-blue-900 bg-opacity-50 rounded-xl border border-blue-400" },
+				React.createElement("h3", { className: "text-lg font-bold text-blue-200 mb-2" }, "🏆 Stato del Calendario"),
+				React.createElement("p", { className: "text-blue-100" }, 
+				  maxDay > 0 
+					? `✨ Hai accesso ai primi ${maxDay} giorni! Clicca su un giorno per iniziare la sfida.`
+					: "🔒 Tutti i giorni sono ancora bloccati. Torna a dicembre per iniziare!"
+				),
+				React.createElement("p", { className: "text-blue-200 text-sm mt-1" }, 
+				  `📅 Data corrente: ${today.toLocaleDateString('it-IT')} | Modalità: ${currentMonth < 11 ? 'Testing Pre-Dicembre' : currentMonth === 11 ? 'Dicembre Ufficiale' : 'Post-Dicembre'}`
+				)
+			  ),
+			  
+			  // Griglia giorni con layout migliorato
+			  React.createElement(
+				"div",
+				{ 
+				  id: "calendarGrid",
+				  className: "w-full"
+				},
+ 
+				FULL_CONSTELLATIONS.map((c, i) => {
+				  const index = i + 1;
+				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				  // Controllo se il giorno è bloccato:
+				  // 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
+				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)
+		
+							  
+						
+							  
+							
+									  
+																			  
+																	
+			 
+		   
+		 
+		
+																																													   
+															 
+																												 
+																 
+																														  
+																																																												   
+										 
+		   
+		  
+		 
+	  
+			   
+								  
+					  
+																																								  
+																											  
+																														 
+		
+												  
+																																												
+															   
+																																																										 
+		 
+		
+	  
 					
-					return `
-						<div class="leaderboard-item ${itemClass}">
-							<span class="leaderboard-rank">${rank}</span>
-							<span class="flex-grow ml-3 text-text-primary">${item.username} ${isUser ? '(Tu)' : ''}</span>
-							<span class="leaderboard-score">${item.score}</span>
+														 
+							
+																								
+												  
+																					
+																	 
+		
+							  
+						
+								  
+							
+										  
+																				  
+																		
+			 
+		   
+		 
+		
+																																																	
+															 
+																												 
+																 
+																														  
+																																																												   
+										 
+		   
+		  
+		 
+	  
+			   
+								  
+					  
+																																								  
+																											  
+																														 
+		
+												  
+																																												
+															   
+																																																										  
+		 
+		
+																   
+						   
+																							   
+				  const dayNotYetAvailable = index > maxDay;
+				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				  const locked = dayNotYetAvailable || previousDayNotCompleted;
+				  
+												 
+								  
+				  
+				  // Debug per ogni giorno
+				  if (i < 10) { // Solo primi 10 giorni per evitare spam
+					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
+				  }
+	  
+				  function openModal() {
+					if (!locked) {
+					  setActiveModal(i);
+					  setFeedback("");
+					  
+					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
+					  if (!shuffledOptions[i]) {
+						const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
+						setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
+						console.log(`🎲 Opzioni mescolate per giorno ${i + 1}:`, mixed);
+					  }
+					}
+				  }
+	  
+				  return React.createElement(
+					"div",
+					{
+					  key: i,
+					  className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`,
+					  onClick: openModal,
+					  'data-day': index
+					},
+					React.createElement("h2", null, `Giorno ${index}`),
+					React.createElement("div", { className: "day-icon" }, 
+					  locked ? "🔒" : entry.solved ? "🎆" : "✨"
+					),
+					React.createElement("div", { className: "day-status" },
+					  locked 
+						? `Bloccato fino al ${index} dicembre`
+						: entry.solved 
+						  ? (() => {
+							  const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
+							  const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`;
+							  return `Completato! ⭐ ${displayScore}`;
+							})()
+						  : "🔹 Clicca per iniziare!"
+		   
+					)
+				  );
+				})
+											   
+						 
+							  
+																																																																																																											
+													  
+																																													
+																																																																									  
+		   
+		  
+								
+							  
+			  ),
+													  
+																																													
+																																																																									  
+		   
+		  
+								
+							  
+																																																																																																											
+													  
+																																													
+																																																																									  
+		   
+		  
+								
+							  
+																																																																																																											
+													  
+																																													
+																																																																									  
+		   
+		  
+	   
+	  
+							  
+			 
+			  
+
+			  // ========================================
+			  // RENDERING TEST PERIODICI
+			  // ========================================
+			  
+			  // Bottoni per i test
+			  React.createElement("div", { style: { marginTop: "3rem", marginBottom: "2rem" } },
+				React.createElement("h2", { style: { marginBottom: "1.5rem", color: "#fbbf24" } }, "📚 Test Periodici"),
+				React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" } },
+					PERIODIC_TESTS.map((test) => {
+						const testCompleted = testSubmitted[test.testNumber];
+						const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
+						
+						return React.createElement(
+							"div",
+							{
+								key: `test-${test.testNumber}`,
+								className: `calendar-day ${testCompleted ? 'completed' : canDoTest ? 'available' : 'locked'}`,
+								onClick: () => canDoTest && setActiveTest(test.testNumber),
+								style: { cursor: canDoTest ? "pointer" : "not-allowed" }
+							},
+							React.createElement("h2", null, `Test ${test.testNumber}`),
+							React.createElement("div", { className: "day-icon" }, testCompleted ? "🎓" : canDoTest ? "📝" : "🔒"),
+							React.createElement("div", { className: "day-status" },
+								testCompleted
+									? (() => {
+										const r = testResults[test.testNumber];
+										return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`;
+									  })()									: canDoTest									  ? `🔹 Clicca!`									  : `Completa giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`
+							)
+						);
+					})
+				)
+			  ),
+			  
+			  // Modal del test
+			  activeTest && React.createElement(TestModalComponent, {
+				  test: PERIODIC_TESTS[activeTest - 1],
+				  testNumber: activeTest,
+				  testAnswers: testAnswers,
+				  setTestAnswers: setTestAnswers,
+				  testSubmitted: testSubmitted,
+				  setTestSubmitted: setTestSubmitted,
+				  testResults: testResults,
+				  setTestResults: setTestResults,
+				  progress: progress,
+				  handleTestAnswerChange: handleTestAnswerChange,
+				  handleTestSubmit: handleTestSubmit,
+				  PERIODIC_TESTS: PERIODIC_TESTS
+			  }),
+			  
+			  // Modal gioco
+			  activeModal !== null && React.createElement(
+				"div",
+				{ className: "full-screen-modal" },
+				React.createElement("button", { className: "close-button", onClick: () => setActiveModal(null) }, "×"),
+				React.createElement("div", { className: "modal-content" },
+				  React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
+				  React.createElement("div", { className: "mb-4 text-center" },
+									  
+					React.createElement("div", { 
+					  className: "w-full max-w-2xl mx-auto rounded-lg flex flex-col items-center justify-center text-white border-2 border-yellow-400 shadow-lg overflow-hidden bg-gray-900 p-4",
+					  style: { cursor: FULL_CONSTELLATIONS[activeModal].image ? "pointer" : "default" },
+					  onClick: () => {
+					    if (FULL_CONSTELLATIONS[activeModal].image) {
+					      setEnlargedImage(FULL_CONSTELLATIONS[activeModal].image);
+					    }
+					  }
+					},
+					  FULL_CONSTELLATIONS[activeModal].image ? 
+					    React.createElement("img", { 
+					      src: FULL_CONSTELLATIONS[activeModal].image,
+					      alt: FULL_CONSTELLATIONS[activeModal].name,
+					      style: { width: "100%", height: "auto", maxHeight: "500px", objectFit: "contain" }
+					    })										
+					  :
+					    React.createElement(React.Fragment, null,
+					      React.createElement("div", { className: "text-6xl mb-2" }, "✨"),
+					      React.createElement("div", { className: "text-lg font-bold" }, FULL_CONSTELLATIONS[activeModal].name),
+					      React.createElement("div", { className: "text-sm text-gray-300 mt-2 px-4 text-center" }, "Osserva attentamente le stelle di questa costellazione")
+					    )
+					)
+
+				  ),
+				  !progress[activeModal]?.solved && React.createElement(React.Fragment, null,
+					React.createElement("p", { className: "mb-4 text-lg" }, "Quale costellazione è questa?"),
+					React.createElement("div", { className: "flex flex-col gap-3" },
+					  // BUG FIX #1 & #2: Opzioni mescolate con risposte multiple sbagliate
+					  (shuffledOptions[activeModal] || FULL_CONSTELLATIONS[activeModal].options).map((opt, j) => {
+						const dayWrongAnswers = wrongAnswers[activeModal] || [];
+						const isWrong = dayWrongAnswers.includes(opt);
+						const isCorrect = progress[activeModal]?.solved && opt === FULL_CONSTELLATIONS[activeModal].name;
+						
+						return React.createElement("button", {
+						  key: j,
+						  onClick: () => handleAnswer(activeModal, opt),
+						  disabled: progress[activeModal]?.solved || isWrong,
+						  className: `option-button px-4 py-2 rounded-lg shadow transition-all ${
+							isCorrect ? 'bg-green-600 hover:bg-green-700 text-white' : 
+							isWrong ? 'bg-red-600 text-white cursor-not-allowed opacity-75' : 
+							'bg-blue-600 hover:bg-blue-700 text-white'
+						  }`
+						}, opt);
+					  })
+					),
+					feedback && React.createElement("div", { className: `feedback ${feedback.includes('Corretto') ? 'correct' : feedback.includes('sbagliata') ? 'wrong' : ''}` }, feedback),
+					usedHintsDisplay[activeModal] && usedHintsDisplay[activeModal].length > 0 && 
+					React.createElement("div", { className: "mt-4 p-3 bg-yellow-900 rounded-lg border-l-4 border-yellow-400" },
+					  React.createElement("div", { className: "text-yellow-300 font-bold mb-2" }, "💡 Indizi usati:"),
+					  usedHintsDisplay[activeModal].map((h, i) => 
+					    React.createElement("div", { key: i, className: "text-sm text-yellow-100 mb-1" }, `${i+1}. ${h}`)
+					  )
+					),
+																							
+																		// BUG FIX #2: DISPLAY CORRETTO DEI PUNTI
+					React.createElement("div", { className: "mt-4 p-3 bg-gray-800 rounded-lg text-center" },
+					  React.createElement("div", { className: "text-lg font-bold text-yellow-300" }, 
+						(() => {
+						  const currentScore = progress[activeModal]?.score ?? 3;
+						  const displayScore = currentScore >= 0 ? `+${currentScore}` : `${currentScore}`;  // BUG FIX: NO +-2 ma -2
+						  return `⭐ Punti attuali: ${displayScore}`;
+						})()
+					  ),
+					  React.createElement("div", { className: "text-sm text-gray-400 mt-1" }, 
+						(() => {
+							/*
+						  const currentScore = progress[activeModal]?.score ?? 3;
+						  const hints = progress[activeModal]?.usedHints || 0;
+						  const errors = Math.max(0, (progress[activeModal]?.attempts || 0) - (progress[activeModal]?.solved ? 1 : 0));
+						  return `Formula: 3 - ${hints} indizi - ${errors} errori = ${currentScore}`;
+						  */
+						})()
+					  ),
+					  progress[activeModal]?.score < 0 && React.createElement("div", { className: "text-sm text-red-400 font-bold mt-1" }, 
+						"⚠️ Attenzione: sei in punteggio negativo!"
+					  )
+					),
+					React.createElement("div", { className: "mt-4 flex justify-between items-center" },
+					  React.createElement("button", { 
+						onClick: () => useHint(activeModal), 
+						className: "text-sm text-yellow-400 underline hover:text-yellow-300",
+						disabled: (progress[activeModal]?.usedHints || 0) >= 3
+					  }, `💡 Usa indizio (${progress[activeModal]?.usedHints || 0}/3)`),
+					  React.createElement("p", { className: "text-sm" }, 
+						(() => {
+						  const currentScore = progress[activeModal]?.score ?? 3;
+						  const displayScore = currentScore >= 0 ? `+${currentScore}` : `${currentScore}`;  // BUG FIX #2
+						  return `⭐ Punti: ${displayScore}`;
+						})()
+					  )
+					)
+				  ),
+				  progress[activeModal]?.solved && React.createElement("div", { className: "mt-6 text-lg space-y-4" },
+					React.createElement("h3", { className: "text-xl font-bold text-yellow-400" }, FULL_CONSTELLATIONS[activeModal].name),
+					React.createElement("p", { className: "text-gray-300" }, FULL_CONSTELLATIONS[activeModal].description),
+					React.createElement("div", { className: "bg-gray-800 p-4 rounded-lg" },
+					  React.createElement("h4", { className: "font-semibold mb-2" }, "📊 Statistiche:"),
+					  React.createElement("p", { className: "text-sm text-gray-300" }, `❌ Tentativi sbagliati: ${(progress[activeModal]?.attempts || 1) - 1}`),
+					  React.createElement("p", { className: "text-sm text-gray-300" }, `💡 Indizi usati: ${progress[activeModal]?.usedHints || 0}`),
+					  React.createElement("p", { className: "text-sm text-yellow-300 font-semibold" }, `⭐ Punteggio ottenuto: ${progress[activeModal]?.score || 0}`)
+					)
+				  )
+				)
+			  ),
+
+				// Modal immagine ingrandita - INIZIO
+				enlargedImage && React.createElement(
+				  "div",
+				  { 
+				    className: "fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50",
+				    onClick: () => setEnlargedImage(null),
+				    style: { backdropFilter: "blur(5px)" }
+				  },
+				  React.createElement("button", { 
+				    className: "absolute top-4 right-4 text-white text-3xl hover:text-red-500 z-51",
+				    onClick: () => setEnlargedImage(null)
+				  }, "×"),
+				  React.createElement("img", {
+				    src: enlargedImage,
+				    alt: "Immagine ingrandita",
+				    style: { maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain" },
+				    onClick: (e) => e.stopPropagation()
+				  }),
+				  React.createElement("div", { 
+				    className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm"
+				  }, "Clicca per chiudere")
+				),
+				// Modal immagine ingrandita - FINE
+
+			  
+			  // Modal impostazioni
+			  settingsModal && React.createElement(
+				"div",
+				{ className: "full-screen-modal" },
+				React.createElement("button", { className: "close-button", onClick: () => setSettingsModal(false) }, "×"),
+				React.createElement("div", { className: "modal-content max-w-2xl" },
+				  React.createElement("h2", { className: "text-3xl font-bold mb-6" }, "⚙️ Impostazioni"),
+				  
+				  // Sezione utente
+				  React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "👤 Profilo Utente"),
+					React.createElement("div", { className: "space-y-3" },
+					  React.createElement("div", { className: "text-center" },
+						React.createElement("div", { className: "text-lg font-semibold text-white mb-2" }, `👤 ${USERS[username]?.displayName || username}`),
+						React.createElement("p", { className: "text-sm text-gray-400" }, 
+						  "Il tuo nome utente e display name sono gestiti dal sistema di login."
+						)
+					  )
+					)
+				  ),
+				  
+				  // Statistiche
+				  React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "📊 Statistiche"),
+					React.createElement("div", { className: "stats-grid" },
+					  React.createElement("div", { className: "stat-card" },
+						React.createElement("div", { className: "text-2xl font-bold text-yellow-400" }, stats.totalScore || 0),
+						React.createElement("div", { className: "text-sm text-gray-400" }, "Punti Totali")
+					  ),
+					  React.createElement("div", { className: "stat-card" },
+						React.createElement("div", { className: "text-2xl font-bold text-green-400" }, stats.completedDays || 0),
+						React.createElement("div", { className: "text-sm text-gray-400" }, "Giorni Completati")
+					  ),
+					  React.createElement("div", { className: "stat-card" },
+						React.createElement("div", { className: "text-2xl font-bold text-blue-400" }, stats.totalAttempts || 0),
+						React.createElement("div", { className: "text-sm text-gray-400" }, "Tentativi Totali")
+					  ),
+					  React.createElement("div", { className: "stat-card" },
+						React.createElement("div", { className: "text-2xl font-bold text-purple-400" }, stats.totalHints || 0),
+						React.createElement("div", { className: "text-sm text-gray-400" }, "Indizi Usati")
+					  )
+					)
+				  ),
+				  
+				  // Backup e ripristino
+				  React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "💾 Backup &amp; Ripristino"),
+					React.createElement("p", { className: "text-sm text-gray-400 mb-4" }, 
+					  "Usa queste funzioni per salvare o ripristinare il tuo progresso su altri dispositivi. I codici di backup sono sicuri e contengono tutti i tuoi dati."
+					),
+					React.createElement("div", { className: "space-y-4" },
+					  React.createElement("div", null,
+						React.createElement("button", {
+						  onClick: exportUserProgress,
+						  className: "w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors mb-2"
+						}, "📤 Genera Codice di Backup"),
+						React.createElement("p", { className: "text-sm text-gray-400" }, "Copia il codice per salvare il tuo progresso")
+					  ),
+					  React.createElement("div", null,
+						React.createElement("input", {
+						  id: "import-input",
+						  type: "text",
+						  placeholder: "Incolla qui il codice di backup",
+						  className: "w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white mb-2"
+						}),
+						React.createElement("button", {
+						  onClick: () => {
+							const code = document.getElementById('import-input').value;
+							if (code) importUserProgress(code);
+						  },
+						  className: "w-full px-4 py-3 bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
+						}, "📥 Importa Progresso")
+					  ),
+					  React.createElement("div", null,
+						React.createElement("button", {
+						  onClick: resetUserProgress,
+						  className: "w-full px-4 py-3 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+						}, "🗑️ Reset Completo"),
+						React.createElement("p", { className: "text-sm text-gray-400 mt-1" }, "⚠️ Questa azione cancellerà tutto il progresso in modo permanente")
+					  )
+					)
+				  ),
+				  
+				  // Info tecnica
+				  React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "ℹ️ Informazioni"),
+					React.createElement("div", { className: "text-sm text-gray-400 space-y-2" },
+					  React.createElement("p", null, `🗄️ Salvataggio: ${dataManager.fallbackToMemory ? 'Memoria Temporanea' : 'IndexedDB (Persistente)'}`),
+					  React.createElement("p", null, `📅 Ultima sincronizzazione: ${new Date().toLocaleString('it-IT')}`),
+					  React.createElement("p", null, `📱 Versione: 2.0 - Calendario Costellazioni`),
+					  React.createElement("p", null, `🌟 Giorni disponibili: ${maxDay}/31`)
+					)
+				  )
+				)
+			  )
+			);
+		  }
+	  
+	  
+	  
+		  // ========================================
+		  // MODAL EXPORT MIGLIORATO E USER-FRIENDLY
+		  // ========================================
+		  
+		  function exportProgress() {
+			try {
+			  updateSaveIndicator('saving');
+			  
+			  const code = exportProgressCode();
+			  const finalCode = `ADVENT_V2_${code}`;
+			  
+			  showExportModal(finalCode);
+			  
+			  console.log('📤 Export completato, modal mostrato');
+			  return finalCode;
+			  
+			} catch (error) {
+			  console.error('❌ Errore esportazione:', error);
+			  showToast('Errore durante l\'esportazione', 'error');
+			  updateSaveIndicator('error');
+			}
+		  }
+	  
+		  // ========================================
+		  // MODAL IMPORT MIGLIORATO CON VALIDAZIONE
+		  // ========================================
+		  
+		  function importProgress() {
+			showImportModal();
+		  }
+		  
+		  function executeImport() {
+			const code = document.getElementById('importCode').value.trim();
+			const feedback = document.getElementById('importFeedback');
+			
+			if (!code) {
+			  showImportFeedback('❌ Inserisci un codice valido', 'error');
+			  return;
+			}
+			
+			updateSaveIndicator('saving');
+			showImportFeedback('🔄 Importazione in corso...', 'info');
+			
+			// Pulizia codice
+			const cleanCode = code.replace(/ADVENT_V2_|ADVENT_/g, '');
+			
+			const result = importProgressCode(cleanCode);
+			
+			if (result.success) {
+			  showImportFeedback(`✅ Dati importati con successo! (${result.usersImported} utenti)`, 'success');
+			  
+			  // Auto-chiudi e aggiorna dopo successo
+			  setTimeout(() => {
+				closeImportModal();
+				autoSave();
+				
+				// Se l'utente corrente è stato aggiornato, ricarica interfaccia
+				if (currentUser) {
+				  window.dispatchEvent(new CustomEvent('dataImported'));
+				  location.reload();
+				}
+			  }, 1500);
+			  
+			} else {
+			  showImportFeedback(`❌ Errore: ${result.error}`, 'error');
+			  updateSaveIndicator('error');
+			}
+		  }
+		  
+		  function showImportFeedback(message, type) {
+			const feedback = document.getElementById('importFeedback');
+			if (feedback) {
+			  feedback.innerHTML = message;
+			  feedback.className = `import-feedback ${type}`;
+			}
+		  }
+	  
+		  // ========================================
+		  // MODAL EXPORT CON ISTRUZIONI CHIARE
+		  // ========================================
+		  function showExportModal(code) {
+			const modal = document.createElement('div');
+			modal.className = 'backup-modal';
+			modal.innerHTML = `
+			  <div class="backup-content">
+				<h2>📤 Esporta Progressi</h2>
+				<p class="backup-instructions">
+				  <strong>Copia questo codice e salvalo in un posto sicuro:</strong><br>
+				  Potrai usarlo per ripristinare i progressi su altri browser o dispositivi.
+				</p>
+				<textarea readonly id="exportCode" class="backup-code">${code}</textarea>
+				<div class="backup-actions">
+				  <button onclick="copyBackupCode()" class="btn btn--primary">📋 Copia Codice</button>
+				  <button onclick="closeBackupModal()" class="btn btn--secondary">Chiudi</button>
+				</div>
+				<p class="backup-note">💡 <strong>Dove salvarlo:</strong> WhatsApp a te stesso, email, note del telefono, cloud drive</p>
+				<div class="backup-info">
+				  <small>🔒 Codice sicuro • ⏰ ${new Date().toLocaleString('it-IT')} • 👥 ${Object.keys(window.ADVENT_DATA.users).length} utenti</small>
+				</div>
+			  </div>
+			`;
+			
+			document.body.appendChild(modal);
+			
+			// Auto-select text per facile copia
+			const textarea = document.getElementById('exportCode');
+			if (textarea) {
+			  textarea.select();
+			  textarea.focus();
+			}
+		  }
+		  
+		  function showImportModal() {
+			const modal = document.createElement('div');
+			modal.className = 'backup-modal';
+			modal.innerHTML = `
+			  <div class="backup-content">
+				<h2>📥 Importa Progressi</h2>
+				<p class="backup-instructions">
+				  <strong>Incolla qui il codice di backup</strong> per ripristinare i progressi:
+				</p>
+				<textarea id="importCode" class="backup-code" placeholder="Incolla il codice qui...\n\nPuoi incollare codici che iniziano con:\n• ADVENT_V2_...\n• ADVENT_...\n• Oppure il codice diretto"></textarea>
+				<div id="importFeedback" class="import-feedback"></div>
+				<div class="backup-actions">
+				  <button onclick="executeImport()" class="btn btn--primary">✅ Importa Dati</button>
+				  <button onclick="closeBackupModal()" class="btn btn--secondary">Annulla</button>
+				</div>
+				<p class="backup-note">⚠️ I dati attuali verranno <strong>uniti</strong> con quelli importati (mantiene il punteggio migliore per ogni giorno)</p>
+			  </div>
+			`;
+			
+			document.body.appendChild(modal);
+			
+			// Focus sul campo di input
+			const textarea = document.getElementById('importCode');
+			if (textarea) {
+			  textarea.focus();
+			  
+			  // Auto-import al paste
+			  textarea.addEventListener('paste', () => {
+				setTimeout(() => {
+				  if (textarea.value.trim()) {
+					showImportFeedback('📋 Codice incollato! Clicca "Importa Dati" per continuare.', 'info');
+				  }
+				}, 100);
+			  });
+			}
+		  }
+	  
+		  // ========================================
+		  // GESTIONE MODALS UNIFICATA
+		  // ========================================
+		  function closeBackupModal() {
+			const modals = document.querySelectorAll('.backup-modal, .export-modal');
+			modals.forEach(modal => {
+			  modal.style.animation = 'fadeOut 0.3s ease-out';
+			  setTimeout(() => modal.remove(), 300);
+			});
+		  }
+		  
+		  function closeExportModal() {
+			closeBackupModal();
+		  }
+		  
+		  function closeImportModal() {
+			closeBackupModal();
+		  }
+		  
+		  // Click outside to close
+		  document.addEventListener('click', (e) => {
+			if (e.target.classList.contains('backup-modal')) {
+			  closeBackupModal();
+			}
+		  });
+		  
+		  // Escape key to close
+		  document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') {
+			  closeBackupModal();
+			}
+		  });
+	  
+		  // ========================================
+		  // COPIA NEGLI APPUNTI CON FEEDBACK MIGLIORATO
+		  // ========================================
+		  function copyBackupCode() {
+			const textarea = document.getElementById('exportCode');
+			if (!textarea) return;
+			
+			const code = textarea.value;
+			
+			if (navigator.clipboard) {
+			  navigator.clipboard.writeText(code).then(() => {
+				showToast('📋 Codice copiato negli appunti!', 'success');
+				
+				// Cambio temporaneo del bottone
+				const btn = event.target;
+				const originalText = btn.innerHTML;
+				btn.innerHTML = '✅ Copiato!';
+				btn.style.background = '#10b981';
+				
+				setTimeout(() => {
+				  btn.innerHTML = originalText;
+				  btn.style.background = '';
+				}, 2000);
+				
+			  }).catch(() => {
+				fallbackCopyToClipboard(code);
+			  });
+			} else {
+			  fallbackCopyToClipboard(code);
+			}
+		  }
+		  
+		  function copyToClipboard(text) {
+			copyBackupCode();
+		  }
+	  
+		  function fallbackCopyToClipboard(text) {
+			const textArea = document.createElement('textarea');
+			textArea.value = text;
+			textArea.style.position = 'fixed';
+			textArea.style.top = '0';
+			textArea.style.left = '0';
+			textArea.style.width = '2em';
+			textArea.style.height = '2em';
+			textArea.style.padding = '0';
+			textArea.style.border = 'none';
+			textArea.style.outline = 'none';
+			textArea.style.boxShadow = 'none';
+			textArea.style.background = 'transparent';
+			document.body.appendChild(textArea);
+			textArea.select();
+			
+			try {
+			  const successful = document.execCommand('copy');
+			  if (successful) {
+				alert('✅ Codice copiato negli appunti!');
+			  } else {
+				alert('❌ Impossibile copiare automaticamente. Seleziona e copia manualmente.');
+			  }
+			} catch (err) {
+			  alert('❌ Impossibile copiare automaticamente. Seleziona e copia manualmente.');
+			}
+			
+			document.body.removeChild(textArea);
+			closeExportModal();
+		  }
+	  
+		  // ========================================
+		  // CLASSIFICA CON MEMORIA PURA
+		  // ========================================
+		  function showLeaderboard() {
+			if (!currentUser) {
+			  console.error('❌ Nessun utente loggato per la classifica');
+			  return;
+			}
+			
+			console.log('=== CARICAMENTO CLASSIFICA DA MEMORIA ===');
+			console.log('👤 Utente corrente:', currentUser);
+			
+			try {
+			  // Ottieni classifica dalla memoria
+			  const leaderboardData = getLeaderboard();
+			  console.log('📊 Risultati classifica da memoria:', leaderboardData);
+			  
+			  // Crea modal classifica
+			  const modal = document.createElement('div');
+			  modal.className = 'full-screen-modal';
+			  
+			  console.log('🎨 Creazione modal con dati finali:', leaderboardData);
+			  
+			  const content = leaderboardData.length === 0 ? 
+				`<div style="text-align: center; padding: 2rem;">
+				  <h3 style="color: #888; margin-bottom: 1rem;">🤷‍♂️ Nessun dato disponibile</h3>
+				  <p style="color: #666; font-size: 0.9rem;">Completa almeno un giorno per apparire in classifica!</p>
+				  <div style="margin-top: 1rem; font-size: 0.8rem; color: #555; font-family: monospace;">
+					<p>Debug: Utente = ${currentUser}</p>
+					<p>Modalità: Memoria JavaScript pura</p>
+					<p>Utenti nella memoria: ${Object.keys(window.ADVENT_DATA.users).join(', ')}</p>
+					<p>Progressi trovati: ${Object.keys(window.ADVENT_DATA.users).map(u => Object.keys(window.ADVENT_DATA.users[u].progress).length).join(', ')}</p>
+				  </div>
+				</div>` :
+				leaderboardData.map((user, index) => {
+				  const isCurrentUser = user.username === currentUser;
+				  const scoreColor = user.score >= 0 ? '#FFD700' : '#FF6B6B';
+				  const scoreText = user.score >= 0 ? user.score : `${user.score} (negativo)`;
+				  
+				  return `
+					<div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
+					  <div style="display: flex; align-items: center; gap: 1rem;">
+						<div class="rank-badge ${index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : ''}">
+						  ${index + 1}
 						</div>
-					`;
+						<div>
+						  <div style="font-weight: bold; color: white;">
+							${user.name} ${isCurrentUser ? '(Tu)' : ''}
+						  </div>
+						  <div style="font-size: 0.9rem; color: #ccc;">
+							${user.days}/31 giorni completati
+						  </div>
+						</div>
+					  </div>
+					  <div style="text-align: right;">
+						<div style="font-size: 1.5rem; font-weight: bold; color: ${scoreColor};">
+						  ⭐ ${scoreText}
+						</div>
+					  </div>
+					</div>
+				  `;
 				}).join('');
-				
-				showToast('Classifica aggiornata.', 'success');
-				
+			  
+			  modal.innerHTML = `
+				<button class="close-button" onclick="this.parentElement.remove()">×</button>
+				<div class="leaderboard">
+				  <h2 class="leaderboard-title">🏆 Classifica Generale</h2>
+				  <div style="margin-bottom: 1rem; text-align: center; font-size: 0.9rem; color: #999;">
+					Aggiornata: ${new Date().toLocaleTimeString('it-IT')}
+				  </div>
+				  <div style="margin-bottom: 1rem; text-align: center; font-size: 0.8rem; color: #666; background: rgba(255,215,0,0.1); padding: 0.5rem; border-radius: 0.5rem;">
+					⚠️ Dati salvati solo in questa sessione. Usa 'Esporta' per backup permanente.
+				  </div>
+				  ${content}
+				</div>
+			  `;
+			  
+			  document.body.appendChild(modal);
+			  console.log('✅ Classifica mostrata con successo');
+			  
 			} catch (error) {
 			  console.error('❌ Errore caricamento classifica:', error);
 			  showToast('Errore caricamento classifica', 'error');
-			  listContainer.innerHTML = '<p class="text-error">Errore nel caricamento della classifica.</p>';
 			}
-		  };
+		  }
 		  
 		  // Inizializzazione semplificata
 		  function initializeApp() {
 			console.log('🚀 Inizializzando Calendario dell\'Avvento semplificato...');
 			
 			// Carica progresso dalla memoria se presente
-			/* La logica di caricamento è stata spostata nel componente React
 			const progress = loadProgress();
 			if (Object.keys(progress).length > 0) {
 			  console.log('💾 Progressi trovati in memoria JavaScript:', Object.keys(progress).length, 'giorni');
 			}
-			*/
 		  }
 	  
 		  // Inizializzazione DOM semplificata
@@ -695,7 +2052,7 @@
 			// Nascondi elementi non necessari e mostra app
 			const mainApp = document.getElementById('mainApp');
 			if (mainApp) {
-			  mainApp.style.display = 'flex';
+			  mainApp.style.display = 'block';
 			}
 			
 			// Avvia app React direttamente
@@ -711,10 +2068,12 @@
 				}, 1000);
 			  }
 			} catch (error) {
-			  console.error('❌ Errore critico nell\'avvio dell\'app React:', error);
-			  showToast('Errore critico nell\'avvio dell\'app.', 'error');
+			  console.error('❌ Errore inizializzazione app:', error);
+			  showToast('Errore caricamento calendario', 'error');
 			}
 		  });
+		  
+	  
 		</script>
-	</body>
+	 </body>
 </html>
