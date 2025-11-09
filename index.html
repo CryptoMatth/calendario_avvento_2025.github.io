@@ -368,6 +368,12 @@
 		    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
 		    animation: pulse-owl 2s infinite;
 		  }
+
+			.owl-button.inactive {
+				opacity: 0.3;            /* Opzionale: rendilo semitrasparente per far capire che è disabilitato */
+				pointer-events: none;    /* Disabilita ogni interazione col gufo */
+				user-select: none;       /* Opzionale: impedisce la selezione */
+			}
 	
 		  .owl-button:hover {
 		    transform: scale(1.1) rotate(5deg);
@@ -1433,6 +1439,7 @@
 					if (!locked) {
 					  setActiveModal(i);
 					  setFeedback("");
+					owlButton.classList.add('inactive');
 					  
 					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
 					  if (!shuffledOptions[i]) {
