@@ -1755,6 +1755,49 @@
 			  )
 			);
 		  }
+		  
+		  // Inizializzazione semplificata
+		  function initializeApp() {
+			console.log('🚀 Inizializzando Calendario dell\'Avvento semplificato...');
+			
+			// Carica progresso dalla memoria se presente
+			const progress = loadProgress();
+			if (Object.keys(progress).length > 0) {
+			  console.log('💾 Progressi trovati in memoria JavaScript:', Object.keys(progress).length, 'giorni');
+			}
+		  }
+	  
+		  // Inizializzazione DOM semplificata
+		  document.addEventListener('DOMContentLoaded', function() {
+			console.log('🚀 DOM caricato, avvio calendario semplificato...');
+			
+			initializeApp();
+			
+			// Nascondi elementi non necessari e mostra app
+			const mainApp = document.getElementById('mainApp');
+			if (mainApp) {
+			  mainApp.style.display = 'block';
+			}
+			
+			// Avvia app React direttamente
+			try {
+			  const container = document.getElementById('app');
+			  if (container) {
+				const root = ReactDOM.createRoot(container);
+				root.render(React.createElement(App));
+				console.log('✅ App calendario inizializzata con successo');
+				
+				setTimeout(() => {
+				  showToast('🎄 Calendario dell\'Avvento caricato! Buon divertimento!', 'success');
+				}, 1000);
+			  }
+			} catch (error) {
+			  console.error('❌ Errore inizializzazione app:', error);
+			  showToast('Errore caricamento calendario', 'error');
+			}
+		  });
+		  
+	  
 		</script>
 	 </body>
 </html>
