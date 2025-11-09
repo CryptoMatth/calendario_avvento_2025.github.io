@@ -701,6 +701,7 @@
 				closeModal.addEventListener('click', function() {
 				  gameModal.style.display = 'none';
 				  document.body.style.overflow = 'auto';
+				  owlButton.classList.remove('inactive');
 				});
 
 				// Chiudi il modal quando si clicca fuori dal contenuto
@@ -708,6 +709,7 @@
 				  if (e.target === gameModal) {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
+					  owlButton.classList.remove('inactive');
 				  }
 				});
 
@@ -716,6 +718,7 @@
 				  if (e.key === 'Escape' && gameModal.style.display === 'flex') {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
+					  owlButton.classList.remove('inactive');
 				  }
 				});
 			})();
