@@ -388,45 +388,43 @@
 		    }
 		  }
 
-			
-  /* ===== NOTIFICA CON PACCO REGALO 🎁 ===== */
-  .owl-notification {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    animation: bounce-gift 0.8s infinite, pulse-gift 2s infinite;
-    z-index: 1;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-  }
+		  /* ===== NOTIFICA CON PACCO REGALO 🎁 ===== */
+		  .owl-notification {
+			position: absolute;
+			top: -8px;
+			right: -8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.3rem;
+			animation: bounce-gift 0.8s infinite, pulse-gift 2s infinite;
+			z-index: 1;
+			filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+		  }
 
-  @keyframes bounce-gift {
-    0%, 100% { 
-      transform: translateY(0) rotate(0deg);
-    }
-    50% { 
-      transform: translateY(-6px) rotate(-5deg);
-    }
-  }
+		  @keyframes bounce-gift {
+			0%, 100% { 
+			  transform: translateY(0) rotate(0deg);
+			}
+			50% { 
+			  transform: translateY(-6px) rotate(-5deg);
+			}
+		  }
 
-  @keyframes pulse-gift {
-    0%, 100% { 
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
-    }
-    50% { 
-      filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.6));
-    }
-  }
+		  @keyframes pulse-gift {
+			0%, 100% { 
+			  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+			}
+			50% { 
+			  filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.6));
+			}
+		  }
 
-  .owl-notification.hidden {
-    display: none;
-  }
+		  .owl-notification.hidden {
+			display: none;
+		  }
 
 
-	
 		  /* ===== STILI PER IL MODAL ===== */
 		  .modal-overlay {
 		    position: fixed;
@@ -650,76 +648,70 @@
 				snowContainer.appendChild(flake);
 			}
 
+			// ===== GESTIONE MODAL GUFO NATALIZIO CON NOTIFICA =====
+			(function() {
+				const owlButton = document.getElementById('owlButton');
+				const gameModal = document.getElementById('gameModal');
+				const closeModal = document.getElementById('closeModal');
+				const owlNotification = document.getElementById('owlNotification');
 
+				// Chiave per localStorage
+				const MODAL_VIEWED_KEY = 'owlModalViewed';
 
-	  // ===== GESTIONE MODAL GUFO NATALIZIO CON NOTIFICA =====
-	  (function() {
-	    const owlButton = document.getElementById('owlButton');
-	    const gameModal = document.getElementById('gameModal');
-	    const closeModal = document.getElementById('closeModal');
-	    const owlNotification = document.getElementById('owlNotification');
-	    
-	    // Chiave per localStorage
-	    const MODAL_VIEWED_KEY = 'owlModalViewed';
-	    
-	    // Controlla se l'utente ha già visualizzato il modal
-	    function hasViewedModal() {
-	      return localStorage.getItem(MODAL_VIEWED_KEY) === 'true';
-	    }
-	    
-	    // Segna il modal come visualizzato
-	    function markModalAsViewed() {
-	      localStorage.setItem(MODAL_VIEWED_KEY, 'true');
-	    }
-	    
-	    // Nascondi la notifica
-	    function hideNotification() {
-	      if (owlNotification) {
-	        owlNotification.classList.add('hidden');
-	      }
-	    }
-	    
-	    // Mostra/nascondi la notifica al caricamento della pagina
-	    if (hasViewedModal()) {
-	      hideNotification();
-	    }
+				// Controlla se l'utente ha già visualizzato il modal
+				function hasViewedModal() {
+				  return localStorage.getItem(MODAL_VIEWED_KEY) === 'true';
+				}
 
-	    // Apri il modal quando si clicca sul pulsante gufo
-	    owlButton.addEventListener('click', function() {
-	      gameModal.style.display = 'flex';
-	      document.body.style.overflow = 'hidden';
-	      
-	      // Nascondi la notifica e segna come visualizzato
-	      hideNotification();
-	      markModalAsViewed();
-	    });
+				// Segna il modal come visualizzato
+				function markModalAsViewed() {
+				  localStorage.setItem(MODAL_VIEWED_KEY, 'true');
+				}
 
-	    // Chiudi il modal quando si clicca sulla X
-	    closeModal.addEventListener('click', function() {
-	      gameModal.style.display = 'none';
-	      document.body.style.overflow = 'auto';
-	    });
+				// Nascondi la notifica
+				function hideNotification() {
+				  if (owlNotification) {
+					owlNotification.classList.add('hidden');
+				  }
+				}
 
-	    // Chiudi il modal quando si clicca fuori dal contenuto
-	    gameModal.addEventListener('click', function(e) {
-	      if (e.target === gameModal) {
-	        gameModal.style.display = 'none';
-	        document.body.style.overflow = 'auto';
-	      }
-	    });
+				// Mostra/nascondi la notifica al caricamento della pagina
+				if (hasViewedModal()) {
+				  hideNotification();
+				}
 
-	    // Chiudi il modal con il tasto ESC
-	    document.addEventListener('keydown', function(e) {
-	      if (e.key === 'Escape' && gameModal.style.display === 'flex') {
-	        gameModal.style.display = 'none';
-	        document.body.style.overflow = 'auto';
-	      }
-	    });
-	  })();
+				// Apri il modal quando si clicca sul pulsante gufo
+				owlButton.addEventListener('click', function() {
+				  gameModal.style.display = 'flex';
+				  document.body.style.overflow = 'hidden';
+				  
+				  // Nascondi la notifica e segna come visualizzato
+				  hideNotification();
+				  markModalAsViewed();
+				});
 
+				// Chiudi il modal quando si clicca sulla X
+				closeModal.addEventListener('click', function() {
+				  gameModal.style.display = 'none';
+				  document.body.style.overflow = 'auto';
+				});
 
+				// Chiudi il modal quando si clicca fuori dal contenuto
+				gameModal.addEventListener('click', function(e) {
+				  if (e.target === gameModal) {
+					gameModal.style.display = 'none';
+					document.body.style.overflow = 'auto';
+				  }
+				});
 
-			
+				// Chiudi il modal con il tasto ESC
+				document.addEventListener('keydown', function(e) {
+				  if (e.key === 'Escape' && gameModal.style.display === 'flex') {
+					gameModal.style.display = 'none';
+					document.body.style.overflow = 'auto';
+				  }
+				});
+			})();
 	  
 			const { useState, useEffect } = React;
 	  
@@ -963,78 +955,6 @@
 			// ========================================
 			// Utility functions
 			// ========================================
-											  
-										   
-											  
-   
-								  
-													   
-	
-   
-									  
-													  
-											 
-	
-   
-													 
-												
-														 
-	
-						 
-												 
-													 
-					 
-	  
-	   
-	
-												 
-																  
-	
-			
-						   
-						   
-				  
-																  
-	  
-	
-   
-																   
-							 
-			 
-									
-		
-	
-   
-										  
-																
-	
-							 
-			 
-						  
-		
-	
-							   
-			 
-					   
-		
-	
-										 
-							 
-				 
-				 
-				   
-						   
-							   
-						   
-										   
-	  
-	  
-	
-								 
-													   
-	
-																				 
-	
    
 			function shuffleArray(array) {
 				const shuffled = [...array]; 
@@ -1438,62 +1358,9 @@
 			    return { ...prev, [index]: entry };
 			  });
 			}
-
-
-	  
-	  
-	  
-	  
 	  
 			// Loading screen semplificato
-			if (!initialized) {
-
-											  
-								 
-											  
-															   
-						   
-														   
-											
-																						   
-											   
-				   
-																		  
-																						   
-															
-																									   
-																																								 
-	   
-	 
-																		 
-																						  
-																							
-																																							 
-																																   
-															  
-																																							   
-																																																												  
-																											  
-																																	  
-																										  
-																																																										
-																																																			
-																																
-																						   
-																																									  
-																																	  
-																														  
-		 
-																			 
-									  
-															  
-																																																						  
-																							
-																																																																																																																																																																				 
-																																																						  
-	  
-	
-   
+			if (!initialized) {   
 			  return React.createElement('div', { className: 'text-center py-20' }, 
 				React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
 				React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
@@ -1551,97 +1418,11 @@
 				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
 				  // Controllo se il giorno è bloccato:
 				  // 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
-				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)
-		
-							  
-						
-							  
-							
-									  
-																			  
-																	
-			 
-		   
-		 
-		
-																																													   
-															 
-																												 
-																 
-																														  
-																																																												   
-										 
-		   
-		  
-		 
-	  
-			   
-								  
-					  
-																																								  
-																											  
-																														 
-		
-												  
-																																												
-															   
-																																																										 
-		 
-		
-	  
-					
-														 
-							
-																								
-												  
-																					
-																	 
-		
-							  
-						
-								  
-							
-										  
-																				  
-																		
-			 
-		   
-		 
-		
-																																																	
-															 
-																												 
-																 
-																														  
-																																																												   
-										 
-		   
-		  
-		 
-	  
-			   
-								  
-					  
-																																								  
-																											  
-																														 
-		
-												  
-																																												
-															   
-																																																										  
-		 
-		
-																   
-						   
-																							   
+				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)   																		   
 				  const dayNotYetAvailable = index > maxDay;
 				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
 				  const locked = dayNotYetAvailable || previousDayNotCompleted;
-				  
-												 
-								  
-				  
+	
 				  // Debug per ogni giorno
 				  if (i < 10) { // Solo primi 10 giorni per evitare spam
 					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
@@ -1683,48 +1464,10 @@
 							  return `Completato! ⭐ ${displayScore}`;
 							})()
 						  : "🔹 Clicca per iniziare!"
-		   
 					)
 				  );
-				})
-											   
-						 
-							  
-																																																																																																											
-													  
-																																													
-																																																																									  
-		   
-		  
-								
-							  
+				})		  
 			  ),
-													  
-																																													
-																																																																									  
-		   
-		  
-								
-							  
-																																																																																																											
-													  
-																																													
-																																																																									  
-		   
-		  
-								
-							  
-																																																																																																											
-													  
-																																													
-																																																																									  
-		   
-		  
-	   
-	  
-							  
-			 
-			  
 
 			  // ========================================
 			  // RENDERING TEST PERIODICI
@@ -2012,386 +1755,6 @@
 			  )
 			);
 		  }
-	  
-	  
-	  
-		  // ========================================
-		  // MODAL EXPORT MIGLIORATO E USER-FRIENDLY
-		  // ========================================
-		  
-		  function exportProgress() {
-			try {
-			  updateSaveIndicator('saving');
-			  
-			  const code = exportProgressCode();
-			  const finalCode = `ADVENT_V2_${code}`;
-			  
-			  showExportModal(finalCode);
-			  
-			  console.log('📤 Export completato, modal mostrato');
-			  return finalCode;
-			  
-			} catch (error) {
-			  console.error('❌ Errore esportazione:', error);
-			  showToast('Errore durante l\'esportazione', 'error');
-			  updateSaveIndicator('error');
-			}
-		  }
-	  
-		  // ========================================
-		  // MODAL IMPORT MIGLIORATO CON VALIDAZIONE
-		  // ========================================
-		  
-		  function importProgress() {
-			showImportModal();
-		  }
-		  
-		  function executeImport() {
-			const code = document.getElementById('importCode').value.trim();
-			const feedback = document.getElementById('importFeedback');
-			
-			if (!code) {
-			  showImportFeedback('❌ Inserisci un codice valido', 'error');
-			  return;
-			}
-			
-			updateSaveIndicator('saving');
-			showImportFeedback('🔄 Importazione in corso...', 'info');
-			
-			// Pulizia codice
-			const cleanCode = code.replace(/ADVENT_V2_|ADVENT_/g, '');
-			
-			const result = importProgressCode(cleanCode);
-			
-			if (result.success) {
-			  showImportFeedback(`✅ Dati importati con successo! (${result.usersImported} utenti)`, 'success');
-			  
-			  // Auto-chiudi e aggiorna dopo successo
-			  setTimeout(() => {
-				closeImportModal();
-				autoSave();
-				
-				// Se l'utente corrente è stato aggiornato, ricarica interfaccia
-				if (currentUser) {
-				  window.dispatchEvent(new CustomEvent('dataImported'));
-				  location.reload();
-				}
-			  }, 1500);
-			  
-			} else {
-			  showImportFeedback(`❌ Errore: ${result.error}`, 'error');
-			  updateSaveIndicator('error');
-			}
-		  }
-		  
-		  function showImportFeedback(message, type) {
-			const feedback = document.getElementById('importFeedback');
-			if (feedback) {
-			  feedback.innerHTML = message;
-			  feedback.className = `import-feedback ${type}`;
-			}
-		  }
-	  
-		  // ========================================
-		  // MODAL EXPORT CON ISTRUZIONI CHIARE
-		  // ========================================
-		  function showExportModal(code) {
-			const modal = document.createElement('div');
-			modal.className = 'backup-modal';
-			modal.innerHTML = `
-			  <div class="backup-content">
-				<h2>📤 Esporta Progressi</h2>
-				<p class="backup-instructions">
-				  <strong>Copia questo codice e salvalo in un posto sicuro:</strong><br>
-				  Potrai usarlo per ripristinare i progressi su altri browser o dispositivi.
-				</p>
-				<textarea readonly id="exportCode" class="backup-code">${code}</textarea>
-				<div class="backup-actions">
-				  <button onclick="copyBackupCode()" class="btn btn--primary">📋 Copia Codice</button>
-				  <button onclick="closeBackupModal()" class="btn btn--secondary">Chiudi</button>
-				</div>
-				<p class="backup-note">💡 <strong>Dove salvarlo:</strong> WhatsApp a te stesso, email, note del telefono, cloud drive</p>
-				<div class="backup-info">
-				  <small>🔒 Codice sicuro • ⏰ ${new Date().toLocaleString('it-IT')} • 👥 ${Object.keys(window.ADVENT_DATA.users).length} utenti</small>
-				</div>
-			  </div>
-			`;
-			
-			document.body.appendChild(modal);
-			
-			// Auto-select text per facile copia
-			const textarea = document.getElementById('exportCode');
-			if (textarea) {
-			  textarea.select();
-			  textarea.focus();
-			}
-		  }
-		  
-		  function showImportModal() {
-			const modal = document.createElement('div');
-			modal.className = 'backup-modal';
-			modal.innerHTML = `
-			  <div class="backup-content">
-				<h2>📥 Importa Progressi</h2>
-				<p class="backup-instructions">
-				  <strong>Incolla qui il codice di backup</strong> per ripristinare i progressi:
-				</p>
-				<textarea id="importCode" class="backup-code" placeholder="Incolla il codice qui...\n\nPuoi incollare codici che iniziano con:\n• ADVENT_V2_...\n• ADVENT_...\n• Oppure il codice diretto"></textarea>
-				<div id="importFeedback" class="import-feedback"></div>
-				<div class="backup-actions">
-				  <button onclick="executeImport()" class="btn btn--primary">✅ Importa Dati</button>
-				  <button onclick="closeBackupModal()" class="btn btn--secondary">Annulla</button>
-				</div>
-				<p class="backup-note">⚠️ I dati attuali verranno <strong>uniti</strong> con quelli importati (mantiene il punteggio migliore per ogni giorno)</p>
-			  </div>
-			`;
-			
-			document.body.appendChild(modal);
-			
-			// Focus sul campo di input
-			const textarea = document.getElementById('importCode');
-			if (textarea) {
-			  textarea.focus();
-			  
-			  // Auto-import al paste
-			  textarea.addEventListener('paste', () => {
-				setTimeout(() => {
-				  if (textarea.value.trim()) {
-					showImportFeedback('📋 Codice incollato! Clicca "Importa Dati" per continuare.', 'info');
-				  }
-				}, 100);
-			  });
-			}
-		  }
-	  
-		  // ========================================
-		  // GESTIONE MODALS UNIFICATA
-		  // ========================================
-		  function closeBackupModal() {
-			const modals = document.querySelectorAll('.backup-modal, .export-modal');
-			modals.forEach(modal => {
-			  modal.style.animation = 'fadeOut 0.3s ease-out';
-			  setTimeout(() => modal.remove(), 300);
-			});
-		  }
-		  
-		  function closeExportModal() {
-			closeBackupModal();
-		  }
-		  
-		  function closeImportModal() {
-			closeBackupModal();
-		  }
-		  
-		  // Click outside to close
-		  document.addEventListener('click', (e) => {
-			if (e.target.classList.contains('backup-modal')) {
-			  closeBackupModal();
-			}
-		  });
-		  
-		  // Escape key to close
-		  document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') {
-			  closeBackupModal();
-			}
-		  });
-	  
-		  // ========================================
-		  // COPIA NEGLI APPUNTI CON FEEDBACK MIGLIORATO
-		  // ========================================
-		  function copyBackupCode() {
-			const textarea = document.getElementById('exportCode');
-			if (!textarea) return;
-			
-			const code = textarea.value;
-			
-			if (navigator.clipboard) {
-			  navigator.clipboard.writeText(code).then(() => {
-				showToast('📋 Codice copiato negli appunti!', 'success');
-				
-				// Cambio temporaneo del bottone
-				const btn = event.target;
-				const originalText = btn.innerHTML;
-				btn.innerHTML = '✅ Copiato!';
-				btn.style.background = '#10b981';
-				
-				setTimeout(() => {
-				  btn.innerHTML = originalText;
-				  btn.style.background = '';
-				}, 2000);
-				
-			  }).catch(() => {
-				fallbackCopyToClipboard(code);
-			  });
-			} else {
-			  fallbackCopyToClipboard(code);
-			}
-		  }
-		  
-		  function copyToClipboard(text) {
-			copyBackupCode();
-		  }
-	  
-		  function fallbackCopyToClipboard(text) {
-			const textArea = document.createElement('textarea');
-			textArea.value = text;
-			textArea.style.position = 'fixed';
-			textArea.style.top = '0';
-			textArea.style.left = '0';
-			textArea.style.width = '2em';
-			textArea.style.height = '2em';
-			textArea.style.padding = '0';
-			textArea.style.border = 'none';
-			textArea.style.outline = 'none';
-			textArea.style.boxShadow = 'none';
-			textArea.style.background = 'transparent';
-			document.body.appendChild(textArea);
-			textArea.select();
-			
-			try {
-			  const successful = document.execCommand('copy');
-			  if (successful) {
-				alert('✅ Codice copiato negli appunti!');
-			  } else {
-				alert('❌ Impossibile copiare automaticamente. Seleziona e copia manualmente.');
-			  }
-			} catch (err) {
-			  alert('❌ Impossibile copiare automaticamente. Seleziona e copia manualmente.');
-			}
-			
-			document.body.removeChild(textArea);
-			closeExportModal();
-		  }
-	  
-		  // ========================================
-		  // CLASSIFICA CON MEMORIA PURA
-		  // ========================================
-		  function showLeaderboard() {
-			if (!currentUser) {
-			  console.error('❌ Nessun utente loggato per la classifica');
-			  return;
-			}
-			
-			console.log('=== CARICAMENTO CLASSIFICA DA MEMORIA ===');
-			console.log('👤 Utente corrente:', currentUser);
-			
-			try {
-			  // Ottieni classifica dalla memoria
-			  const leaderboardData = getLeaderboard();
-			  console.log('📊 Risultati classifica da memoria:', leaderboardData);
-			  
-			  // Crea modal classifica
-			  const modal = document.createElement('div');
-			  modal.className = 'full-screen-modal';
-			  
-			  console.log('🎨 Creazione modal con dati finali:', leaderboardData);
-			  
-			  const content = leaderboardData.length === 0 ? 
-				`<div style="text-align: center; padding: 2rem;">
-				  <h3 style="color: #888; margin-bottom: 1rem;">🤷‍♂️ Nessun dato disponibile</h3>
-				  <p style="color: #666; font-size: 0.9rem;">Completa almeno un giorno per apparire in classifica!</p>
-				  <div style="margin-top: 1rem; font-size: 0.8rem; color: #555; font-family: monospace;">
-					<p>Debug: Utente = ${currentUser}</p>
-					<p>Modalità: Memoria JavaScript pura</p>
-					<p>Utenti nella memoria: ${Object.keys(window.ADVENT_DATA.users).join(', ')}</p>
-					<p>Progressi trovati: ${Object.keys(window.ADVENT_DATA.users).map(u => Object.keys(window.ADVENT_DATA.users[u].progress).length).join(', ')}</p>
-				  </div>
-				</div>` :
-				leaderboardData.map((user, index) => {
-				  const isCurrentUser = user.username === currentUser;
-				  const scoreColor = user.score >= 0 ? '#FFD700' : '#FF6B6B';
-				  const scoreText = user.score >= 0 ? user.score : `${user.score} (negativo)`;
-				  
-				  return `
-					<div class="leaderboard-row ${isCurrentUser ? 'current-user' : ''}">
-					  <div style="display: flex; align-items: center; gap: 1rem;">
-						<div class="rank-badge ${index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : ''}">
-						  ${index + 1}
-						</div>
-						<div>
-						  <div style="font-weight: bold; color: white;">
-							${user.name} ${isCurrentUser ? '(Tu)' : ''}
-						  </div>
-						  <div style="font-size: 0.9rem; color: #ccc;">
-							${user.days}/31 giorni completati
-						  </div>
-						</div>
-					  </div>
-					  <div style="text-align: right;">
-						<div style="font-size: 1.5rem; font-weight: bold; color: ${scoreColor};">
-						  ⭐ ${scoreText}
-						</div>
-					  </div>
-					</div>
-				  `;
-				}).join('');
-			  
-			  modal.innerHTML = `
-				<button class="close-button" onclick="this.parentElement.remove()">×</button>
-				<div class="leaderboard">
-				  <h2 class="leaderboard-title">🏆 Classifica Generale</h2>
-				  <div style="margin-bottom: 1rem; text-align: center; font-size: 0.9rem; color: #999;">
-					Aggiornata: ${new Date().toLocaleTimeString('it-IT')}
-				  </div>
-				  <div style="margin-bottom: 1rem; text-align: center; font-size: 0.8rem; color: #666; background: rgba(255,215,0,0.1); padding: 0.5rem; border-radius: 0.5rem;">
-					⚠️ Dati salvati solo in questa sessione. Usa 'Esporta' per backup permanente.
-				  </div>
-				  ${content}
-				</div>
-			  `;
-			  
-			  document.body.appendChild(modal);
-			  console.log('✅ Classifica mostrata con successo');
-			  
-			} catch (error) {
-			  console.error('❌ Errore caricamento classifica:', error);
-			  showToast('Errore caricamento classifica', 'error');
-			}
-		  }
-		  
-		  // Inizializzazione semplificata
-		  function initializeApp() {
-			console.log('🚀 Inizializzando Calendario dell\'Avvento semplificato...');
-			
-			// Carica progresso dalla memoria se presente
-			const progress = loadProgress();
-			if (Object.keys(progress).length > 0) {
-			  console.log('💾 Progressi trovati in memoria JavaScript:', Object.keys(progress).length, 'giorni');
-			}
-		  }
-	  
-		  // Inizializzazione DOM semplificata
-		  document.addEventListener('DOMContentLoaded', function() {
-			console.log('🚀 DOM caricato, avvio calendario semplificato...');
-			
-			initializeApp();
-			
-			// Nascondi elementi non necessari e mostra app
-			const mainApp = document.getElementById('mainApp');
-			if (mainApp) {
-			  mainApp.style.display = 'block';
-			}
-			
-			// Avvia app React direttamente
-			try {
-			  const container = document.getElementById('app');
-			  if (container) {
-				const root = ReactDOM.createRoot(container);
-				root.render(React.createElement(App));
-				console.log('✅ App calendario inizializzata con successo');
-				
-				setTimeout(() => {
-				  showToast('🎄 Calendario dell\'Avvento caricato! Buon divertimento!', 'success');
-				}, 1000);
-			  }
-			} catch (error) {
-			  console.error('❌ Errore inizializzazione app:', error);
-			  showToast('Errore caricamento calendario', 'error');
-			}
-		  });
-		  
-	  
 		</script>
 	 </body>
 </html>
