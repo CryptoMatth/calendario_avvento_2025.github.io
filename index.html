@@ -387,6 +387,47 @@
 		      box-shadow: 0 6px 25px rgba(255, 215, 0, 0.9);
 		    }
 		  }
+
+			
+	  /* ===== NOTIFICA "NUOVO" SUL GUFO ===== */
+	  .owl-notification {
+	    position: absolute;
+	    top: -5px;
+	    right: -5px;
+	    background: #FF0000;
+	    color: white;
+	    border: 2px solid #FFD700;
+	    border-radius: 50%;
+	    width: 28px;
+	    height: 28px;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    font-size: 0.75rem;
+	    font-weight: bold;
+	    animation: bounce-notification 1s infinite, pulse-notification 2s infinite;
+	    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+	    z-index: 1;
+	  }
+
+	  @keyframes bounce-notification {
+	    0%, 100% { transform: translateY(0); }
+	    50% { transform: translateY(-5px); }
+	  }
+
+	  @keyframes pulse-notification {
+	    0%, 100% { 
+	      box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+	    }
+	    50% { 
+	      box-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.5);
+	    }
+	  }
+
+	  .owl-notification.hidden {
+	    display: none;
+	  }
+
 	
 		  /* ===== STILI PER IL MODAL ===== */
 		  .modal-overlay {
@@ -517,8 +558,10 @@
 
 		<!-- ===== PULSANTE GUFO NATALIZIO ===== -->
 		<button class="owl-button" id="owlButton" aria-label="Apri informazioni sul gioco">
-			<span>🦉</span>
+		  <span>🦉</span>
+		  <span class="owl-notification" id="owlNotification">NEW</span>
 		</button>
+
 
 		<!-- ===== MODAL INFORMAZIONI GIOCO ===== -->
 		<div id="gameModal" class="modal-overlay" style="display: none;">
@@ -610,40 +653,73 @@
 			}
 
 
-			  // ===== GESTIONE MODAL GUFO NATALIZIO =====
-			  (function() {
-			    const owlButton = document.getElementById('owlButton');
-			    const gameModal = document.getElementById('gameModal');
-			    const closeModal = document.getElementById('closeModal');
-		
-			    // Apri il modal quando si clicca sul pulsante gufo
-			    owlButton.addEventListener('click', function() {
-			      gameModal.style.display = 'flex';
-			      document.body.style.overflow = 'hidden';
-			    });
-		
-			    // Chiudi il modal quando si clicca sulla X
-			    closeModal.addEventListener('click', function() {
-			      gameModal.style.display = 'none';
-			      document.body.style.overflow = 'auto';
-			    });
-		
-			    // Chiudi il modal quando si clicca fuori dal contenuto
-			    gameModal.addEventListener('click', function(e) {
-			      if (e.target === gameModal) {
-			        gameModal.style.display = 'none';
-			        document.body.style.overflow = 'auto';
-			      }
-			    });
-		
-			    // Chiudi il modal con il tasto ESC
-			    document.addEventListener('keydown', function(e) {
-			      if (e.key === 'Escape' && gameModal.style.display === 'flex') {
-			        gameModal.style.display = 'none';
-			        document.body.style.overflow = 'auto';
-			      }
-			    });
-			  })();
+
+	  // ===== GESTIONE MODAL GUFO NATALIZIO CON NOTIFICA =====
+	  (function() {
+	    const owlButton = document.getElementById('owlButton');
+	    const gameModal = document.getElementById('gameModal');
+	    const closeModal = document.getElementById('closeModal');
+	    const owlNotification = document.getElementById('owlNotification');
+	    
+	    // Chiave per localStorage
+	    const MODAL_VIEWED_KEY = 'owlModalViewed';
+	    
+	    // Controlla se l'utente ha già visualizzato il modal
+	    function hasViewedModal() {
+	      return localStorage.getItem(MODAL_VIEWED_KEY) === 'true';
+	    }
+	    
+	    // Segna il modal come visualizzato
+	    function markModalAsViewed() {
+	      localStorage.setItem(MODAL_VIEWED_KEY, 'true');
+	    }
+	    
+	    // Nascondi la notifica
+	    function hideNotification() {
+	      if (owlNotification) {
+	        owlNotification.classList.add('hidden');
+	      }
+	    }
+	    
+	    // Mostra/nascondi la notifica al caricamento della pagina
+	    if (hasViewedModal()) {
+	      hideNotification();
+	    }
+
+	    // Apri il modal quando si clicca sul pulsante gufo
+	    owlButton.addEventListener('click', function() {
+	      gameModal.style.display = 'flex';
+	      document.body.style.overflow = 'hidden';
+	      
+	      // Nascondi la notifica e segna come visualizzato
+	      hideNotification();
+	      markModalAsViewed();
+	    });
+
+	    // Chiudi il modal quando si clicca sulla X
+	    closeModal.addEventListener('click', function() {
+	      gameModal.style.display = 'none';
+	      document.body.style.overflow = 'auto';
+	    });
+
+	    // Chiudi il modal quando si clicca fuori dal contenuto
+	    gameModal.addEventListener('click', function(e) {
+	      if (e.target === gameModal) {
+	        gameModal.style.display = 'none';
+	        document.body.style.overflow = 'auto';
+	      }
+	    });
+
+	    // Chiudi il modal con il tasto ESC
+	    document.addEventListener('keydown', function(e) {
+	      if (e.key === 'Escape' && gameModal.style.display === 'flex') {
+	        gameModal.style.display = 'none';
+	        document.body.style.overflow = 'auto';
+	      }
+	    });
+	  })();
+
+
 
 			
 	  
