@@ -389,44 +389,42 @@
 		  }
 
 			
-	  /* ===== NOTIFICA "NUOVO" SUL GUFO ===== */
-	  .owl-notification {
-	    position: absolute;
-	    top: -5px;
-	    right: -5px;
-	    background: #FF0000;
-	    color: white;
-	    border: 2px solid #FFD700;
-	    border-radius: 50%;
-	    width: 28px;
-	    height: 28px;
-	    display: flex;
-	    align-items: center;
-	    justify-content: center;
-	    font-size: 0.75rem;
-	    font-weight: bold;
-	    animation: bounce-notification 1s infinite, pulse-notification 2s infinite;
-	    box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-	    z-index: 1;
-	  }
+  /* ===== NOTIFICA CON PACCO REGALO 🎁 ===== */
+  .owl-notification {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    animation: bounce-gift 0.8s infinite, pulse-gift 2s infinite;
+    z-index: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+  }
 
-	  @keyframes bounce-notification {
-	    0%, 100% { transform: translateY(0); }
-	    50% { transform: translateY(-5px); }
-	  }
+  @keyframes bounce-gift {
+    0%, 100% { 
+      transform: translateY(0) rotate(0deg);
+    }
+    50% { 
+      transform: translateY(-6px) rotate(-5deg);
+    }
+  }
 
-	  @keyframes pulse-notification {
-	    0%, 100% { 
-	      box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-	    }
-	    50% { 
-	      box-shadow: 0 0 20px rgba(255, 0, 0, 1), 0 0 30px rgba(255, 0, 0, 0.5);
-	    }
-	  }
+  @keyframes pulse-gift {
+    0%, 100% { 
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+    }
+    50% { 
+      filter: drop-shadow(0 4px 8px rgba(255, 215, 0, 0.6));
+    }
+  }
 
-	  .owl-notification.hidden {
-	    display: none;
-	  }
+  .owl-notification.hidden {
+    display: none;
+  }
+
 
 	
 		  /* ===== STILI PER IL MODAL ===== */
@@ -559,7 +557,7 @@
 		<!-- ===== PULSANTE GUFO NATALIZIO ===== -->
 		<button class="owl-button" id="owlButton" aria-label="Apri informazioni sul gioco">
 		  <span>🦉</span>
-		  <span class="owl-notification" id="owlNotification">NEW</span>
+		  <span class="owl-notification" id="owlNotification">🎁</span>
 		</button>
 
 
