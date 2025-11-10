@@ -354,7 +354,7 @@
 		  .owl-button {
 		    position: fixed;
 		    top: 20px;
-		    right: 20px;
+		    right: 90px;
 		    background: linear-gradient(135deg, #8B0000, #228B22);
 		    border: 3px solid #FFD700;
 		    border-radius: 50%;
@@ -708,7 +708,7 @@
 				closeModal.addEventListener('click', function() {
 				  gameModal.style.display = 'none';
 				  document.body.style.overflow = 'auto';
-				  owlButton.classList.remove('inactive');
+				  
 				});
 
 				// Chiudi il modal quando si clicca fuori dal contenuto
@@ -716,7 +716,7 @@
 				  if (e.target === gameModal) {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					  owlButton.classList.remove('inactive');
+					
 				  }
 				});
 
@@ -725,7 +725,7 @@
 				  if (e.key === 'Escape' && gameModal.style.display === 'flex') {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					  owlButton.classList.remove('inactive');
+					
 				  }
 				});
 			})();
@@ -1454,7 +1454,7 @@
 					if (!locked) {
 					  setActiveModal(i);
 					  setFeedback("");
-					owlButton.classList.add('inactive');
+					
 					  
 					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
 					  if (!shuffledOptions[i]) {
