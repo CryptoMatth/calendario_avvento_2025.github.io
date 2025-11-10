@@ -788,11 +788,19 @@
 			}
 
 
-			// ===== GESTIONE IMMAGINE INGRANDIBILE SHERLOCK =====
+			// ===== GESTIONE IMMAGINE INGRANDIBILE SHERLOCK (VERSIONE CORRETTA) =====
 			(function() {
 			    console.log('🔍 Inizializzo setup immagine Sherlock...');
 			    
+			    let listenerAdded = false;  // 🆕 NUOVO: Flag per evitare duplicati
+			    
 			    function setupImageZoom() {
+			        // 🆕 NUOVO: Se il listener è già stato aggiunto, non aggiungere di nuovo
+			        if (listenerAdded) {
+			            console.log('✅ Listener già aggiunto, skippando...');
+			            return;
+			        }
+			        
 			        const owlModalImage = document.getElementById('owlModalImage');
 			        
 			        if (!owlModalImage) {
@@ -800,7 +808,10 @@
 			            return;
 			        }
 			        
-			        console.log('✅ Elemento owlModalImage trovato, aggiungo listener...');
+			        console.log('✅ Elemento owlModalImage trovato, aggiungo listener UNA VOLTA SOLA...');
+			        
+			        // 🆕 NUOVO: Segna come aggiunto
+			        listenerAdded = true;
 			        
 			        // Aggiungi listener al click
 			        owlModalImage.addEventListener('click', function(e) {
@@ -847,6 +858,7 @@
 			            };
 			            closeBtn.onclick = (evt) => {
 			                evt.stopPropagation();
+			                console.log('🖼️ Pulsante X cliccato, rimuovendo modal');
 			                modal.remove();
 			            };
 			            
@@ -897,20 +909,23 @@
 			            console.log('🖼️ Modal immagine creato e visualizzato');
 			        });
 			        
-			        console.log('✅ Setup immagine Sherlock completato con successo');
+			        console.log('✅ Setup immagine Sherlock completato');
 			    }
 			    
-			    // Esegui al caricamento del DOM
+			    // 🆕 NUOVO: Esegui UNA VOLTA SOLA al caricamento del DOM
 			    if (document.readyState === 'loading') {
 			        document.addEventListener('DOMContentLoaded', setupImageZoom);
 			    } else {
-			        // Se il DOM è già caricato
 			        setupImageZoom();
 			    }
 			    
-			    // Fallback: esegui anche dopo un ritardo
-			    setTimeout(setupImageZoom, 1000);
+			    // 🆕 NUOVO: Fallback SENZA DUPLICARE il listener
+			    // Usa setTimeout solo se il DOM non è ancora caricato
+			    if (document.readyState === 'loading') {
+			        setTimeout(setupImageZoom, 1000);
+			    }
 			})();
+
 
 			// ===== DATI DEI MESSAGGI PERIODICI =====
 			const PERIODIC_MESSAGES = {
