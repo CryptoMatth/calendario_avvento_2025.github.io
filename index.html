@@ -1099,10 +1099,13 @@
 			  }
 
 				// ===== NUOVA: CASELLA DI POSTA DINAMICA =====
-				function showMailboxModal() {
-				  // Calcola quali messaggi mostrare
-				  const messages = [];
+				// ===== EVENTO: Click sul gufo =====
+				owlButton.addEventListener('click', function() {
+				  console.log('🦉 Click gufo - Aprendo la casella di posta');
+				  
+				  // Accedi ai dati direttamente dal localStorage
 				  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+				  const messages = [];
 				  
 				  // Struttura dati di tutti i messaggi disponibili
 				  const allMessages = [
@@ -1158,12 +1161,18 @@
 				  
 				  // Aggiungi messaggi milestone se il giorno è completato
 				  allMessages.slice(1).forEach(msg => {
-				    if (msg.triggerDay && progress[msg.triggerDay - 1]?.solved) {
-				      messages.unshift({
-				        ...msg,
-				        isOpen: readMessages.includes(msg.id),
-				        icon: readMessages.includes(msg.id) ? '📭' : '📬'
-				      });
+				    if (msg.triggerDay) {
+				      // Leggi i dati salvati da localStorage (gameProgress)
+				      const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+				      const dayEntry = savedProgress[msg.triggerDay - 1];
+				      
+				      if (dayEntry && dayEntry.solved) {
+				        messages.unshift({
+				          ...msg,
+				          isOpen: readMessages.includes(msg.id),
+				          icon: readMessages.includes(msg.id) ? '📭' : '📬'
+				        });
+				      }
 				    }
 				  });
 				  
@@ -1213,7 +1222,11 @@
 				    
 				    // Click per leggere
 				    item.onclick = () => {
-				      localStorage.setItem('mailbox_read', JSON.stringify([...readMessages, msg.id]));
+				      const currentRead = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+				      if (!currentRead.includes(msg.id)) {
+				        currentRead.push(msg.id);
+				        localStorage.setItem('mailbox_read', JSON.stringify(currentRead));
+				      }
 				      
 				      // Aggiorna icona
 				      icon.innerHTML = '📭';
@@ -1257,7 +1270,8 @@
 				  document.body.appendChild(mailboxModal);
 				  
 				  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
-				}
+				});
+
 
 			
 			 
