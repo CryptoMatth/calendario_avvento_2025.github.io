@@ -1079,7 +1079,7 @@
 							})
 						),
 						!isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(testNumber), disabled: Object.keys(testAnswers).length < test.questions.length, style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: Object.keys(testAnswers).length < test.questions.length ? "#666" : "#4ade80", color: "#000", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", fontWeight: "bold", cursor: "pointer" } }, "Invia Risposte"),
-						isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(null), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
+						isSubmitted && React.createElement("button", { onClick: () => onClose(), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
 					)
 				);
 			}
