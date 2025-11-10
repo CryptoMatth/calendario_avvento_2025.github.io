@@ -1098,370 +1098,326 @@
 			    hideNotification();
 			  }
 
-				// ===== EVENTO: Click sul gufo =====
-				owlButton.addEventListener('click', function() {
-				  console.log('🦉 Click gufo - Aprendo la casella di posta');
-				  
-				  // Leggi i dati salvati
-				  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-				  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
-				  
-				  const messages = [];
-				  
-				  // FUNZIONE HELPER PER CREARE MESSAGGI CON FALLBACK ROBUSTO
-				  function createMessage(id, triggerDay, icon, subject, content, image, description) {
-				    return {
-				      id: id,
-				      triggerDay: triggerDay,
-				      icon: icon,
-				      subject: subject || 'Messaggio',
-				      content: content || '',
-				      image: image || 'fotoSherlocknatalizio.png',
-				      fullDescription: description || content || 'Messaggio'
-				    };
-				  }
-				  
-				  // ===== MESSAGGI CON FALLBACK ROBUSTO =====
-				  const allMessages = [
-				    createMessage(
-				      'welcome',
-				      null,
-				      '📬',
-				      'Benvenuto al Calendario',
-				      'Benvenuto al Calendario dell\'Avvento!',
-				      'fotoSherlocknatalizio.png',
-				      '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p><p style="margin-bottom: 15px;"><strong>Obiettivo del gioco</strong><br>Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.</p>'
-				    ),
-				    createMessage(
-				      'day5_milestone',
-				      5,
-				      '📬',
-				      PERIODIC_MESSAGES?.day5milestone?.title || 'Mezzo Cammino!',
-				      PERIODIC_MESSAGES?.day5milestone?.subtitle || 'Fantastico! Hai completato 5 giorni!',
-				      PERIODIC_MESSAGES?.day5milestone?.image || 'fotoSherlocknatalizio.png',
-				      PERIODIC_MESSAGES?.day5milestone?.description || 'Fantastico! Hai completato il primo quinto del calendario!'
-				    ),
-				    createMessage(
-				      'day10_milestone',
-				      10,
-				      '📬',
-				      PERIODIC_MESSAGES?.day10milestone?.title || 'Primo Test Completato!',
-				      PERIODIC_MESSAGES?.day10milestone?.subtitle || 'Complimenti! Hai superato il primo test!',
-				      PERIODIC_MESSAGES?.day10milestone?.image || 'fotoSherlocknatalizio.png',
-				      PERIODIC_MESSAGES?.day10milestone?.description || 'Complimenti! Hai superato il primo test diventando un vero esperto di costellazioni.'
-				    ),
-				    createMessage(
-				      'day15_milestone',
-				      15,
-				      '📬',
-				      'Meta Calendario!',
-				      'Sei a metà del percorso!',
-				      'fotoSherlocknatalizio.png',
-				      'Incredibile! Sei arrivato a metà del percorso! Metà del cammino completata con successo. Continua così, il traguardo finale è sempre più vicino!'
-				    ),
-				    createMessage(
-				      'day20_milestone',
-				      20,
-				      '📬',
-				      'Home Stretch!',
-				      'Ormai sei quasi alla fine!',
-				      'fotoSherlocknatalizio.png',
-				      'Stai per arrivare alla fine! Soltanto 5 giorni ancora e avrai completato l\'intero Calendario dell\'Avvento!'
-				    ),
-				    createMessage(
-				      'day25_milestone',
-				      25,
-				      '📬',
-				      'Finale!',
-				      'Ultimi giorni fino a Natale!',
-				      'fotoSherlocknatalizio.png',
-				      'Ultimi giorni fino a Natale! Stai per diventare un vero astronomo! Completa gli ultimi giorni e ricevi il tuo certificato di esperto costellazioni!'
-				    )
-				  ];
-				  
-				  // Messaggio di benvenuto sempre presente
-				  messages.push({
-				    ...allMessages,
-				    isOpen: readMessages.includes('welcome'),
-				    icon: readMessages.includes('welcome') ? '📭' : '📬'
-				  });
-				  
-				  // Aggiungi messaggi milestone se il giorno è completato
-				  allMessages.slice(1).forEach(msg => {
-				    if (msg.triggerDay) {
-				      const dayEntry = savedProgress[msg.triggerDay - 1];
-				      if (dayEntry && dayEntry.solved) {
-				        messages.unshift({
-				          ...msg,
-				          isOpen: readMessages.includes(msg.id),
-				          icon: readMessages.includes(msg.id) ? '📭' : '📬'
-				        });
-				      }
-				    }
-				  });
-				  
-				  // ===== CREA MODAL CASELLA DI POSTA =====
-				  const mailboxModal = document.createElement('div');
-				  mailboxModal.className = 'mailbox-modal';
-				  
-				  const container = document.createElement('div');
-				  container.className = 'mailbox-container';
-				  
-				  // Pulsante chiudi
-				  const closeBtn = document.createElement('button');
-				  closeBtn.className = 'mailbox-close-btn';
-				  closeBtn.innerHTML = '×';
-				  closeBtn.onclick = (e) => {
-				    e.stopPropagation();
-				    mailboxModal.remove();
-				  };
-				  
-				  // Titolo
-				  const title = document.createElement('h2');
-				  title.className = 'mailbox-title';
-				  title.innerHTML = '📬 Casella di Posta';
-				  
-				  // Lista messaggi
-				  const messagesList = document.createElement('div');
-				  messagesList.className = 'messages-list';
-				  
-				  messages.forEach((msg) => {
-				    const item = document.createElement('div');
-				    item.className = 'mailbox-item';
-				    
-				    const header = document.createElement('div');
-				    header.className = 'mailbox-item-header';
-				    
-				    const icon = document.createElement('span');
-				    icon.className = 'mailbox-icon';
-				    icon.innerHTML = msg.icon;
-				    
-				    const subject = document.createElement('span');
-				    subject.className = 'mailbox-subject';
-				    // IMPORTANTE: FALLBACK per evitare "undefined"
-				    subject.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Nuovo Messaggio';
-				    
-				    header.appendChild(icon);
-				    header.appendChild(subject);
-				    item.appendChild(header);
-				    
-				    // CLICK - APRE MODAL SEPARATO
-				    item.onclick = (e) => {
-				      e.stopPropagation();
-				      
-				      // Segna come letto
-				      if (!readMessages.includes(msg.id)) {
-				        readMessages.push(msg.id);
-				        localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
-				      }
-				      
-				      // Aggiorna icona
-				      icon.innerHTML = '📭';
-				      
-				      // ===== CREA MODAL DEL MESSAGGIO COMPLETO =====
-				      const messageModal = document.createElement('div');
-				      messageModal.style.position = 'fixed';
-				      messageModal.style.top = '0';
-				      messageModal.style.left = '0';
-				      messageModal.style.width = '100%';
-				      messageModal.style.height = '100%';
-				      messageModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
-				      messageModal.style.display = 'flex';
-				      messageModal.style.alignItems = 'center';
-				      messageModal.style.justifyContent = 'center';
-				      messageModal.style.zIndex = '3000';
-				      messageModal.style.backdropFilter = 'blur(5px)';
-				      messageModal.style.overflowY = 'auto';
-				      messageModal.style.padding = '20px';
-				      
-				      const messageContent = document.createElement('div');
-				      messageContent.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
-				      messageContent.style.border = '3px solid #FFD700';
-				      messageContent.style.borderRadius = '20px';
-				      messageContent.style.padding = '40px';
-				      messageContent.style.maxWidth = '700px';
-				      messageContent.style.width = '100%';
-				      messageContent.style.maxHeight = '90vh';
-				      messageContent.style.overflowY = 'auto';
-				      messageContent.style.position = 'relative';
-				      messageContent.style.boxShadow = '0 10px 50px rgba(255, 215, 0, 0.3)';
-				      
-				      // Pulsante chiudi X
-				      const closeMessageBtn = document.createElement('button');
-				      closeMessageBtn.innerHTML = '×';
-				      closeMessageBtn.style.position = 'absolute';
-				      closeMessageBtn.style.top = '15px';
-				      closeMessageBtn.style.right = '15px';
-				      closeMessageBtn.style.background = '#8B0000';
-				      closeMessageBtn.style.color = 'white';
-				      closeMessageBtn.style.border = '2px solid #FFD700';
-				      closeMessageBtn.style.borderRadius = '50%';
-				      closeMessageBtn.style.width = '40px';
-				      closeMessageBtn.style.height = '40px';
-				      closeMessageBtn.style.fontSize = '1.5rem';
-				      closeMessageBtn.style.cursor = 'pointer';
-				      closeMessageBtn.style.transition = 'all 0.3s';
-				      closeMessageBtn.style.display = 'flex';
-				      closeMessageBtn.style.alignItems = 'center';
-				      closeMessageBtn.style.justifyContent = 'center';
-				      
-				      closeMessageBtn.onmouseover = () => {
-				        closeMessageBtn.style.background = '#FF0000';
-				        closeMessageBtn.style.transform = 'rotate(90deg)';
-				      };
-				      closeMessageBtn.onmouseout = () => {
-				        closeMessageBtn.style.background = '#8B0000';
-				        closeMessageBtn.style.transform = 'rotate(0deg)';
-				      };
-				      
-				      closeMessageBtn.onclick = (e) => {
-				        e.stopPropagation();
-				        messageModal.remove();
-				      };
-				      
-				      messageContent.appendChild(closeMessageBtn);
-				      
-				      // Titolo del messaggio
-				      const msgTitle = document.createElement('h2');
-				      msgTitle.style.color = '#FFD700';
-				      msgTitle.style.fontSize = '2rem';
-				      msgTitle.style.fontWeight = 'bold';
-				      msgTitle.style.marginBottom = '20px';
-				      msgTitle.style.textAlign = 'center';
-				      msgTitle.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Messaggio';
-				      messageContent.appendChild(msgTitle);
-				      
-				      // Immagine - DEBUG LOG
-				      console.log('📸 Caricando immagine:', msg.image);
-				      
-				      if (msg.image && msg.image !== 'undefined') {
-				        const img = document.createElement('img');
-				        img.src = msg.image;
-				        img.alt = msg.subject;
-				        img.style.width = '100%';
-				        img.style.maxHeight = '400px';
-				        img.style.objectFit = 'cover';
-				        img.style.borderRadius = '10px';
-				        img.style.marginBottom = '20px';
-				        img.style.border = '2px solid #FFD700';
-				        img.style.cursor = 'pointer';
-				        
-				        // Gestisci errore caricamento immagine
-				        img.onerror = () => {
-				          console.error('❌ Immagine non trovata:', msg.image);
-				          img.style.display = 'none';
-				        };
-				        
-				        img.onload = () => {
-				          console.log('✅ Immagine caricata:', msg.image);
-				        };
-				        
-				        // Click immagine per ingrandire
-				        img.onclick = (e) => {
-				          e.stopPropagation();
-				          
-				          const fullscreenImg = document.createElement('div');
-				          fullscreenImg.style.position = 'fixed';
-				          fullscreenImg.style.top = '0';
-				          fullscreenImg.style.left = '0';
-				          fullscreenImg.style.width = '100%';
-				          fullscreenImg.style.height = '100%';
-				          fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-				          fullscreenImg.style.display = 'flex';
-				          fullscreenImg.style.alignItems = 'center';
-				          fullscreenImg.style.justifyContent = 'center';
-				          fullscreenImg.style.zIndex = '9999';
-				          
-				          const largeImg = document.createElement('img');
-				          largeImg.src = msg.image;
-				          largeImg.alt = msg.subject;
-				          largeImg.style.maxWidth = '90vw';
-				          largeImg.style.maxHeight = '90vh';
-				          largeImg.style.objectFit = 'contain';
-				          
-				          const closeLargeImg = document.createElement('button');
-				          closeLargeImg.innerHTML = '×';
-				          closeLargeImg.style.position = 'absolute';
-				          closeLargeImg.style.top = '20px';
-				          closeLargeImg.style.right = '20px';
-				          closeLargeImg.style.fontSize = '2.5rem';
-				          closeLargeImg.style.color = 'white';
-				          closeLargeImg.style.background = 'none';
-				          closeLargeImg.style.border = 'none';
-				          closeLargeImg.style.cursor = 'pointer';
-				          
-				          closeLargeImg.onclick = () => fullscreenImg.remove();
-				          fullscreenImg.onclick = () => fullscreenImg.remove();
-				          
-				          fullscreenImg.appendChild(closeLargeImg);
-				          fullscreenImg.appendChild(largeImg);
-				          document.body.appendChild(fullscreenImg);
-				        };
-				        
-				        messageContent.appendChild(img);
-				      } else {
-				        console.warn('⚠️ Nessuna immagine per il messaggio:', msg.id);
-				      }
-				      
-				      // Testo del messaggio
-				      const msgText = document.createElement('div');
-				      msgText.style.color = '#e0e0e0';
-				      msgText.style.fontSize = '1rem';
-				      msgText.style.lineHeight = '1.8';
-				      msgText.style.marginTop = '20px';
-				      msgText.innerHTML = msg.fullDescription && msg.fullDescription !== 'undefined' ? msg.fullDescription : msg.content;
-				      messageContent.appendChild(msgText);
-				      
-				      messageModal.appendChild(messageContent);
-				      
-				      // Chiudi cliccando fuori
-				      messageModal.onclick = (e) => {
-				        if (e.target === messageModal) {
-				          messageModal.remove();
-				        }
-				      };
-				      
-				      // Chiudi con ESC
-				      const handleEsc = (e) => {
-				        if (e.key === 'Escape') {
-				          messageModal.remove();
-				          document.removeEventListener('keydown', handleEsc);
-				        }
-				      };
-				      document.addEventListener('keydown', handleEsc);
-				      
-				      document.body.appendChild(messageModal);
-				      console.log('📭 Modal messaggio aperto:', msg.subject);
-				    };
-				    
-				    messagesList.appendChild(item);
-				  });
-				  
-				  container.appendChild(closeBtn);
-				  container.appendChild(title);
-				  container.appendChild(messagesList);
-				  mailboxModal.appendChild(container);
-				  
-				  // Chiudi cliccando fuori
-				  mailboxModal.onclick = (e) => {
-				    if (e.target === mailboxModal) {
-				      mailboxModal.remove();
-				    }
-				  };
-				  
-				  // Chiudi con ESC
-				  const handleEsc = (e) => {
-				    if (e.key === 'Escape') {
-				      mailboxModal.remove();
-				      document.removeEventListener('keydown', handleEsc);
-				    }
-				  };
-				  document.addEventListener('keydown', handleEsc);
-				  
-				  document.body.appendChild(mailboxModal);
-				  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
-				  console.log('📋 Debug messaggi:', messages);
-				});
+// ===== EVENTO: Click sul gufo =====
+owlButton.addEventListener('click', function() {
+  console.log('🦉 Click gufo - Aprendo la casella di posta');
+  
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+  
+  const messages = [];
+  
+  // ===== MESSAGGI SINCRONIZZATI DIRETTAMENTE DA PERIODIC_MESSAGES =====
+  const allMessages = [
+    {
+      id: 'welcome',
+      triggerDay: null,
+      icon: '📬',
+      subject: 'Benvenuto al Calendario',
+      content: 'Benvenuto al Calendario dell\'Avvento!',
+      image: 'fotoSherlocknatalizio.png',
+      fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
+    },
+    // PRELEVA DIRETTAMENTE DA PERIODIC_MESSAGES
+    ...(PERIODIC_MESSAGES?.day5milestone ? [{
+      id: 'day5_milestone',
+      triggerDay: 5,
+      icon: '📬',
+      subject: PERIODIC_MESSAGES.day5milestone.title,
+      content: PERIODIC_MESSAGES.day5milestone.subtitle,
+      image: PERIODIC_MESSAGES.day5milestone.image,
+      fullDescription: PERIODIC_MESSAGES.day5milestone.description
+    }] : []),
+    
+    ...(PERIODIC_MESSAGES?.day10milestone ? [{
+      id: 'day10_milestone',
+      triggerDay: 10,
+      icon: '📬',
+      subject: PERIODIC_MESSAGES.day10milestone.title,
+      content: PERIODIC_MESSAGES.day10milestone.subtitle,
+      image: PERIODIC_MESSAGES.day10milestone.image,
+      fullDescription: PERIODIC_MESSAGES.day10milestone.description
+    }] : [])
+  ];
+  
+  // Aggiungi sempre il messaggio di benvenuto
+  messages.push({
+    ...allMessages,
+    isOpen: readMessages.includes('welcome'),
+    icon: readMessages.includes('welcome') ? '📭' : '📬'
+  });
+  
+  // Aggiungi messaggi milestone se il giorno è completato
+  allMessages.slice(1).forEach(msg => {
+    if (msg.triggerDay) {
+      const dayEntry = savedProgress[msg.triggerDay - 1];
+      if (dayEntry && dayEntry.solved) {
+        messages.unshift({
+          ...msg,
+          isOpen: readMessages.includes(msg.id),
+          icon: readMessages.includes(msg.id) ? '📭' : '📬'
+        });
+      }
+    }
+  });
+  
+  console.log('📋 DEBUG Messaggi casella:', messages);
+  messages.forEach(msg => {
+    console.log(`📬 ${msg.subject}:`, {
+      image: msg.image,
+      description: msg.fullDescription ? msg.fullDescription.substring(0, 50) + '...' : 'N/A'
+    });
+  });
+  
+  // ===== CREA MODAL CASELLA DI POSTA =====
+  const mailboxModal = document.createElement('div');
+  mailboxModal.className = 'mailbox-modal';
+  
+  const container = document.createElement('div');
+  container.className = 'mailbox-container';
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'mailbox-close-btn';
+  closeBtn.innerHTML = '×';
+  closeBtn.onclick = (e) => {
+    e.stopPropagation();
+    mailboxModal.remove();
+  };
+  
+  const title = document.createElement('h2');
+  title.className = 'mailbox-title';
+  title.innerHTML = '📬 Casella di Posta';
+  
+  const messagesList = document.createElement('div');
+  messagesList.className = 'messages-list';
+  
+  messages.forEach((msg) => {
+    const item = document.createElement('div');
+    item.className = 'mailbox-item';
+    
+    const header = document.createElement('div');
+    header.className = 'mailbox-item-header';
+    
+    const icon = document.createElement('span');
+    icon.className = 'mailbox-icon';
+    icon.innerHTML = msg.icon;
+    
+    const subject = document.createElement('span');
+    subject.className = 'mailbox-subject';
+    subject.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Nuovo Messaggio';
+    
+    header.appendChild(icon);
+    header.appendChild(subject);
+    item.appendChild(header);
+    
+    // CLICK - APRE MODAL SEPARATO
+    item.onclick = (e) => {
+      e.stopPropagation();
+      
+      if (!readMessages.includes(msg.id)) {
+        readMessages.push(msg.id);
+        localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
+      }
+      
+      icon.innerHTML = '📭';
+      
+      // ===== MODAL DEL MESSAGGIO COMPLETO =====
+      const messageModal = document.createElement('div');
+      messageModal.style.position = 'fixed';
+      messageModal.style.top = '0';
+      messageModal.style.left = '0';
+      messageModal.style.width = '100%';
+      messageModal.style.height = '100%';
+      messageModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+      messageModal.style.display = 'flex';
+      messageModal.style.alignItems = 'center';
+      messageModal.style.justifyContent = 'center';
+      messageModal.style.zIndex = '3000';
+      messageModal.style.backdropFilter = 'blur(5px)';
+      messageModal.style.overflowY = 'auto';
+      messageModal.style.padding = '20px';
+      
+      const messageContent = document.createElement('div');
+      messageContent.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+      messageContent.style.border = '3px solid #FFD700';
+      messageContent.style.borderRadius = '20px';
+      messageContent.style.padding = '40px';
+      messageContent.style.maxWidth = '700px';
+      messageContent.style.width = '100%';
+      messageContent.style.maxHeight = '90vh';
+      messageContent.style.overflowY = 'auto';
+      messageContent.style.position = 'relative';
+      messageContent.style.boxShadow = '0 10px 50px rgba(255, 215, 0, 0.3)';
+      
+      const closeMessageBtn = document.createElement('button');
+      closeMessageBtn.innerHTML = '×';
+      closeMessageBtn.style.position = 'absolute';
+      closeMessageBtn.style.top = '15px';
+      closeMessageBtn.style.right = '15px';
+      closeMessageBtn.style.background = '#8B0000';
+      closeMessageBtn.style.color = 'white';
+      closeMessageBtn.style.border = '2px solid #FFD700';
+      closeMessageBtn.style.borderRadius = '50%';
+      closeMessageBtn.style.width = '40px';
+      closeMessageBtn.style.height = '40px';
+      closeMessageBtn.style.fontSize = '1.5rem';
+      closeMessageBtn.style.cursor = 'pointer';
+      closeMessageBtn.style.transition = 'all 0.3s';
+      closeMessageBtn.style.display = 'flex';
+      closeMessageBtn.style.alignItems = 'center';
+      closeMessageBtn.style.justifyContent = 'center';
+      
+      closeMessageBtn.onmouseover = () => {
+        closeMessageBtn.style.background = '#FF0000';
+        closeMessageBtn.style.transform = 'rotate(90deg)';
+      };
+      closeMessageBtn.onmouseout = () => {
+        closeMessageBtn.style.background = '#8B0000';
+        closeMessageBtn.style.transform = 'rotate(0deg)';
+      };
+      
+      closeMessageBtn.onclick = (e) => {
+        e.stopPropagation();
+        messageModal.remove();
+      };
+      
+      messageContent.appendChild(closeMessageBtn);
+      
+      // TITOLO
+      const msgTitle = document.createElement('h2');
+      msgTitle.style.color = '#FFD700';
+      msgTitle.style.fontSize = '2rem';
+      msgTitle.style.fontWeight = 'bold';
+      msgTitle.style.marginBottom = '20px';
+      msgTitle.style.textAlign = 'center';
+      msgTitle.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Messaggio';
+      messageContent.appendChild(msgTitle);
+      
+      // IMMAGINE - IMPORTANTE!!!
+      if (msg.image && msg.image !== 'undefined' && msg.image.length > 0) {
+        console.log('🖼️ Caricando immagine:', msg.image);
+        
+        const img = document.createElement('img');
+        img.src = msg.image;
+        img.alt = msg.subject;
+        img.style.width = '100%';
+        img.style.maxHeight = '400px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '10px';
+        img.style.marginBottom = '20px';
+        img.style.border = '2px solid #FFD700';
+        img.style.cursor = 'pointer';
+        
+        img.onerror = () => {
+          console.error('❌ Immagine non trovata:', msg.image);
+          img.style.display = 'none';
+        };
+        
+        img.onload = () => {
+          console.log('✅ Immagine caricata correttamente:', msg.image);
+        };
+        
+        img.onclick = (e) => {
+          e.stopPropagation();
+          
+          const fullscreenImg = document.createElement('div');
+          fullscreenImg.style.position = 'fixed';
+          fullscreenImg.style.top = '0';
+          fullscreenImg.style.left = '0';
+          fullscreenImg.style.width = '100%';
+          fullscreenImg.style.height = '100%';
+          fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+          fullscreenImg.style.display = 'flex';
+          fullscreenImg.style.alignItems = 'center';
+          fullscreenImg.style.justifyContent = 'center';
+          fullscreenImg.style.zIndex = '9999';
+          
+          const largeImg = document.createElement('img');
+          largeImg.src = msg.image;
+          largeImg.alt = msg.subject;
+          largeImg.style.maxWidth = '90vw';
+          largeImg.style.maxHeight = '90vh';
+          largeImg.style.objectFit = 'contain';
+          
+          const closeLargeImg = document.createElement('button');
+          closeLargeImg.innerHTML = '×';
+          closeLargeImg.style.position = 'absolute';
+          closeLargeImg.style.top = '20px';
+          closeLargeImg.style.right = '20px';
+          closeLargeImg.style.fontSize = '2.5rem';
+          closeLargeImg.style.color = 'white';
+          closeLargeImg.style.background = 'none';
+          closeLargeImg.style.border = 'none';
+          closeLargeImg.style.cursor = 'pointer';
+          
+          closeLargeImg.onclick = () => fullscreenImg.remove();
+          fullscreenImg.onclick = () => fullscreenImg.remove();
+          
+          fullscreenImg.appendChild(closeLargeImg);
+          fullscreenImg.appendChild(largeImg);
+          document.body.appendChild(fullscreenImg);
+        };
+        
+        messageContent.appendChild(img);
+      } else {
+        console.warn('⚠️ Nessuna immagine disponibile per il messaggio:', msg.id, 'Valore:', msg.image);
+      }
+      
+      // TESTO
+      const msgText = document.createElement('div');
+      msgText.style.color = '#e0e0e0';
+      msgText.style.fontSize = '1rem';
+      msgText.style.lineHeight = '1.8';
+      msgText.style.marginTop = '20px';
+      msgText.innerHTML = msg.fullDescription && msg.fullDescription !== 'undefined' ? msg.fullDescription : msg.content;
+      messageContent.appendChild(msgText);
+      
+      messageModal.appendChild(messageContent);
+      
+      messageModal.onclick = (e) => {
+        if (e.target === messageModal) {
+          messageModal.remove();
+        }
+      };
+      
+      const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+          messageModal.remove();
+          document.removeEventListener('keydown', handleEsc);
+        }
+      };
+      document.addEventListener('keydown', handleEsc);
+      
+      document.body.appendChild(messageModal);
+      console.log('📭 Modal messaggio aperto:', msg.subject);
+    };
+    
+    messagesList.appendChild(item);
+  });
+  
+  container.appendChild(closeBtn);
+  container.appendChild(title);
+  container.appendChild(messagesList);
+  mailboxModal.appendChild(container);
+  
+  mailboxModal.onclick = (e) => {
+    if (e.target === mailboxModal) {
+      mailboxModal.remove();
+    }
+  };
+  
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') {
+      mailboxModal.remove();
+      document.removeEventListener('keydown', handleEsc);
+    }
+  };
+  document.addEventListener('keydown', handleEsc);
+  
+  document.body.appendChild(mailboxModal);
+  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
+});
+
 
 
 
