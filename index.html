@@ -561,13 +561,12 @@
 				
 				<!-- Immagine del gioco -->
 				<img 
+				    id="owlModalImage"
 				    src="foto/Sherlock_natalizio.png" 
 				    alt="Calendario dell'Avvento" 
 				    class="modal-image"
-				    style={{cursor: 'pointer'}}
-				    onClick={() => setEnlargedImage('foto/Sherlock_natalizio.png')}
-				/>
-
+				    style="cursor: pointer;"
+				>
 				
 				<!-- Descrizione del gioco -->
 				<div class="modal-text">
@@ -1155,6 +1154,70 @@
 					percentage: Math.round((correctCount / totalQuestions) * 100)
 				};
 			}
+
+			// ===== IMMAGINE DEL GUFO CLICCABILE =====
+			document.addEventListener('DOMContentLoaded', function() {
+			    const owlImage = document.querySelector('.modal-image');
+			    
+			    if (owlImage) {
+			        owlImage.style.cursor = 'pointer';
+			        
+			        owlImage.addEventListener('click', function(e) {
+			            e.stopPropagation();
+			            
+			            const modal = document.createElement('div');
+			            modal.style.position = 'fixed';
+			            modal.style.top = '0';
+			            modal.style.left = '0';
+			            modal.style.width = '100%';
+			            modal.style.height = '100%';
+			            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+			            modal.style.display = 'flex';
+			            modal.style.alignItems = 'center';
+			            modal.style.justifyContent = 'center';
+			            modal.style.zIndex = '9999';
+			            modal.style.backdropFilter = 'blur(5px)';
+			            
+			            const closeBtn = document.createElement('button');
+			            closeBtn.innerHTML = '✕';
+			            closeBtn.style.position = 'absolute';
+			            closeBtn.style.top = '20px';
+			            closeBtn.style.right = '20px';
+			            closeBtn.style.fontSize = '2.5rem';
+			            closeBtn.style.color = 'white';
+			            closeBtn.style.background = 'none';
+			            closeBtn.style.border = 'none';
+			            closeBtn.style.cursor = 'pointer';
+			            closeBtn.style.zIndex = '10000';
+			            closeBtn.onclick = () => modal.remove();
+			            
+			            const img = document.createElement('img');
+			            img.src = owlImage.src;
+			            img.style.maxWidth = '90vw';
+			            img.style.maxHeight = '90vh';
+			            img.style.objectFit = 'contain';
+			            img.onclick = (e) => e.stopPropagation();
+			            
+			            const hint = document.createElement('div');
+			            hint.innerHTML = 'Clicca per chiudere';
+			            hint.style.position = 'absolute';
+			            hint.style.bottom = '20px';
+			            hint.style.left = '50%';
+			            hint.style.transform = 'translateX(-50%)';
+			            hint.style.color = 'white';
+			            hint.style.fontSize = '0.9rem';
+			            hint.style.opacity = '0.7';
+			            
+			            modal.onclick = () => modal.remove();
+			            
+			            modal.appendChild(closeBtn);
+			            modal.appendChild(img);
+			            modal.appendChild(hint);
+			            document.body.appendChild(modal);
+			        });
+			    }
+			});
+
 			
 				const currentYear = today.getFullYear();
 			
