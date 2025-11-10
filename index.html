@@ -1133,28 +1133,27 @@
 			    document.body.appendChild(envelopeModal);
 			  }
 			 
-			// ===== EVENTO: Click sul gufo =====
+			// ===== EVENTO: Click sul gufo (VERSIONE CORRETTA) =====
 			owlButton.addEventListener('click', function() {
 			  // Controlla se c'è un messaggio periodico visibile
-			  const visiblePeriodicMessage = Object.keys(periodicNotificationVisible || {}).find(key => periodicNotificationVisible[key]);
+			  // Leggi direttamente da localStorage E dal DOM
+			  const day5MessageSeen = localStorage.getItem('periodic_day5_milestone_seen');
+			  const periodicNotif = document.getElementById('periodicNotification');
 			  
-			  if (visiblePeriodicMessage && PERIODIC_MESSAGES[visiblePeriodicMessage]) {
-				// Mostra il messaggio periodico
-				showPeriodicMessage(PERIODIC_MESSAGES[visiblePeriodicMessage], visiblePeriodicMessage);
+			  if (periodicNotif && periodicNotif.style.display !== 'none' && !day5MessageSeen) {
+				// Il messaggio periodico è disponibile
+				console.log('📬 Mostrando messaggio periodico day5_milestone');
+				showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
 				
 				// Nascondi la notifica
-				const periodicNotif = document.getElementById('periodicNotification');
-				if (periodicNotif) {
-				  periodicNotif.style.display = 'none';
-				}
-				
-				// Segna come visto
-				setPeriodicNotificationVisible(prev => ({...prev, [visiblePeriodicMessage]: false}));
+				periodicNotif.style.display = 'none';
 			  } else {
 				// Mostra il messaggio normale
+				console.log('📭 Mostrando messaggio normale');
 				showEnvelopeBox();
 			  }
 			});
+
 
 			
 			  // ===== CHIUSURA MODAL PRINCIPALE =====
