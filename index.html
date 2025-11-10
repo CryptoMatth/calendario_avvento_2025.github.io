@@ -598,19 +598,24 @@
 			  border: 3px solid #FFD700;
 			  border-radius: 20px;
 			  padding: 40px;
-			  max-width: 500px;
+			  max-width: 400px;
 			  width: 90%;
 			  text-align: center;
 			  box-shadow: 0 10px 50px rgba(255, 215, 0, 0.3);
 			  animation: slideDown-modal 0.4s ease;
+			  position: relative;
+			  display: flex;
+			  flex-direction: column;
+			  align-items: center;
+			  gap: 20px;
 			}
 			
 			.envelope-icon {
-			  font-size: 120px;
-			  margin-bottom: 20px;
+			  font-size: 100px;
 			  display: inline-block;
 			  cursor: pointer;
 			  transition: transform 0.3s ease;
+			  animation: bounce-envelope 1s infinite;
 			}
 			
 			.envelope-icon:hover {
@@ -619,15 +624,8 @@
 			
 			.envelope-text {
 			  color: #FFD700;
-			  font-size: 1.5rem;
+			  font-size: 1.3rem;
 			  font-weight: bold;
-			  margin-bottom: 10px;
-			}
-			
-			.envelope-subtitle {
-			  color: #ccc;
-			  font-size: 1rem;
-			  margin-bottom: 20px;
 			}
 			
 			.envelope-button {
@@ -635,11 +633,12 @@
 			  color: #111827;
 			  border: none;
 			  border-radius: 10px;
-			  padding: 12px 30px;
+			  padding: 12px 25px;
 			  font-weight: bold;
 			  cursor: pointer;
 			  transition: all 0.3s ease;
 			  font-size: 1rem;
+			  white-space: nowrap;
 			}
 			
 			.envelope-button:hover {
@@ -647,29 +646,40 @@
 			  transform: scale(1.05);
 			}
 			
+			.envelope-button:active {
+			  transform: scale(0.98);
+			}
+			
 			.envelope-close {
 			  position: absolute;
-			  top: 15px;
-			  right: 15px;
+			  top: 12px;
+			  right: 12px;
 			  background: #8B0000;
 			  color: white;
 			  border: 2px solid #FFD700;
 			  border-radius: 50%;
-			  width: 40px;
-			  height: 40px;
+			  width: 35px;
+			  height: 35px;
 			  display: flex;
 			  align-items: center;
 			  justify-content: center;
 			  cursor: pointer;
-			  font-size: 1.5rem;
+			  font-size: 1.3rem;
 			  font-weight: bold;
 			  transition: all 0.3s ease;
+			  padding: 0;
 			}
 			
 			.envelope-close:hover {
 			  background: #FF0000;
 			  transform: rotate(90deg);
 			}
+			
+			@keyframes bounce-envelope {
+			  0%, 100% { transform: translateY(0); }
+			  50% { transform: translateY(-10px); }
+			}
+
 
 
 		</style>
@@ -680,72 +690,44 @@
 
 
 
-		<!-- ===== MODAL INFORMAZIONI GIOCO ===== -->
+		<!-- ===== MODAL INFORMAZIONI GIOCO - VERSIONE SEMPLIFICATA ===== -->
 		<div id="gameModal" class="modal-overlay" style="display: none;">
-
-                <button class="modal-close" id="closeModal" aria-label="Chiudi"></button>
-                
-                <!-- STATO 1: BUSTA CHIUSA (Messaggio non letto) -->
-                <div id="closedEnvelopeState" style="text-align: center;">
-                    <div style="font-size: 4rem; margin-bottom: 20px; animation: bounce-envelope 1s infinite;">
-                        📮
-                    </div>
-                    <h2 style="color: #FFD700; font-size: 2rem; margin-bottom: 20px;">Messaggio del Gufo</h2>
-                    <p style="color: #ccc; font-size: 1.2rem; margin-bottom: 30px;">Hai un nuovo messaggio!</p>
-                    <button id="openEnvelopeBtn" class="envelope-button">
-                        Apri la Busta 📬
-                    </button>
-                </div>
-                
-                <!-- STATO 2: BUSTA APERTA (Messaggio letto) -->
-                <div id="openEnvelopeState" style="display: none; text-align: center;">
-                    <div style="font-size: 4rem; margin-bottom: 20px;">
-                        📭
-                    </div>
-                    <h2 style="color: #FFD700; font-size: 2rem; margin-bottom: 20px;">Leggi di nuovo il Messaggio</h2>
-                    <button id="readMessageBtn" class="envelope-button">
-                        Leggi Messaggio 💌
-                    </button>
-                </div>
-                
-                <!-- STATO 3: MESSAGGIO APERTO CON CONTENUTO -->
-                <div id="messageState" style="display: none;">
-                    <button class="modal-close" id="closeMessageBtn" aria-label="Chiudi"></button>
-                    
-                    <h2 class="modal-title">Benvenuto al Calendario dell'Avvento</h2>
-                    
-                    <!-- Immagine del gufo cliccabile e ingrandibile -->
-                    <img id="owlModalImage" src="foto/Sherlock_natalizio.png" alt="Calendario dell'Avvento" class="modal-image" style="cursor: pointer;">
-                    
-                    <!-- Descrizione del gioco -->
-                    <div class="modal-text">
-                        <p style="margin-bottom: 15px;">
-                            <strong>Come si gioca:</strong><br>
-                            Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.
-                        </p>
-                        
-                        <p style="margin-bottom: 15px;">
-                            <strong>Obiettivo del gioco:</strong><br>
-                            Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.
-                        </p>
-                        
-                        <p style="margin-bottom: 15px;">
-                            <strong>Caratteristiche:</strong><br>
-                            25 giorni di divertimento astronomico<br>
-                            Quiz interattivi sulle costellazioni<br>
-                            Accumula punti e diventa un esperto delle stelle<br>
-                            Bellissime animazioni natalizie con stelle e neve
-                        </p>
-                        
-                        <p style="margin-bottom: 0;">
-                            <strong>Buon divertimento e Buon Natale!</strong>
-                        </p>
-                    </div>
-                </div>
-
-
+			<button class="modal-close" id="closeModal" aria-label="Chiudi"></button>
 			
+			<!-- CONTENUTO PRINCIPALE DEL MESSAGGIO -->
+			<div class="modal-content">
+				<h2 class="modal-title">Benvenuto al Calendario dell'Avvento</h2>
+				
+				<!-- Immagine di Sherlock -->
+				<img id="owlModalImage" src="foto/Sherlock_natalizio.png" alt="Calendario dell'Avvento" class="modal-image" style="cursor: pointer;">
+				
+				<!-- Testo messaggio -->
+				<div class="modal-text">
+					<p style="margin-bottom: 15px;">
+						<strong>Come si gioca:</strong><br>
+						Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.
+					</p>
+					
+					<p style="margin-bottom: 15px;">
+						<strong>Obiettivo del gioco:</strong><br>
+						Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.
+					</p>
+					
+					<p style="margin-bottom: 15px;">
+						<strong>Caratteristiche:</strong><br>
+						25 giorni di divertimento astronomico<br>
+						Quiz interattivi sulle costellazioni<br>
+						Accumula punti e diventa un esperto delle stelle<br>
+						Bellissime animazioni natalizie con stelle e neve
+					</p>
+					
+					<p style="margin-bottom: 0;">
+						<strong>Buon divertimento e Buon Natale!</strong>
+					</p>
+				</div>
+			</div>
 		</div>
+
 
 		
 		<div class="stars" id="stars"></div>
@@ -803,41 +785,41 @@
 				snowContainer.appendChild(flake);
 			}
 
-			// ===== GESTIONE MODAL GUFO NATALIZIO CON NOTIFICA E BUSTA INTERMEDIA =====
+			// ===== GESTIONE MODAL GUFO CON BOX BUSTA INTERMEDIA =====
 			(function() {
 			  const owlButton = document.getElementById('owlButton');
 			  const gameModal = document.getElementById('gameModal');
 			  const closeModal = document.getElementById('closeModal');
 			  const owlNotification = document.getElementById('owlNotification');
 			
-			  // Chiave per localStorage
-			  const MODAL_VIEWED_KEY = 'owlModalViewed';
+			  // Chiave localStorage per tracciare se il messaggio è stato letto
+			  const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
 			
-			  // Controlla se l'utente ha già visualizzato il modal
-			  function hasViewedModal() {
-			    return localStorage.getItem(MODAL_VIEWED_KEY) === 'true';
+			  // Funzione: Controlla se la busta è stata letta
+			  function isEnvelopeRead() {
+			    return localStorage.getItem(ENVELOPE_READ_KEY) === 'true';
 			  }
 			
-			  // Segna il modal come visualizzato
-			  function markModalAsViewed() {
-			    localStorage.setItem(MODAL_VIEWED_KEY, 'true');
+			  // Funzione: Segna busta come letta
+			  function markEnvelopeAsRead() {
+			    localStorage.setItem(ENVELOPE_READ_KEY, 'true');
 			  }
 			
-			  // Nascondi la notifica
+			  // Funzione: Nascondi notifica
 			  function hideNotification() {
 			    if (owlNotification) {
 			      owlNotification.classList.add('hidden');
 			    }
 			  }
 			
-			  // Mostra/nascondi la notifica al caricamento della pagina
-			  if (hasViewedModal()) {
+			  // Al caricamento pagina: se busta già letta, nascondi notifica
+			  if (isEnvelopeRead()) {
 			    hideNotification();
 			  }
 			
-			  // ===== NUOVA FUNZIONE: Mostra la box della busta =====
+			  // ===== FUNZIONE PRINCIPALE: Mostra box con busta =====
 			  function showEnvelopeBox() {
-			    const isRead = hasViewedModal();
+			    const isRead = isEnvelopeRead();
 			    
 			    // Crea il modal della busta
 			    const envelopeModal = document.createElement('div');
@@ -847,7 +829,7 @@
 			    const envelopeBox = document.createElement('div');
 			    envelopeBox.className = 'envelope-box';
 			    
-			    // Pulsante chiudi
+			    // Pulsante chiudi (X)
 			    const closeBtn = document.createElement('div');
 			    closeBtn.className = 'envelope-close';
 			    closeBtn.innerHTML = '×';
@@ -856,41 +838,39 @@
 			      envelopeModal.remove();
 			    };
 			    
-			    // Icona busta
+			    // Icona busta (chiusa o aperta)
 			    const envelopeIcon = document.createElement('div');
 			    envelopeIcon.className = 'envelope-icon';
-			    envelopeIcon.innerHTML = isRead ? '📪' : '📬'; // Busta aperta se letto, chiusa altrimenti
-			    envelopeIcon.title = 'Clicca per leggere il messaggio';
+			    envelopeIcon.innerHTML = isRead ? '📭' : '📬'; // Aperta se letta, chiusa altrimenti
 			    
-			    // Testo
-			    const envelopeText = document.createElement('div');
-			    envelopeText.className = 'envelope-text';
-			    envelopeText.innerHTML = isRead ? 'Messaggio Letto' : 'Nuovo Messaggio';
+			    // Titolo/Sottotitolo
+			    const envelopeTitle = document.createElement('div');
+			    envelopeTitle.className = 'envelope-text';
+			    envelopeTitle.innerHTML = isRead ? 'Messaggio già letto' : 'Nuovo Messaggio';
 			    
-			    const envelopeSubtitle = document.createElement('div');
-			    envelopeSubtitle.className = 'envelope-subtitle';
-			    envelopeSubtitle.innerHTML = 'Clicca sulla busta per aprire';
-			    
-			    // Bottone
+			    // Pulsante unico
 			    const button = document.createElement('button');
 			    button.className = 'envelope-button';
-			    button.innerHTML = isRead ? 'Rileggi' : 'Apri';
+			    button.innerHTML = isRead ? 'Rileggi Messaggio' : 'Leggi Messaggio';
 			    button.onclick = (e) => {
 			      e.stopPropagation();
+			      markEnvelopeAsRead();
+			      hideNotification();
 			      envelopeModal.remove();
-			      openGameModal();
+			      // Apri il modal principale con il messaggio
+			      gameModal.style.display = 'flex';
+			      document.body.style.overflow = 'hidden';
 			    };
 			    
-			    // Assembla il box
+			    // Assembla il box - TUTTO SU UNA RIGA CONCETTUALMENTE
 			    envelopeBox.appendChild(closeBtn);
 			    envelopeBox.appendChild(envelopeIcon);
-			    envelopeBox.appendChild(envelopeText);
-			    envelopeBox.appendChild(envelopeSubtitle);
+			    envelopeBox.appendChild(envelopeTitle);
 			    envelopeBox.appendChild(button);
 			    
 			    envelopeModal.appendChild(envelopeBox);
 			    
-			    // Chiudi cliccando fuori
+			    // Chiudi cliccando fuori dal box
 			    envelopeModal.onclick = (e) => {
 			      if (e.target === envelopeModal) {
 			        envelopeModal.remove();
@@ -909,29 +889,18 @@
 			    document.body.appendChild(envelopeModal);
 			  }
 			
-			  // ===== FUNZIONE: Apri il game modal =====
-			  function openGameModal() {
-			    gameModal.style.display = 'flex';
-			    document.body.style.overflow = 'hidden';
-			    
-			    // Nascondi la notifica e segna come visualizzato
-			    hideNotification();
-			    markModalAsViewed();
-			  }
-			
-			  // Click sul gufo → mostra la busta
+			  // ===== EVENTO: Click sul gufo =====
 			  owlButton.addEventListener('click', function() {
 			    showEnvelopeBox();
 			  });
 			
-			  // Chiudi il game modal quando si clicca sulla X
+			  // ===== CHIUSURA MODAL PRINCIPALE =====
 			  closeModal.addEventListener('click', function() {
 			    gameModal.style.display = 'none';
 			    document.body.style.overflow = 'auto';
-			    owlButton.classList.remove('inactive');
 			  });
 			
-			  // Chiudi il game modal quando si clicca fuori dal contenuto
+			  // Chiudi cliccando fuori
 			  gameModal.addEventListener('click', function(e) {
 			    if (e.target === gameModal) {
 			      gameModal.style.display = 'none';
@@ -939,7 +908,7 @@
 			    }
 			  });
 			
-			  // Chiudi il game modal con il tasto ESC
+			  // Chiudi con ESC
 			  document.addEventListener('keydown', function(e) {
 			    if (e.key === 'Escape' && gameModal.style.display === 'flex') {
 			      gameModal.style.display = 'none';
@@ -947,6 +916,7 @@
 			    }
 			  });
 			})();
+
 
 	  
 			const { useState, useEffect } = React;
