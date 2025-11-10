@@ -1108,37 +1108,78 @@
 				  
 				  const messages = [];
 				  
-				  // ===== STRUTTURA DATI SINCRONIZZATA CON PERIODIC_MESSAGES =====
+				  // FUNZIONE HELPER PER CREARE MESSAGGI CON FALLBACK ROBUSTO
+				  function createMessage(id, triggerDay, icon, subject, content, image, description) {
+				    return {
+				      id: id,
+				      triggerDay: triggerDay,
+				      icon: icon,
+				      subject: subject || 'Messaggio',
+				      content: content || '',
+				      image: image || 'fotoSherlocknatalizio.png',
+				      fullDescription: description || content || 'Messaggio'
+				    };
+				  }
+				  
+				  // ===== MESSAGGI CON FALLBACK ROBUSTO =====
 				  const allMessages = [
-				    {
-				      id: 'welcome',
-				      icon: '📬',
-				      subject: 'Benvenuto al Calendario',
-				      content: 'Benvenuto al Calendario dell\'Avvento!',
-				      image: PERIODIC_MESSAGES.day5milestone?.image || 'fotoSherlocknatalizio.png',
-				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p><p style="margin-bottom: 15px;"><strong>Obiettivo del gioco</strong><br>Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.</p>'
-				    },
-				    {
-				      id: 'day5_milestone',
-				      triggerDay: 5,
-				      icon: '📬',
-				      subject: PERIODIC_MESSAGES.day5milestone?.title || 'Mezzo Cammino!',
-				      content: PERIODIC_MESSAGES.day5milestone?.subtitle || 'Fantastico! Hai completato 5 giorni!',
-				      image: PERIODIC_MESSAGES.day5milestone?.image || 'fotoSherlocknatalizio.png',
-				      fullDescription: PERIODIC_MESSAGES.day5milestone?.description || 'Fantastico! Hai completato il primo quinto del calendario!'
-				    },
-				    {
-				      id: 'day10_milestone',
-				      triggerDay: 10,
-				      icon: '📬',
-				      subject: PERIODIC_MESSAGES.day10milestone?.title || 'Primo Test Completato!',
-				      content: PERIODIC_MESSAGES.day10milestone?.subtitle || 'Complimenti! Hai superato il primo test!',
-				      image: PERIODIC_MESSAGES.day10milestone?.image || 'fotoSherlocknatalizio.png',
-				      fullDescription: PERIODIC_MESSAGES.day10milestone?.description || 'Complimenti! Hai superato il primo test diventando un vero esperto di costellazioni.'
-				    }
+				    createMessage(
+				      'welcome',
+				      null,
+				      '📬',
+				      'Benvenuto al Calendario',
+				      'Benvenuto al Calendario dell\'Avvento!',
+				      'fotoSherlocknatalizio.png',
+				      '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p><p style="margin-bottom: 15px;"><strong>Obiettivo del gioco</strong><br>Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.</p>'
+				    ),
+				    createMessage(
+				      'day5_milestone',
+				      5,
+				      '📬',
+				      PERIODIC_MESSAGES?.day5milestone?.title || 'Mezzo Cammino!',
+				      PERIODIC_MESSAGES?.day5milestone?.subtitle || 'Fantastico! Hai completato 5 giorni!',
+				      PERIODIC_MESSAGES?.day5milestone?.image || 'fotoSherlocknatalizio.png',
+				      PERIODIC_MESSAGES?.day5milestone?.description || 'Fantastico! Hai completato il primo quinto del calendario!'
+				    ),
+				    createMessage(
+				      'day10_milestone',
+				      10,
+				      '📬',
+				      PERIODIC_MESSAGES?.day10milestone?.title || 'Primo Test Completato!',
+				      PERIODIC_MESSAGES?.day10milestone?.subtitle || 'Complimenti! Hai superato il primo test!',
+				      PERIODIC_MESSAGES?.day10milestone?.image || 'fotoSherlocknatalizio.png',
+				      PERIODIC_MESSAGES?.day10milestone?.description || 'Complimenti! Hai superato il primo test diventando un vero esperto di costellazioni.'
+				    ),
+				    createMessage(
+				      'day15_milestone',
+				      15,
+				      '📬',
+				      'Meta Calendario!',
+				      'Sei a metà del percorso!',
+				      'fotoSherlocknatalizio.png',
+				      'Incredibile! Sei arrivato a metà del percorso! Metà del cammino completata con successo. Continua così, il traguardo finale è sempre più vicino!'
+				    ),
+				    createMessage(
+				      'day20_milestone',
+				      20,
+				      '📬',
+				      'Home Stretch!',
+				      'Ormai sei quasi alla fine!',
+				      'fotoSherlocknatalizio.png',
+				      'Stai per arrivare alla fine! Soltanto 5 giorni ancora e avrai completato l\'intero Calendario dell\'Avvento!'
+				    ),
+				    createMessage(
+				      'day25_milestone',
+				      25,
+				      '📬',
+				      'Finale!',
+				      'Ultimi giorni fino a Natale!',
+				      'fotoSherlocknatalizio.png',
+				      'Ultimi giorni fino a Natale! Stai per diventare un vero astronomo! Completa gli ultimi giorni e ricevi il tuo certificato di esperto costellazioni!'
+				    )
 				  ];
 				  
-				  // Aggiungi sempre il messaggio di benvenuto
+				  // Messaggio di benvenuto sempre presente
 				  messages.push({
 				    ...allMessages,
 				    isOpen: readMessages.includes('welcome'),
@@ -1197,13 +1238,14 @@
 				    
 				    const subject = document.createElement('span');
 				    subject.className = 'mailbox-subject';
-				    subject.innerHTML = msg.subject || 'Messaggio';
+				    // IMPORTANTE: FALLBACK per evitare "undefined"
+				    subject.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Nuovo Messaggio';
 				    
 				    header.appendChild(icon);
 				    header.appendChild(subject);
 				    item.appendChild(header);
 				    
-				    // CLICK - APRE MODAL SEPARATO CON MESSAGGIO COMPLETO
+				    // CLICK - APRE MODAL SEPARATO
 				    item.onclick = (e) => {
 				      e.stopPropagation();
 				      
@@ -1286,11 +1328,13 @@
 				      msgTitle.style.fontWeight = 'bold';
 				      msgTitle.style.marginBottom = '20px';
 				      msgTitle.style.textAlign = 'center';
-				      msgTitle.innerHTML = msg.subject;
+				      msgTitle.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Messaggio';
 				      messageContent.appendChild(msgTitle);
 				      
-				      // Immagine
-				      if (msg.image) {
+				      // Immagine - DEBUG LOG
+				      console.log('📸 Caricando immagine:', msg.image);
+				      
+				      if (msg.image && msg.image !== 'undefined') {
 				        const img = document.createElement('img');
 				        img.src = msg.image;
 				        img.alt = msg.subject;
@@ -1301,6 +1345,16 @@
 				        img.style.marginBottom = '20px';
 				        img.style.border = '2px solid #FFD700';
 				        img.style.cursor = 'pointer';
+				        
+				        // Gestisci errore caricamento immagine
+				        img.onerror = () => {
+				          console.error('❌ Immagine non trovata:', msg.image);
+				          img.style.display = 'none';
+				        };
+				        
+				        img.onload = () => {
+				          console.log('✅ Immagine caricata:', msg.image);
+				        };
 				        
 				        // Click immagine per ingrandire
 				        img.onclick = (e) => {
@@ -1345,6 +1399,8 @@
 				        };
 				        
 				        messageContent.appendChild(img);
+				      } else {
+				        console.warn('⚠️ Nessuna immagine per il messaggio:', msg.id);
 				      }
 				      
 				      // Testo del messaggio
@@ -1353,7 +1409,7 @@
 				      msgText.style.fontSize = '1rem';
 				      msgText.style.lineHeight = '1.8';
 				      msgText.style.marginTop = '20px';
-				      msgText.innerHTML = msg.fullDescription || msg.content;
+				      msgText.innerHTML = msg.fullDescription && msg.fullDescription !== 'undefined' ? msg.fullDescription : msg.content;
 				      messageContent.appendChild(msgText);
 				      
 				      messageModal.appendChild(messageContent);
@@ -1404,7 +1460,9 @@
 				  
 				  document.body.appendChild(mailboxModal);
 				  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
+				  console.log('📋 Debug messaggi:', messages);
 				});
+
 
 
 
