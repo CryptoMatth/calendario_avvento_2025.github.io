@@ -1042,7 +1042,7 @@
 				}
 				
 				return React.createElement("div", { className: "full-screen-modal" },
-					React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+					React.createElement("button", { className: "close-button", onClick: () => { handleTestSubmit(null); closeModal(); } }, "×"),
 					React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
 					React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
 					React.createElement("div", { className: "modal-content", style: { maxWidth: "800px", maxHeight: "70vh", overflowY: "auto" } },
@@ -1208,6 +1208,11 @@
 			const [settingsModal, setSettingsModal] = useState(false);
 			const [initError, setInitError] = useState(null);
 			const [enlargedImage, setEnlargedImage] = useState(null);
+			const closeModal = () => {
+			  setActiveModal(null);
+			  setEnlargedImage(null);
+			  setFeedback("");
+			};
 			
 			// Gestione apertura settings da pulsante esterno
 			useEffect(() => {
@@ -1540,7 +1545,7 @@
 			  activeModal !== null && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => setActiveModal(null) }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => closeModal() }, "×"),
 				React.createElement("div", { className: "modal-content" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
 				  React.createElement("div", { className: "mb-4 text-center" },
@@ -1679,7 +1684,7 @@
 			  settingsModal && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => setSettingsModal(false) }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => { setSettingsModal(false); closeModal(); } }, "×"),
 				React.createElement("div", { className: "modal-content max-w-2xl" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-6" }, "⚙️ Impostazioni"),
 				  
