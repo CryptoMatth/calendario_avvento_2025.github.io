@@ -350,24 +350,25 @@
 		  }
 
 		  /* ===== STILI PER IL PULSANTE GUFO NATALIZIO ===== */
-		  .owl-button {
-		    position: fixed;
-		    top: 20px;
-		    right: 90px;
-		    background: linear-gradient(135deg, #8B0000, #228B22);
-		    border: 3px solid #FFD700;
-		    border-radius: 50%;
-		    width: 70px;
-		    height: 70px;
-		    display: flex;
-		    align-items: center;
-		    justify-content: center;
-		    cursor: pointer;
-		    z-index: 1000;
-		    transition: all 0.3s ease;
-		    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
-		    animation: pulse-owl 2s infinite;
-		  }
+		.owl-button {
+		  position: absolute;
+		  top: 0;
+		  right: -90px;
+		  background: linear-gradient(135deg, #8B0000, #228B22);
+		  border: 3px solid #FFD700;
+		  border-radius: 50%;
+		  width: 70px;
+		  height: 70px;
+		  display: flex;
+		  align-items: center;
+		  justify-content: center;
+		  cursor: pointer;
+		  z-index: 1000;
+		  transition: all 0.3s ease;
+		  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+		  animation: pulse-owl 2s infinite;
+		}
+
 	
 		  .owl-button:hover {
 		    transform: scale(1.1) rotate(5deg);
@@ -552,13 +553,6 @@
 
 
 
-		<!-- ===== PULSANTE GUFO NATALIZIO ===== -->
-		<button class="owl-button" id="owlButton" aria-label="Apri informazioni sul gioco">
-		  <span>🦉</span>
-		  <span class="owl-notification" id="owlNotification">🎁</span>
-		</button>
-
-
 		<!-- ===== MODAL INFORMAZIONI GIOCO ===== -->
 		<div id="gameModal" class="modal-overlay" style="display: none;">
 			<div class="modal-content">
@@ -610,6 +604,11 @@
 				<div class="flex justify-center items-center">
 					<div class="text-center">
 						<h1 class="header-title text-4xl font-extrabold mb-2">🎄 Calendario dell'Avvento - Costellazioni ✨</h1>
+						<!-- ===== PULSANTE GUFO NATALIZIO ===== -->
+						<button class="owl-button" id="owlButton" aria-label="Apri informazioni sul gioco">
+						  <span>🦉</span>
+						  <span class="owl-notification" id="owlNotification">🎁</span>
+						</button>
 						<h2 id="totalScore" class="text-2xl font-semibold text-white">⭐ Punteggio Totale: 0</h2>
 					</div>
 				</div>
