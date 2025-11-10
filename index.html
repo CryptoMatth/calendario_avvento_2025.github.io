@@ -1357,121 +1357,30 @@
 				};
 			}
 
-			// ===== GESTIONE BUSTA DEL GUFO CON STATI =====
+			// ===== GESTIONE BUSTA DEL GUFO (VERSIONE SEMPLIFICATA) =====
 			(function() {
-			    let initialized = false;
-			    const ENVELOPE_VIEWED_KEY = 'owlEnvelopeViewed';
+			    const ENVELOPE_VIEWED_KEY = 'owlEnvelopeRead';
 			    
-			    function initializeEnvelope() {
-			        if (initialized) return;
-			        initialized = true;
-			        
-			        const closedEnvelopeState = document.getElementById('closedEnvelopeState');
-			        const openEnvelopeState = document.getElementById('openEnvelopeState');
-			        const messageState = document.getElementById('messageState');
-			        const openEnvelopeBtn = document.getElementById('openEnvelopeBtn');
-			        const readMessageBtn = document.getElementById('readMessageBtn');
-			        const closeMessageBtn = document.getElementById('closeMessageBtn');
-			        const owlModalImage = document.getElementById('owlModalImage');
-			        
-			        // Controlla se la busta è stata già aperta
-			        const isEnvelopeViewed = localStorage.getItem(ENVELOPE_VIEWED_KEY) === 'true';
-			        
-			        // Mostra lo stato corretto
-			        if (isEnvelopeViewed) {
-			            closedEnvelopeState.style.display = 'none';
-			            openEnvelopeState.style.display = 'block';
-			            messageState.style.display = 'none';
-			        } else {
-			            closedEnvelopeState.style.display = 'block';
-			            openEnvelopeState.style.display = 'none';
-			            messageState.style.display = 'none';
-			        }
-			        
-			        // Click: Apri busta chiusa
-			        openEnvelopeBtn.addEventListener('click', function() {
-			            localStorage.setItem(ENVELOPE_VIEWED_KEY, 'true');
-			            closedEnvelopeState.style.display = 'none';
-			            messageState.style.display = 'block';
-			        });
-			        
-			        // Click: Leggi messaggio da busta aperta
-			        readMessageBtn.addEventListener('click', function() {
-			            openEnvelopeState.style.display = 'none';
-			            messageState.style.display = 'block';
-			        });
-			        
-			        // Click: Chiudi messaggio e torna a busta aperta
-			        closeMessageBtn.addEventListener('click', function() {
-			            messageState.style.display = 'none';
-			            openEnvelopeState.style.display = 'block';
-			        });
-			        
-			        // ===== IMMAGINE INGRANDIBILE =====
-			        if (owlModalImage) {
-			            owlModalImage.addEventListener('click', function(e) {
-			                e.stopPropagation();
-			                
-			                const modal = document.createElement('div');
-			                modal.style.position = 'fixed';
-			                modal.style.top = '0';
-			                modal.style.left = '0';
-			                modal.style.width = '100%';
-			                modal.style.height = '100%';
-			                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-			                modal.style.display = 'flex';
-			                modal.style.alignItems = 'center';
-			                modal.style.justifyContent = 'center';
-			                modal.style.zIndex = '9999';
-			                modal.style.backdropFilter = 'blur(5px)';
-			                
-			                const closeBtn = document.createElement('button');
-			                closeBtn.innerHTML = '✕';
-			                closeBtn.style.position = 'absolute';
-			                closeBtn.style.top = '20px';
-			                closeBtn.style.right = '20px';
-			                closeBtn.style.fontSize = '2.5rem';
-			                closeBtn.style.color = 'white';
-			                closeBtn.style.background = 'none';
-			                closeBtn.style.border = 'none';
-			                closeBtn.style.cursor = 'pointer';
-			                closeBtn.style.zIndex = '10000';
-			                closeBtn.onclick = () => modal.remove();
-			                
-			                const img = document.createElement('img');
-			                img.src = owlModalImage.src;
-			                img.style.maxWidth = '90vw';
-			                img.style.maxHeight = '90vh';
-			                img.style.objectFit = 'contain';
-			                img.onclick = (e) => e.stopPropagation();
-			                
-			                const hint = document.createElement('div');
-			                hint.innerHTML = 'Clicca per chiudere';
-			                hint.style.position = 'absolute';
-			                hint.style.bottom = '20px';
-			                hint.style.left = '50%';
-			                hint.style.transform = 'translateX(-50%)';
-			                hint.style.color = 'white';
-			                hint.style.fontSize = '0.9rem';
-			                hint.style.opacity = '0.7';
-			                
-			                modal.onclick = () => modal.remove();
-			                modal.appendChild(closeBtn);
-			                modal.appendChild(img);
-			                modal.appendChild(hint);
-			                document.body.appendChild(modal);
-			            });
+			    function markEnvelopeAsRead() {
+			        localStorage.setItem(ENVELOPE_VIEWED_KEY, 'true');
+			    }
+			    
+			    function hasBeenRead() {
+			        return localStorage.getItem(ENVELOPE_VIEWED_KEY) === 'true';
+			    }
+			    
+			    // Al caricamento: se già letto, nascondi notifica
+			    if (hasBeenRead()) {
+			        const owlNotification = document.getElementById('owlNotification');
+			        if (owlNotification) {
+			            owlNotification.classList.add('hidden');
 			        }
 			    }
 			    
-			    if (document.readyState === 'loading') {
-			        document.addEventListener('DOMContentLoaded', initializeEnvelope);
-			    } else {
-			        initializeEnvelope();
-			    }
-			    
-			    setTimeout(initializeEnvelope, 500);
+			    // Questo è tutto. Il resto è gestito dalla nuova logica della busta
+			    // nel primo click del gufo che crea la envelope-modal
 			})();
+
 			// ===== FINE GESTIONE BUSTA DEL GUFO =====
  			const currentYear = today.getFullYear();
 
