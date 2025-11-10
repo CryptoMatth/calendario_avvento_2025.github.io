@@ -1155,71 +1155,98 @@
 				};
 			}
 
-			// ===== IMMAGINE DEL GUFO CLICCABILE =====
-			document.addEventListener('DOMContentLoaded', function() {
-			    const owlImage = document.querySelector('.modal-image');
+			// ===== IMMAGINE DEL GUFO CLICCABILE CORRETTO =====
+			function initializeOwlImageClick() {
+			    const owlImage = document.getElementById('owlModalImage');
 			    
-			    if (owlImage) {
-			        owlImage.style.cursor = 'pointer';
-			        
-			        owlImage.addEventListener('click', function(e) {
-			            e.stopPropagation();
-			            
-			            const modal = document.createElement('div');
-			            modal.style.position = 'fixed';
-			            modal.style.top = '0';
-			            modal.style.left = '0';
-			            modal.style.width = '100%';
-			            modal.style.height = '100%';
-			            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-			            modal.style.display = 'flex';
-			            modal.style.alignItems = 'center';
-			            modal.style.justifyContent = 'center';
-			            modal.style.zIndex = '9999';
-			            modal.style.backdropFilter = 'blur(5px)';
-			            
-			            const closeBtn = document.createElement('button');
-			            closeBtn.innerHTML = '✕';
-			            closeBtn.style.position = 'absolute';
-			            closeBtn.style.top = '20px';
-			            closeBtn.style.right = '20px';
-			            closeBtn.style.fontSize = '2.5rem';
-			            closeBtn.style.color = 'white';
-			            closeBtn.style.background = 'none';
-			            closeBtn.style.border = 'none';
-			            closeBtn.style.cursor = 'pointer';
-			            closeBtn.style.zIndex = '10000';
-			            closeBtn.onclick = () => modal.remove();
-			            
-			            const img = document.createElement('img');
-			            img.src = owlImage.src;
-			            img.style.maxWidth = '90vw';
-			            img.style.maxHeight = '90vh';
-			            img.style.objectFit = 'contain';
-			            img.onclick = (e) => e.stopPropagation();
-			            
-			            const hint = document.createElement('div');
-			            hint.innerHTML = 'Clicca per chiudere';
-			            hint.style.position = 'absolute';
-			            hint.style.bottom = '20px';
-			            hint.style.left = '50%';
-			            hint.style.transform = 'translateX(-50%)';
-			            hint.style.color = 'white';
-			            hint.style.fontSize = '0.9rem';
-			            hint.style.opacity = '0.7';
-			            
-			            modal.onclick = () => modal.remove();
-			            
-			            modal.appendChild(closeBtn);
-			            modal.appendChild(img);
-			            modal.appendChild(hint);
-			            document.body.appendChild(modal);
-			        });
+			    if (!owlImage) {
+			        console.warn('Immagine del gufo non trovata');
+			        return;
 			    }
-			});
-
+			    
+			    owlImage.style.cursor = 'pointer';
+			    
+			    owlImage.addEventListener('click', function(e) {
+			        e.stopPropagation();
+			        
+			        // Crea il modal fullscreen
+			        const modal = document.createElement('div');
+			        modal.style.position = 'fixed';
+			        modal.style.top = '0';
+			        modal.style.left = '0';
+			        modal.style.width = '100%';
+			        modal.style.height = '100%';
+			        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+			        modal.style.display = 'flex';
+			        modal.style.alignItems = 'center';
+			        modal.style.justifyContent = 'center';
+			        modal.style.zIndex = '9999';
+			        modal.style.backdropFilter = 'blur(5px)';
+			        
+			        // Bottone chiudi X
+			        const closeBtn = document.createElement('button');
+			        closeBtn.innerHTML = '✕';
+			        closeBtn.style.position = 'absolute';
+			        closeBtn.style.top = '20px';
+			        closeBtn.style.right = '20px';
+			        closeBtn.style.fontSize = '2.5rem';
+			        closeBtn.style.color = 'white';
+			        closeBtn.style.background = 'none';
+			        closeBtn.style.border = 'none';
+			        closeBtn.style.cursor = 'pointer';
+			        closeBtn.style.zIndex = '10000';
+			        closeBtn.style.transition = 'color 0.2s ease';
+			        
+			        closeBtn.onmouseover = function() {
+			            closeBtn.style.color = '#f87171';
+			        };
+			        closeBtn.onmouseout = function() {
+			            closeBtn.style.color = 'white';
+			        };
+			        
+			        closeBtn.onclick = function(e) {
+			            e.stopPropagation();
+			            modal.remove();
+			        };
+			        
+			        // Immagine ingrandita
+			        const img = document.createElement('img');
+			        img.src = owlImage.src;
+			        img.style.maxWidth = '90vw';
+			        img.style.maxHeight = '90vh';
+			        img.style.objectFit = 'contain';
+			        img.onclick = function(e) {
+			            e.stopPropagation();
+			        };
+			        
+			        // Testo aiuto
+			        const hint = document.createElement('div');
+			        hint.innerHTML = 'Clicca per chiudere';
+			        hint.style.position = 'absolute';
+			        hint.style.bottom = '20px';
+			        hint.style.left = '50%';
+			        hint.style.transform = 'translateX(-50%)';
+			        hint.style.color = 'white';
+			        hint.style.fontSize = '0.9rem';
+			        hint.style.opacity = '0.7';
+			        
+			        // Chiudi al click fuori
+			        modal.onclick = function() {
+			            modal.remove();
+			        };
+			        
+			        modal.appendChild(closeBtn);
+			        modal.appendChild(img);
+			        modal.appendChild(hint);
+			        document.body.appendChild(modal);
+			    });
+			}
 			
-				const currentYear = today.getFullYear();
+			// Esegui dopo il caricamento del DOM
+			document.addEventListener('DOMContentLoaded', initializeOwlImageClick);
+			document.addEventListener('load', initializeOwlImageClick);
+			setTimeout(initializeOwlImageClick, 500);
+			// ===== FINE IMMAGINE DEL GUFO CLICCABILE =====
 			
 				// ========================================
 				// CONTROLLO GIORNO
