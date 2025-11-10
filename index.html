@@ -1150,22 +1150,27 @@
 			 
 			// ===== EVENTO: Click sul gufo (VERSIONE CORRETTA) =====
 			owlButton.addEventListener('click', function() {
-			  // Controlla se c'è un messaggio periodico visibile
-			  // Leggi direttamente da localStorage E dal DOM
+			  // Leggi i flag da localStorage
+			  const envelopeRead = localStorage.getItem('owlEnvelopeRead') === 'true';
 			  const day5MessageSeen = localStorage.getItem('periodic_day5_milestone_seen');
 			  const periodicNotif = document.getElementById('periodicNotification');
 			  
+			  console.log('🦉 Click gufo:', {
+			    envelopeRead: envelopeRead,
+			    day5MessageSeen: day5MessageSeen,
+			    periodicNotifVisible: periodicNotif?.style.display !== 'none'
+			  });
+			  
+			  // Se c'è un messaggio periodico NON VISTO, mostralo
 			  if (periodicNotif && periodicNotif.style.display !== 'none' && !day5MessageSeen) {
-				// Il messaggio periodico è disponibile
-				console.log('📬 Mostrando messaggio periodico day5_milestone');
-				showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
-				
-				// Nascondi la notifica
-				periodicNotif.style.display = 'none';
-			  } else {
-				// Mostra il messaggio normale
-				console.log('📭 Mostrando messaggio normale');
-				showEnvelopeBox();
+			    console.log('📬 Mostrando messaggio periodico (giorno 5)');
+			    showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
+			    periodicNotif.style.display = 'none';
+			  } 
+			  // Altrimenti mostra il messaggio normale
+			  else {
+			    console.log('📭 Mostrando messaggio normale');
+			    showEnvelopeBox();
 			  }
 			});
 
@@ -1830,6 +1835,22 @@
 				  entry.attempts = (totalAttempts[index] || 0) + 1; // BUG FIX #1: Salva conteggio corretto
 				  entry.finalScore = entry.score;
 				  entry.completedAt = new Date().toISOString();
+
+					// 🎉 ATTIVA MESSAGGIO PERIODICO PER GIORNO 5
+					if (index === 4) {  // Giorno 5 (0-indexed)
+					  console.log('🎉 GIORNO 5 COMPLETATO - Attivando notifica di milestone!');
+					  
+					  // Salva nel localStorage che il giorno 5 è completato
+					  localStorage.setItem('periodic_day5_milestone_triggered', 'true');
+					  
+					  // Mostra il pulsante di notifica
+					  const periodicNotif = document.getElementById('periodicNotification');
+					  if (periodicNotif) {
+					    console.log('✅ Notifica periodica visualizzata');
+					    periodicNotif.style.display = 'flex';
+					  }
+					}
+
 				  
 				  console.log(`✅ RISPOSTA CORRETTA Giorno ${index + 1}:`, {
 					tentativi_totali: entry.attempts,
