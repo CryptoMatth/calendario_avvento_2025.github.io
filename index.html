@@ -1098,61 +1098,73 @@
 			    hideNotification();
 			  }
 
-				// ===== NUOVA: CASELLA DI POSTA DINAMICA =====
 				// ===== EVENTO: Click sul gufo =====
 				owlButton.addEventListener('click', function() {
 				  console.log('🦉 Click gufo - Aprendo la casella di posta');
 				  
-				  // Accedi ai dati direttamente dal localStorage
+				  // Leggi direttamente da localStorage
 				  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+				  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+				  
 				  const messages = [];
 				  
-				  // Struttura dati di tutti i messaggi disponibili
 				  const allMessages = [
 				    {
 				      id: 'welcome',
 				      icon: '📬',
 				      subject: 'Benvenuto al Calendario',
-				      content: 'Benvenuto al Calendario dell\'Avvento!'
+				      content: 'Benvenuto al Calendario dell\'Avvento!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p><p style="margin-bottom: 15px;"><strong>Obiettivo del gioco</strong><br>Impara a riconoscere le costellazioni del cielo notturno mentre ti diverti! Guadagna punti rispondendo correttamente ai quiz sulle stelle e le costellazioni.</p><p style="margin-bottom: 15px;"><strong>Caratteristiche</strong><br>• 25 giorni di divertimento astronomico<br>• Quiz interattivi sulle costellazioni<br>• Accumula punti e diventa un esperto delle stelle<br>• Bellissime animazioni natalizie con stelle e neve</p><p>Buon divertimento e Buon Natale!</p>'
 				    },
 				    {
 				      id: 'day5_milestone',
 				      triggerDay: 5,
 				      icon: '📬',
 				      subject: 'Mezzo Cammino!',
-				      content: 'Fantastico! Hai completato 5 giorni!'
+				      content: 'Fantastico! Hai completato 5 giorni!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Mezzo Cammino!</strong></p><p>Fantastico! Hai completato il primo quinto del calendario!</p><p>Hai scoperto 5 costellazioni e risposto correttamente a tutte le domande! Continua così! Il prossimo traguardo è il giorno 10!</p><p>Buon divertimento!</p>'
 				    },
 				    {
 				      id: 'day10_milestone',
 				      triggerDay: 10,
 				      icon: '📬',
 				      subject: 'Primo Test Completato!',
-				      content: 'Complimenti! Sei un vero esperto!'
+				      content: 'Complimenti! Hai superato il primo test!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Primo Test Completato!</strong></p><p>Complimenti! Hai superato il primo test diventando un vero esperto di costellazioni.</p><p>Continua a scoprire nuove stelle e nuovi misteri del cielo notturno! Solo 15 giorni al Natale!</p>'
 				    },
 				    {
 				      id: 'day15_milestone',
 				      triggerDay: 15,
 				      icon: '📬',
 				      subject: 'Meta Calendario!',
-				      content: 'Sei a metà del percorso!'
+				      content: 'Sei a metà del percorso!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Meta Calendario!</strong></p><p>Incredibile! Sei arrivato a metà del percorso!</p><p>Metà del cammino completata con successo. Continua così, il traguardo finale è sempre più vicino!</p>'
 				    },
 				    {
 				      id: 'day20_milestone',
 				      triggerDay: 20,
 				      icon: '📬',
 				      subject: 'Home Stretch!',
-				      content: 'Ormai sei quasi alla fine!'
+				      content: 'Ormai sei quasi alla fine!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Home Stretch!</strong></p><p>Stai per arrivare alla fine! Soltanto 5 giorni ancora e avrai completato l\'intero Calendario dell\'Avvento!</p><p>Non mollare adesso, sei quasi al traguardo!</p>'
 				    },
 				    {
 				      id: 'day25_milestone',
 				      triggerDay: 25,
 				      icon: '📬',
 				      subject: 'Finale!',
-				      content: 'Ultimi giorni fino a Natale!'
+				      content: 'Ultimi giorni fino a Natale!',
+				      image: 'fotoSherlocknatalizio.png',
+				      fullDescription: '<p style="margin-bottom: 15px;"><strong>Finale!</strong></p><p>Ultimi giorni fino a Natale! Stai per diventare un vero astronomo!</p><p>Completa gli ultimi giorni e ricevi il tuo certificato di esperto costellazioni!</p>'
 				    }
 				  ];
 				  
-				  // Aggiungi sempre il messaggio di benvenuto
+				  // Messaggio di benvenuto sempre presente
 				  messages.push({
 				    ...allMessages,
 				    isOpen: readMessages.includes('welcome'),
@@ -1162,10 +1174,7 @@
 				  // Aggiungi messaggi milestone se il giorno è completato
 				  allMessages.slice(1).forEach(msg => {
 				    if (msg.triggerDay) {
-				      // Leggi i dati salvati da localStorage (gameProgress)
-				      const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
 				      const dayEntry = savedProgress[msg.triggerDay - 1];
-				      
 				      if (dayEntry && dayEntry.solved) {
 				        messages.unshift({
 				          ...msg,
@@ -1176,14 +1185,13 @@
 				    }
 				  });
 				  
-				  // Crea il modal della casella
+				  // Crea modal
 				  const mailboxModal = document.createElement('div');
 				  mailboxModal.className = 'mailbox-modal';
 				  
 				  const container = document.createElement('div');
 				  container.className = 'mailbox-container';
 				  
-				  // Pulsante chiudi
 				  const closeBtn = document.createElement('button');
 				  closeBtn.className = 'mailbox-close-btn';
 				  closeBtn.innerHTML = '×';
@@ -1192,16 +1200,14 @@
 				    mailboxModal.remove();
 				  };
 				  
-				  // Titolo
 				  const title = document.createElement('h2');
 				  title.className = 'mailbox-title';
 				  title.innerHTML = '📬 Casella di Posta';
 				  
-				  // Lista messaggi
 				  const messagesList = document.createElement('div');
 				  messagesList.className = 'messages-list';
 				  
-				  messages.forEach((msg, idx) => {
+				  messages.forEach((msg) => {
 				    const item = document.createElement('div');
 				    item.className = 'mailbox-item';
 				    
@@ -1214,7 +1220,7 @@
 				    
 				    const subject = document.createElement('span');
 				    subject.className = 'mailbox-subject';
-				    subject.innerHTML = msg.subject;
+				    subject.innerHTML = msg.subject || 'Messaggio'; // Fallback se subject manca
 				    
 				    header.appendChild(icon);
 				    header.appendChild(subject);
@@ -1222,23 +1228,97 @@
 				    
 				    // Click per leggere
 				    item.onclick = () => {
-				      const currentRead = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-				      if (!currentRead.includes(msg.id)) {
-				        currentRead.push(msg.id);
-				        localStorage.setItem('mailbox_read', JSON.stringify(currentRead));
+				      // Segna come letto
+				      if (!readMessages.includes(msg.id)) {
+				        readMessages.push(msg.id);
+				        localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
 				      }
 				      
-				      // Aggiorna icona
+				      // Aggiorna icona a busta aperta
 				      icon.innerHTML = '📭';
 				      
-				      // Mostra/nascondi contenuto
+				      // Crea o nasconde il contenuto dettagliato
 				      let content = item.querySelector('.mailbox-item-content');
+				      
 				      if (content) {
+				        // Se esiste già, nascondilo
 				        content.remove();
 				      } else {
+				        // Crea il contenuto dettagliato
 				        content = document.createElement('div');
 				        content.className = 'mailbox-item-content';
-				        content.innerHTML = msg.content;
+				        
+				        // Aggiungi immagine se esiste
+				        if (msg.image) {
+				          const img = document.createElement('img');
+				          img.src = msg.image;
+				          img.alt = msg.subject;
+				          img.style.width = '100%';
+				          img.style.borderRadius = '8px';
+				          img.style.marginBottom = '15px';
+				          img.style.cursor = 'pointer';
+				          
+				          // Click sull'immagine per ingrandirla
+				          img.onclick = (e) => {
+				            e.stopPropagation();
+				            
+				            // Crea modal fullscreen per immagine
+				            const imageModal = document.createElement('div');
+				            imageModal.style.position = 'fixed';
+				            imageModal.style.top = '0';
+				            imageModal.style.left = '0';
+				            imageModal.style.width = '100%';
+				            imageModal.style.height = '100%';
+				            imageModal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+				            imageModal.style.display = 'flex';
+				            imageModal.style.alignItems = 'center';
+				            imageModal.style.justifyContent = 'center';
+				            imageModal.style.zIndex = '9999';
+				            imageModal.style.backdropFilter = 'blur(5px)';
+				            
+				            // Immagine ingrandita
+				            const largeImg = document.createElement('img');
+				            largeImg.src = msg.image;
+				            largeImg.alt = msg.subject;
+				            largeImg.style.maxWidth = '90vw';
+				            largeImg.style.maxHeight = '90vh';
+				            largeImg.style.objectFit = 'contain';
+				            largeImg.style.borderRadius = '10px';
+				            
+				            // Pulsante chiudi
+				            const closeImageBtn = document.createElement('button');
+				            closeImageBtn.innerHTML = '×';
+				            closeImageBtn.style.position = 'absolute';
+				            closeImageBtn.style.top = '20px';
+				            closeImageBtn.style.right = '20px';
+				            closeImageBtn.style.fontSize = '2.5rem';
+				            closeImageBtn.style.color = 'white';
+				            closeImageBtn.style.background = 'none';
+				            closeImageBtn.style.border = 'none';
+				            closeImageBtn.style.cursor = 'pointer';
+				            closeImageBtn.style.zIndex = '10000';
+				            
+				            closeImageBtn.onclick = () => imageModal.remove();
+				            imageModal.onclick = (e) => {
+				              if (e.target === imageModal) imageModal.remove();
+				            };
+				            
+				            imageModal.appendChild(closeImageBtn);
+				            imageModal.appendChild(largeImg);
+				            document.body.appendChild(imageModal);
+				          };
+				          
+				          content.appendChild(img);
+				        }
+				        
+				        // Aggiungi testo descrittivo
+				        const description = document.createElement('div');
+				        description.style.color = '#aaa';
+				        description.style.fontSize = '0.95rem';
+				        description.style.lineHeight = '1.6';
+				        description.innerHTML = msg.fullDescription || msg.content;
+				        content.appendChild(description);
+				        
 				        item.appendChild(content);
 				      }
 				    };
@@ -1268,9 +1348,9 @@
 				  document.addEventListener('keydown', handleEsc);
 				  
 				  document.body.appendChild(mailboxModal);
-				  
 				  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 				});
+
 
 
 			
