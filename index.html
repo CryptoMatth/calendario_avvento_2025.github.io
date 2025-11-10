@@ -367,14 +367,18 @@
 		    transition: all 0.3s ease;
 		    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
 		    animation: pulse-owl 2s infinite;
-			opacity: 1 !important;
- 			pointer-events: auto !important;
 		  }
 
 			.owl-button.inactive {
 				opacity: 0.3;            /* Opzionale: rendilo semitrasparente per far capire che è disabilitato */
 				pointer-events: none;    /* Disabilita ogni interazione col gufo */
 				user-select: none;       /* Opzionale: impedisce la selezione */
+			}
+
+			.owl-button.active {
+				opacity: 1;            
+				pointer-events: auto;    
+				user-select: auto;       
 			}
 	
 		  .owl-button:hover {
@@ -703,7 +707,7 @@
 				closeModal.addEventListener('click', function() {
 				  gameModal.style.display = 'none';
 				  document.body.style.overflow = 'auto';
-				  owlButton.classList.remove('inactive');
+				  owlButton.classList.add('active');
 				});
 
 				// Chiudi il modal quando si clicca fuori dal contenuto
@@ -711,7 +715,7 @@
 				  if (e.target === gameModal) {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					  owlButton.classList.remove('inactive');
+					  owlButton.classList.add('active');
 				  }
 				});
 
@@ -720,7 +724,7 @@
 				  if (e.key === 'Escape' && gameModal.style.display === 'flex') {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					  owlButton.classList.remove('inactive');
+					  owlButton.classList.add('active');
 				  }
 				});
 			})();
