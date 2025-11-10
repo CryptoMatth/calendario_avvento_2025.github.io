@@ -1102,74 +1102,87 @@
 owlButton.addEventListener('click', function() {
   console.log('🦉 Click gufo - Aprendo la casella di posta');
   
+  // Verifica che PERIODIC_MESSAGES esista
+  console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
+  if (typeof PERIODIC_MESSAGES === 'undefined') {
+    console.error('❌ PERIODIC_MESSAGES non è definito!');
+    return;
+  }
+  
   const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
   const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
   const messages = [];
   
-  // ===== MESSAGGI SINCRONIZZATI DIRETTAMENTE DA PERIODIC_MESSAGES =====
-  const allMessages = [
-    {
-      id: 'welcome',
-      triggerDay: null,
-      icon: '📬',
-      subject: 'Benvenuto al Calendario',
-      content: 'Benvenuto al Calendario dell\'Avvento!',
-      image: 'fotoSherlocknatalizio.png',
-      fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
-    },
-    // PRELEVA DIRETTAMENTE DA PERIODIC_MESSAGES
-    ...(PERIODIC_MESSAGES?.day5milestone ? [{
+  // MESSAGGIO BENVENUTO - SEMPLICE
+  const welcomeMsg = {
+    id: 'welcome',
+    triggerDay: null,
+    icon: '📬',
+    subject: 'Benvenuto al Calendario',
+    content: 'Benvenuto al Calendario dell\'Avvento!',
+    image: 'fotoSherlocknatalizio.png',
+    fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
+  };
+  
+  // MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
+  const milestoneMessages = [];
+  
+  // DAY 5
+  if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5milestone) {
+    milestoneMessages.push({
       id: 'day5_milestone',
       triggerDay: 5,
       icon: '📬',
-      subject: PERIODIC_MESSAGES.day5milestone.title,
-      content: PERIODIC_MESSAGES.day5milestone.subtitle,
-      image: PERIODIC_MESSAGES.day5milestone.image,
-      fullDescription: PERIODIC_MESSAGES.day5milestone.description
-    }] : []),
-    
-    ...(PERIODIC_MESSAGES?.day10milestone ? [{
+      subject: PERIODIC_MESSAGES.day5milestone.title || 'Mezzo Cammino!',
+      content: PERIODIC_MESSAGES.day5milestone.subtitle || 'Fantastico!',
+      image: PERIODIC_MESSAGES.day5milestone.image || 'fotoSherlocknatalizio.png',
+      fullDescription: PERIODIC_MESSAGES.day5milestone.description || 'Messaggio'
+    });
+    console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5milestone.title);
+  } else {
+    console.warn('⚠️ day5milestone non trovato in PERIODIC_MESSAGES');
+  }
+  
+  // DAY 10
+  if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10milestone) {
+    milestoneMessages.push({
       id: 'day10_milestone',
       triggerDay: 10,
       icon: '📬',
-      subject: PERIODIC_MESSAGES.day10milestone.title,
-      content: PERIODIC_MESSAGES.day10milestone.subtitle,
-      image: PERIODIC_MESSAGES.day10milestone.image,
-      fullDescription: PERIODIC_MESSAGES.day10milestone.description
-    }] : [])
-  ];
+      subject: PERIODIC_MESSAGES.day10milestone.title || 'Primo Test Completato!',
+      content: PERIODIC_MESSAGES.day10milestone.subtitle || 'Complimenti!',
+      image: PERIODIC_MESSAGES.day10milestone.image || 'fotoSherlocknatalizio.png',
+      fullDescription: PERIODIC_MESSAGES.day10milestone.description || 'Messaggio'
+    });
+    console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10milestone.title);
+  } else {
+    console.warn('⚠️ day10milestone non trovato in PERIODIC_MESSAGES');
+  }
   
-  // Aggiungi sempre il messaggio di benvenuto
+  // Aggiungi sempre il benvenuto
   messages.push({
-    ...allMessages,
+    ...welcomeMsg,
     isOpen: readMessages.includes('welcome'),
     icon: readMessages.includes('welcome') ? '📭' : '📬'
   });
   
-  // Aggiungi messaggi milestone se il giorno è completato
-  allMessages.slice(1).forEach(msg => {
-    if (msg.triggerDay) {
-      const dayEntry = savedProgress[msg.triggerDay - 1];
-      if (dayEntry && dayEntry.solved) {
-        messages.unshift({
-          ...msg,
-          isOpen: readMessages.includes(msg.id),
-          icon: readMessages.includes(msg.id) ? '📭' : '📬'
-        });
-      }
+  // Aggiungi milestone se il giorno è completato
+  milestoneMessages.forEach(msg => {
+    const dayEntry = savedProgress[msg.triggerDay - 1];
+    if (dayEntry && dayEntry.solved) {
+      messages.unshift({
+        ...msg,
+        isOpen: readMessages.includes(msg.id),
+        icon: readMessages.includes(msg.id) ? '📭' : '📬'
+      });
+      console.log('✅ Messaggio milestone aggiunto:', msg.subject);
     }
   });
   
-  console.log('📋 DEBUG Messaggi casella:', messages);
-  messages.forEach(msg => {
-    console.log(`📬 ${msg.subject}:`, {
-      image: msg.image,
-      description: msg.fullDescription ? msg.fullDescription.substring(0, 50) + '...' : 'N/A'
-    });
-  });
+  console.log('📋 Messaggi totali:', messages.length, messages);
   
-  // ===== CREA MODAL CASELLA DI POSTA =====
+  // ===== CREA MODAL CASELLA =====
   const mailboxModal = document.createElement('div');
   mailboxModal.className = 'mailbox-modal';
   
@@ -1204,13 +1217,13 @@ owlButton.addEventListener('click', function() {
     
     const subject = document.createElement('span');
     subject.className = 'mailbox-subject';
-    subject.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Nuovo Messaggio';
+    subject.innerHTML = msg.subject;
     
     header.appendChild(icon);
     header.appendChild(subject);
     item.appendChild(header);
     
-    // CLICK - APRE MODAL SEPARATO
+    // CLICK
     item.onclick = (e) => {
       e.stopPropagation();
       
@@ -1221,7 +1234,7 @@ owlButton.addEventListener('click', function() {
       
       icon.innerHTML = '📭';
       
-      // ===== MODAL DEL MESSAGGIO COMPLETO =====
+      // MODAL MESSAGGI
       const messageModal = document.createElement('div');
       messageModal.style.position = 'fixed';
       messageModal.style.top = '0';
@@ -1249,6 +1262,7 @@ owlButton.addEventListener('click', function() {
       messageContent.style.position = 'relative';
       messageContent.style.boxShadow = '0 10px 50px rgba(255, 215, 0, 0.3)';
       
+      // CHIUDI X
       const closeMessageBtn = document.createElement('button');
       closeMessageBtn.innerHTML = '×';
       closeMessageBtn.style.position = 'absolute';
@@ -1290,12 +1304,12 @@ owlButton.addEventListener('click', function() {
       msgTitle.style.fontWeight = 'bold';
       msgTitle.style.marginBottom = '20px';
       msgTitle.style.textAlign = 'center';
-      msgTitle.innerHTML = msg.subject && msg.subject !== 'undefined' ? msg.subject : 'Messaggio';
+      msgTitle.innerHTML = msg.subject;
       messageContent.appendChild(msgTitle);
       
-      // IMMAGINE - IMPORTANTE!!!
-      if (msg.image && msg.image !== 'undefined' && msg.image.length > 0) {
-        console.log('🖼️ Caricando immagine:', msg.image);
+      // IMMAGINE - IMPORTANTE
+      if (msg.image) {
+        console.log('🖼️ Caricamento immagine:', msg.image);
         
         const img = document.createElement('img');
         img.src = msg.image;
@@ -1314,7 +1328,7 @@ owlButton.addEventListener('click', function() {
         };
         
         img.onload = () => {
-          console.log('✅ Immagine caricata correttamente:', msg.image);
+          console.log('✅ Immagine caricata:', msg.image);
         };
         
         img.onclick = (e) => {
@@ -1360,7 +1374,7 @@ owlButton.addEventListener('click', function() {
         
         messageContent.appendChild(img);
       } else {
-        console.warn('⚠️ Nessuna immagine disponibile per il messaggio:', msg.id, 'Valore:', msg.image);
+        console.warn('⚠️ Nessuna immagine per:', msg.id);
       }
       
       // TESTO
@@ -1369,7 +1383,7 @@ owlButton.addEventListener('click', function() {
       msgText.style.fontSize = '1rem';
       msgText.style.lineHeight = '1.8';
       msgText.style.marginTop = '20px';
-      msgText.innerHTML = msg.fullDescription && msg.fullDescription !== 'undefined' ? msg.fullDescription : msg.content;
+      msgText.innerHTML = msg.fullDescription || msg.content;
       messageContent.appendChild(msgText);
       
       messageModal.appendChild(messageContent);
@@ -1418,18 +1432,6 @@ owlButton.addEventListener('click', function() {
   console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 });
 
-
-
-
-
-
-			
-			 
-				// ===== EVENTO: Click sul gufo =====
-				owlButton.addEventListener('click', function() {
-				  console.log('🦉 Click gufo - Aprendo la casella di posta');
-				  showMailboxModal();
-				});
 
 
 
