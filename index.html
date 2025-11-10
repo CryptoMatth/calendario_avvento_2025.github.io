@@ -746,7 +746,9 @@
 						<button class="owl-button" id="owlButton" aria-label="Apri informazioni sul gioco">
 						  <span>🦉</span>
 						  <span class="owl-notification" id="owlNotification">🎁</span>
+						  <span class="owl-notification" id="periodicNotification" style="display: none; animation: pulse-notification 0.6s infinite;">🎁</span>
 						</button>
+
 						<h2 id="totalScore" class="text-2xl font-semibold text-white">⭐ Punteggio Totale: 0</h2>
 					</div>
 				</div>
@@ -910,6 +912,23 @@
 			    setTimeout(setupImageZoom, 1000);
 			})();
 
+			// ===== DATI DEI MESSAGGI PERIODICI =====
+			const PERIODIC_MESSAGES = {
+			  day5_milestone: {
+			    id: 'day5_milestone',
+			    title: '🎉 Mezzo Cammino!',
+			    subtitle: 'Fantastico! Hai completato il primo quinto del calendario!',
+			    description: 'Fantastico! Hai completato il primo quinto del calendario!\n\nHai scoperto 5 costellazioni e risponduto correttamente a tutte le domande!\n\nContinua così! Il prossimo traguardo è il giorno 10!\n\nBuon divertimento! 🌟',
+			    image: 'foto/Sherlock_natalizio.png'
+			  },
+			  day10_milestone: {
+			    id: 'day10_milestone',
+			    title: '🏆 Primo Test Completato!',
+			    subtitle: 'Complimenti! Hai superato il primo test!',
+			    description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+			    image: 'foto/Sherlock_natalizio.png'
+			  }
+			};
 
 			// ===== GESTIONE MODAL GUFO CON BOX BUSTA INTERMEDIA =====
 			(function() {
@@ -917,6 +936,105 @@
 			  const gameModal = document.getElementById('gameModal');
 			  const closeModal = document.getElementById('closeModal');
 			  const owlNotification = document.getElementById('owlNotification');
+
+				  // 🆕 NUOVO: Funzione per mostrare messaggi periodici
+			  function showPeriodicMessage(messageData, messageId) {
+			    const isRead = localStorage.getItem(`periodic_${messageId}`) === 'true';
+			    
+			    // Crea il modal della busta
+			    const envelopeModal = document.createElement('div');
+			    envelopeModal.className = 'envelope-modal';
+			    envelopeModal.id = 'periodicEnvelopeModal';
+			    
+			    const envelopeBox = document.createElement('div');
+			    envelopeBox.className = 'envelope-box';
+			    
+			    // Pulsante chiudi
+			    const closeBtn = document.createElement('div');
+			    closeBtn.className = 'envelope-close';
+			    closeBtn.innerHTML = '×';
+			    closeBtn.onclick = (e) => {
+			      e.stopPropagation();
+			      envelopeModal.remove();
+			    };
+			    
+			    // Icona busta
+			    const envelopeIcon = document.createElement('div');
+			    envelopeIcon.className = 'envelope-icon';
+			    envelopeIcon.innerHTML = isRead ? '📭' : '📬';
+			    
+			    // Titolo
+			    const envelopeTitle = document.createElement('div');
+			    envelopeTitle.className = 'envelope-text';
+			    envelopeTitle.innerHTML = messageData.title;
+			    
+			    // Sottotitolo
+			    const envelopeSubtitle = document.createElement('div');
+			    envelopeSubtitle.style.color = '#aaa';
+			    envelopeSubtitle.style.fontSize = '0.9rem';
+			    envelopeSubtitle.innerHTML = messageData.subtitle;
+			    
+			    // Pulsante
+			    const button = document.createElement('button');
+			    button.className = 'envelope-button';
+			    button.innerHTML = 'Leggi il Messaggio';
+			    button.onclick = (e) => {
+			      e.stopPropagation();
+			      localStorage.setItem(`periodic_${messageId}`, 'true');
+			      envelopeModal.remove();
+			      
+			      // Mostra il modal principale con il messaggio
+			      showPeriodicMessageContent(messageData);
+			    };
+			    
+			    // Assembla
+			    envelopeBox.appendChild(closeBtn);
+			    envelopeBox.appendChild(envelopeIcon);
+			    envelopeBox.appendChild(envelopeTitle);
+			    envelopeBox.appendChild(envelopeSubtitle);
+			    envelopeBox.appendChild(button);
+			    
+			    envelopeModal.appendChild(envelopeBox);
+			    
+			    // Chiudi cliccando fuori
+			    envelopeModal.onclick = (e) => {
+			      if (e.target === envelopeModal) {
+			        envelopeModal.remove();
+			      }
+			    };
+			    
+			    // Chiudi con ESC
+			    const handleEsc = (e) => {
+			      if (e.key === 'Escape') {
+			        envelopeModal.remove();
+			        document.removeEventListener('keydown', handleEsc);
+			      }
+			    };
+			    document.addEventListener('keydown', handleEsc);
+			    
+			    document.body.appendChild(envelopeModal);
+			  }
+			
+			  // 🆕 NUOVO: Funzione per mostrare il contenuto del messaggio periodico
+			  function showPeriodicMessageContent(messageData) {
+			    // Usa il modal principale ma modifica il contenuto
+			    const modal = document.getElementById('gameModal');
+			    const content = modal.querySelector('.modal-content');
+			    
+			    // Modifica il contenuto
+			    const title = content.querySelector('.modal-title');
+			    const image = content.querySelector('.modal-image');
+			    const text = content.querySelector('.modal-text');
+			    
+			    title.innerHTML = messageData.title;
+			    image.src = messageData.image;
+			    text.innerHTML = `<p style="white-space: pre-line; line-height: 1.8;">${messageData.description}</p>`;
+			    
+			    // Apri il modal
+			    modal.style.display = 'flex';
+			    document.body.style.overflow = 'hidden';
+			  }
+
 			
 			  // Chiave localStorage per tracciare se il messaggio è stato letto
 			  const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
@@ -1014,11 +1132,30 @@
 			    
 			    document.body.appendChild(envelopeModal);
 			  }
-			
-			  // ===== EVENTO: Click sul gufo =====
-			  owlButton.addEventListener('click', function() {
-			    showEnvelopeBox();
-			  });
+			 
+			// ===== EVENTO: Click sul gufo =====
+			owlButton.addEventListener('click', function() {
+			  // Controlla se c'è un messaggio periodico visibile
+			  const visiblePeriodicMessage = Object.keys(periodicNotificationVisible || {}).find(key => periodicNotificationVisible[key]);
+			  
+			  if (visiblePeriodicMessage && PERIODIC_MESSAGES[visiblePeriodicMessage]) {
+				// Mostra il messaggio periodico
+				showPeriodicMessage(PERIODIC_MESSAGES[visiblePeriodicMessage], visiblePeriodicMessage);
+				
+				// Nascondi la notifica
+				const periodicNotif = document.getElementById('periodicNotification');
+				if (periodicNotif) {
+				  periodicNotif.style.display = 'none';
+				}
+				
+				// Segna come visto
+				setPeriodicNotificationVisible(prev => ({...prev, [visiblePeriodicMessage]: false}));
+			  } else {
+				// Mostra il messaggio normale
+				showEnvelopeBox();
+			  }
+			});
+
 			
 			  // ===== CHIUSURA MODAL PRINCIPALE =====
 			  closeModal.addEventListener('click', function() {
@@ -1575,6 +1712,28 @@
 			
 			// BUG FIX #1: Traccia TUTTI i tentativi (non solo errori)
 			const [totalAttempts, setTotalAttempts] = useState({});
+
+			// ===== STATE PER MESSAGGI PERIODICI =====
+			const [periodicMessages, setPeriodicMessages] = useState(() => {
+			  try {
+			    const saved = localStorage.getItem('periodicMessages');
+			    return saved ? JSON.parse(saved) : {};
+			  } catch {
+			    return {};
+			  }
+			});
+			
+			const [periodicNotificationVisible, setPeriodicNotificationVisible] = useState({});
+			
+			// Al caricamento, controlla se il giorno 5 è stato completato
+			useEffect(() => {
+			  const day5Completed = progress?.solved;  // Giorno 5 è indice 4
+			  if (day5Completed && !periodicMessages.day5_milestone) {
+			    // Messaggio periodico non è stato visto ancora
+			    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+			  }
+			}, [progress]);
+
 	  
 			// INIZIALIZZAZIONE SEMPLIFICATA
 			useEffect(() => {
@@ -1662,6 +1821,25 @@
 					tentativi_totali: entry.attempts,
 					punteggio_finale: entry.score
 				  });
+
+				// 🆕 NUOVO: Controlla se è il giorno 5
+				  if (index === 4) {  // Giorno 5 (0-indexed)
+				    console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
+				    
+				    // Aggiungi il messaggio periodico
+				    setPeriodicMessages(prev => {
+				      const updated = { ...prev, day5_milestone: true };
+				      localStorage.setItem('periodicMessages', JSON.stringify(updated));
+				      return updated;
+				    });
+				    
+				    // Attiva la notifica
+				    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+				    
+				    // Mostra toast di congratulazioni
+				    showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
+				  }
+
 				  
 				  setFeedback("✅ Corretto! Ottimo lavoro!");
 				  
