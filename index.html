@@ -1024,7 +1024,7 @@
 			// COMPONENTE REACT: TEST A CROCETTE (FUORI da App)
 			// ========================================
 			
-			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
+			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS, onClose }) {
 				if (!test) return null;
 				
 				const isSubmitted = testSubmitted[testNumber] || false;
@@ -1034,7 +1034,7 @@
 				
 				if (isLocked) {
 					return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
-						React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+						React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
 						React.createElement("h1", null, `Test ${testNumber}`),
 						React.createElement("p", { style: { fontSize: "1.2rem", marginTop: "2rem", color: "#f87171" } }, "🔒 Questo test è bloccato!"),
 						React.createElement("p", { style: { marginTop: "1rem", color: "#ccc" } }, `Devi completare prima i giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`)
@@ -1042,7 +1042,7 @@
 				}
 				
 				return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
-					React.createElement("button", { className: "close-button", onClick: () => { handleTestSubmit(null); closeModal(); } }, "×"),
+					React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
 					React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
 					React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
 					React.createElement("div", { className: "modal-content", style: { maxWidth: "800px", maxHeight: "70vh", overflowY: "auto" } },
@@ -1538,14 +1538,15 @@
 				  progress: progress,
 				  handleTestAnswerChange: handleTestAnswerChange,
 				  handleTestSubmit: handleTestSubmit,
-				  PERIODIC_TESTS: PERIODIC_TESTS
+				  PERIODIC_TESTS: PERIODIC_TESTS,
+				  onClose: () => setActiveTest(null)
 			  }),
 			  
 			  // Modal gioco
 			  activeModal !== null && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => closeModal() }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
 				React.createElement("div", { className: "modal-content" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
 				  React.createElement("div", { className: "mb-4 text-center" },
@@ -1684,7 +1685,7 @@
 			  settingsModal && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => { setSettingsModal(false); closeModal(); } }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
 				React.createElement("div", { className: "modal-content max-w-2xl" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-6" }, "⚙️ Impostazioni"),
 				  
