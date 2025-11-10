@@ -371,9 +371,7 @@
 		  }
 
 			.owl-button.inactive {
-				opacity: 0.3;            /* Opzionale: rendilo semitrasparente per far capire che è disabilitato */
-				pointer-events: none;    /* Disabilita ogni interazione col gufo */
-				user-select: none;       /* Opzionale: impedisce la selezione */
+				display: none;
 			}
 
 			.owl-button.active {
@@ -698,6 +696,7 @@
 				owlButton.addEventListener('click', function() {
 				  gameModal.style.display = 'flex';
 				  document.body.style.overflow = 'hidden';
+				  owlButton.classList.add("inactive");
 				  
 				  // Nascondi la notifica e segna come visualizzato
 				  hideNotification();
@@ -708,7 +707,7 @@
 				closeModal.addEventListener('click', function() {
 				  gameModal.style.display = 'none';
 				  document.body.style.overflow = 'auto';
-				  
+				  owlButton.classList.remove("inactive");
 				});
 
 				// Chiudi il modal quando si clicca fuori dal contenuto
@@ -1034,7 +1033,7 @@
 				const isLocked = !allPreviousDaysCompleted;
 				
 				if (isLocked) {
-					return React.createElement("div", { className: "full-screen-modal" },
+					return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
 						React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
 						React.createElement("h1", null, `Test ${testNumber}`),
 						React.createElement("p", { style: { fontSize: "1.2rem", marginTop: "2rem", color: "#f87171" } }, "🔒 Questo test è bloccato!"),
@@ -1042,7 +1041,7 @@
 					);
 				}
 				
-				return React.createElement("div", { className: "full-screen-modal" },
+				return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
 					React.createElement("button", { className: "close-button", onClick: () => { handleTestSubmit(null); closeModal(); } }, "×"),
 					React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
 					React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
