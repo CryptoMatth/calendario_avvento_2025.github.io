@@ -1148,31 +1148,252 @@
 			    document.body.appendChild(envelopeModal);
 			  }
 			 
-			// ===== EVENTO: Click sul gufo (VERSIONE CORRETTA) =====
+			// ===== EVENTO: Click sul gufo (MOSTRA TUTTE LE BUSTE) =====
 			owlButton.addEventListener('click', function() {
-			  // Leggi i flag da localStorage
-			  const envelopeRead = localStorage.getItem('owlEnvelopeRead') === 'true';
+			  console.log('🦉 Click gufo - Mostrando tutte le buste disponibili');
+			  
+			  // Crea il container per le buste
+			  const containerModal = document.createElement('div');
+			  containerModal.className = 'envelope-modal';
+			  containerModal.id = 'containerEnvelopeModal';
+			  
+			  const containerBox = document.createElement('div');
+			  containerBox.style.cssText = `
+			    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+			    border: 3px solid #FFD700;
+			    border-radius: 20px;
+			    padding: 30px;
+			    max-width: 600px;
+			    width: 90%;
+			    max-height: 80vh;
+			    overflow-y: auto;
+			    text-align: center;
+			    box-shadow: 0 10px 50px rgba(255, 215, 0, 0.3);
+			  `;
+			  
+			  // Pulsante chiudi
+			  const closeBtn = document.createElement('div');
+			  closeBtn.className = 'envelope-close';
+			  closeBtn.innerHTML = '×';
+			  closeBtn.style.cssText = `
+			    position: absolute;
+			    top: 12px;
+			    right: 12px;
+			    background: #8B0000;
+			    color: white;
+			    border: 2px solid #FFD700;
+			    border-radius: 50%;
+			    width: 35px;
+			    height: 35px;
+			    display: flex;
+			    align-items: center;
+			    justify-content: center;
+			    cursor: pointer;
+			    font-size: 1.3rem;
+			    font-weight: bold;
+			    transition: all 0.3s ease;
+			    padding: 0;
+			  `;
+			  closeBtn.onclick = (e) => {
+			    e.stopPropagation();
+			    containerModal.remove();
+			  };
+			  
+			  // Titolo
+			  const title = document.createElement('h2');
+			  title.style.cssText = `
+			    color: #FFD700;
+			    font-size: 1.8rem;
+			    font-weight: bold;
+			    margin-bottom: 30px;
+			    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+			  `;
+			  title.innerHTML = '📫 I Tuoi Messaggi';
+			  
+			  containerBox.appendChild(closeBtn);
+			  containerBox.appendChild(title);
+			  
+			  // ===== PRIMA BUSTA: Messaggio di Benvenuto =====
+			  const envelope1 = document.createElement('div');
+			  envelope1.style.cssText = `
+			    background: rgba(255, 255, 255, 0.05);
+			    border: 2px solid #FFD700;
+			    border-radius: 15px;
+			    padding: 20px;
+			    margin-bottom: 20px;
+			    cursor: pointer;
+			    transition: all 0.3s ease;
+			  `;
+			  
+			  envelope1.onmouseover = () => {
+			    envelope1.style.transform = 'scale(1.05)';
+			    envelope1.style.boxShadow = '0 0 20px rgba(255, 215, 0, 0.5)';
+			  };
+			  envelope1.onmouseout = () => {
+			    envelope1.style.transform = 'scale(1)';
+			    envelope1.style.boxShadow = 'none';
+			  };
+			  
+			  const icon1 = document.createElement('div');
+			  icon1.style.cssText = `
+			    font-size: 60px;
+			    margin-bottom: 10px;
+			  `;
+			  icon1.innerHTML = '📬';
+			  
+			  const text1 = document.createElement('div');
+			  text1.style.cssText = `
+			    color: #FFD700;
+			    font-size: 1.1rem;
+			    font-weight: bold;
+			    margin-bottom: 5px;
+			  `;
+			  text1.innerHTML = 'Benvenuto al Calendario';
+			  
+			  const subtitle1 = document.createElement('div');
+			  subtitle1.style.cssText = `
+			    color: #aaa;
+			    font-size: 0.85rem;
+			    margin-bottom: 10px;
+			  `;
+			  subtitle1.innerHTML = 'Come si gioca';
+			  
+			  const btn1 = document.createElement('button');
+			  btn1.style.cssText = `
+			    background: #fbbf24;
+			    color: #111827;
+			    border: none;
+			    border-radius: 8px;
+			    padding: 10px 20px;
+			    font-weight: bold;
+			    cursor: pointer;
+			    transition: all 0.3s ease;
+			    font-size: 0.9rem;
+			  `;
+			  btn1.innerHTML = 'Leggi';
+			  btn1.onmouseover = () => btn1.style.background = '#f59e0b';
+			  btn1.onmouseout = () => btn1.style.background = '#fbbf24';
+			  btn1.onclick = (e) => {
+			    e.stopPropagation();
+			    containerModal.remove();
+			    // Mostra il messaggio di benvenuto
+			    const modal = document.getElementById('gameModal');
+			    modal.style.display = 'flex';
+			    document.body.style.overflow = 'hidden';
+			    localStorage.setItem('owlEnvelopeRead', 'true');
+			  };
+			  
+			  envelope1.appendChild(icon1);
+			  envelope1.appendChild(text1);
+			  envelope1.appendChild(subtitle1);
+			  envelope1.appendChild(btn1);
+			  
+			  containerBox.appendChild(envelope1);
+			  
+			  // ===== SECONDA BUSTA: Messaggio Giorno 5 (Se disponibile) =====
 			  const day5MessageSeen = localStorage.getItem('periodic_day5_milestone_seen');
 			  const periodicNotif = document.getElementById('periodicNotification');
 			  
-			  console.log('🦉 Click gufo:', {
-			    envelopeRead: envelopeRead,
-			    day5MessageSeen: day5MessageSeen,
-			    periodicNotifVisible: periodicNotif?.style.display !== 'none'
-			  });
-			  
-			  // Se c'è un messaggio periodico NON VISTO, mostralo
 			  if (periodicNotif && periodicNotif.style.display !== 'none' && !day5MessageSeen) {
-			    console.log('📬 Mostrando messaggio periodico (giorno 5)');
-			    showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
-			    periodicNotif.style.display = 'none';
-			  } 
-			  // Altrimenti mostra il messaggio normale
-			  else {
-			    console.log('📭 Mostrando messaggio normale');
-			    showEnvelopeBox();
+			    console.log('📬 Aggiungendo secondo messaggio (Giorno 5)');
+			    
+			    const envelope2 = document.createElement('div');
+			    envelope2.style.cssText = `
+			      background: rgba(144, 202, 249, 0.1);
+			      border: 2px solid #90CAF9;
+			      border-radius: 15px;
+			      padding: 20px;
+			      margin-bottom: 20px;
+			      cursor: pointer;
+			      transition: all 0.3s ease;
+			    `;
+			    
+			    envelope2.onmouseover = () => {
+			      envelope2.style.transform = 'scale(1.05)';
+			      envelope2.style.boxShadow = '0 0 20px rgba(144, 202, 249, 0.5)';
+			    };
+			    envelope2.onmouseout = () => {
+			      envelope2.style.transform = 'scale(1)';
+			      envelope2.style.boxShadow = 'none';
+			    };
+			    
+			    const icon2 = document.createElement('div');
+			    icon2.style.cssText = `
+			      font-size: 60px;
+			      margin-bottom: 10px;
+			    `;
+			    icon2.innerHTML = '📫'; // Busta CHIUSA per il nuovo messaggio
+			    
+			    const text2 = document.createElement('div');
+			    text2.style.cssText = `
+			      color: #90CAF9;
+			      font-size: 1.1rem;
+			      font-weight: bold;
+			      margin-bottom: 5px;
+			    `;
+			    text2.innerHTML = '🎉 Mezzo Cammino!';
+			    
+			    const subtitle2 = document.createElement('div');
+			    subtitle2.style.cssText = `
+			      color: #aaa;
+			      font-size: 0.85rem;
+			      margin-bottom: 10px;
+			    `;
+			    subtitle2.innerHTML = 'Nuovo messaggio del gufo';
+			    
+			    const btn2 = document.createElement('button');
+			    btn2.style.cssText = `
+			      background: #90CAF9;
+			      color: #111827;
+			      border: none;
+			      border-radius: 8px;
+			      padding: 10px 20px;
+			      font-weight: bold;
+			      cursor: pointer;
+			      transition: all 0.3s ease;
+			      font-size: 0.9rem;
+			    `;
+			    btn2.innerHTML = 'Leggi';
+			    btn2.onmouseover = () => btn2.style.background = '#64B5F6';
+			    btn2.onmouseout = () => btn2.style.background = '#90CAF9';
+			    btn2.onclick = (e) => {
+			      e.stopPropagation();
+			      containerModal.remove();
+			      
+			      // Mostra il messaggio periodico (funzione già definita nel codice)
+			      showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
+			      periodicNotif.style.display = 'none';
+			    };
+			    
+			    envelope2.appendChild(icon2);
+			    envelope2.appendChild(text2);
+			    envelope2.appendChild(subtitle2);
+			    envelope2.appendChild(btn2);
+			    
+			    containerBox.appendChild(envelope2);
 			  }
+			  
+			  containerModal.appendChild(containerBox);
+			  
+			  // Chiudi cliccando fuori
+			  containerModal.onclick = (e) => {
+			    if (e.target === containerModal) {
+			      containerModal.remove();
+			    }
+			  };
+			  
+			  // Chiudi con ESC
+			  const handleEsc = (e) => {
+			    if (e.key === 'Escape') {
+			      containerModal.remove();
+			      document.removeEventListener('keydown', handleEsc);
+			    }
+			  };
+			  document.addEventListener('keydown', handleEsc);
+			  
+			  document.body.appendChild(containerModal);
 			});
+
 
 
 			
