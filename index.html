@@ -578,8 +578,8 @@
 			    background: linear-gradient(135deg, #4169E1, #1E90FF);
 			}
 
-			/* ===== STILI PER LA BOX DELLA BUSTA ===== */
-			.envelope-modal {
+			/* ===== STILI CASELLA DI POSTA (NUOVA) ===== */
+			.mailbox-modal {
 			  position: fixed;
 			  top: 0;
 			  left: 0;
@@ -593,109 +593,116 @@
 			  animation: fadeIn-modal 0.3s ease;
 			}
 			
-			.envelope-box {
+			.mailbox-container {
 			  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 			  border: 3px solid #FFD700;
 			  border-radius: 20px;
-			  padding: 40px;
-			  max-width: 400px;
+			  padding: 30px;
+			  max-width: 500px;
 			  width: 90%;
-			  text-align: center;
-			  box-shadow: 0 10px 50px rgba(255, 215, 0, 0.3);
-			  animation: slideDown-modal 0.4s ease;
+			  max-height: 70vh;
+			  overflow-y: auto;
 			  position: relative;
-			  display: flex;
-			  flex-direction: column;
-			  align-items: center;
-			  gap: 20px;
+			  box-shadow: 0 10px 50px rgba(255, 215, 0, 0.3);
 			}
 			
-			.envelope-icon {
-			  font-size: 100px;
-			  display: inline-block;
-			  cursor: pointer;
-			  transition: transform 0.3s ease;
-			  animation: bounce-envelope 1s infinite;
-			}
-			
-			.envelope-icon:hover {
-			  transform: scale(1.1) rotate(-5deg);
-			}
-			
-			.envelope-text {
-			  color: #FFD700;
-			  font-size: 1.3rem;
-			  font-weight: bold;
-			}
-			
-			.envelope-button {
-			  background: #fbbf24;
-			  color: #111827;
-			  border: none;
-			  border-radius: 10px;
-			  padding: 12px 25px;
-			  font-weight: bold;
-			  cursor: pointer;
-			  transition: all 0.3s ease;
-			  font-size: 1rem;
-			  white-space: nowrap;
-			}
-			
-			.envelope-button:hover {
-			  background: #f59e0b;
-			  transform: scale(1.05);
-			}
-			
-			.envelope-button:active {
-			  transform: scale(0.98);
-			}
-			
-			.envelope-close {
+			.mailbox-close-btn {
 			  position: absolute;
-			  top: 12px;
-			  right: 12px;
+			  top: 15px;
+			  right: 15px;
 			  background: #8B0000;
 			  color: white;
 			  border: 2px solid #FFD700;
 			  border-radius: 50%;
-			  width: 35px;
-			  height: 35px;
+			  width: 40px;
+			  height: 40px;
+			  cursor: pointer;
+			  font-size: 1.5rem;
+			  transition: all 0.3s;
 			  display: flex;
 			  align-items: center;
 			  justify-content: center;
-			  cursor: pointer;
-			  font-size: 1.3rem;
-			  font-weight: bold;
-			  transition: all 0.3s ease;
-			  padding: 0;
 			}
 			
-			.envelope-close:hover {
+			.mailbox-close-btn:hover {
 			  background: #FF0000;
 			  transform: rotate(90deg);
 			}
 			
-			@keyframes bounce-envelope {
-			  0%, 100% { transform: translateY(0); }
-			  50% { transform: translateY(-10px); }
+			.mailbox-title {
+			  color: #FFD700;
+			  font-size: 1.8rem;
+			  font-weight: bold;
+			  text-align: center;
+			  margin-bottom: 20px;
 			}
 			
-			#periodicNotification {
-			  position: absolute;
-			  top: -8px;
-			  right: -8px;
-			  display: none !important;
+			.messages-list {
+			  display: flex;
+			  flex-direction: column;
+			  gap: 12px;
+			}
+			
+			.mailbox-item {
+			  background: #111;
+			  border-left: 4px solid #FFD700;
+			  padding: 15px;
+			  border-radius: 5px;
+			  cursor: pointer;
+			  transition: all 0.3s;
+			  display: flex;
 			  align-items: center;
-			  justify-content: center;
-			  font-size: 1.3rem;
-			  animation: bounce-gift 0.8s infinite, pulse-gift 2s infinite;
-			  z-index: 1;
-			  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+			  justify-content: space-between;
 			}
 			
-			#periodicNotification[style*="display: flex"] {
-			  display: flex !important;
+			.mailbox-item:hover {
+			  background: #222;
+			  transform: translateX(5px);
 			}
+			
+			.mailbox-item-header {
+			  display: flex;
+			  align-items: center;
+			  gap: 10px;
+			  flex: 1;
+			}
+			
+			.mailbox-icon {
+			  font-size: 1.5rem;
+			  min-width: 30px;
+			}
+			
+			.mailbox-subject {
+			  color: #FFD700;
+			  font-weight: bold;
+			  flex: 1;
+			}
+			
+			.mailbox-item-content {
+			  margin-top: 10px;
+			  padding: 10px;
+			  background: #222;
+			  border-left: 2px solid #FFD700;
+			  color: #aaa;
+			  font-size: 0.9rem;
+			  border-radius: 3px;
+			}
+			
+			@media (max-width: 768px) {
+			  .mailbox-container {
+			    padding: 20px;
+			    width: 95%;
+			  }
+			  
+			  .mailbox-title {
+			    font-size: 1.5rem;
+			  }
+			  
+			  .mailbox-item {
+			    padding: 12px;
+			  }
+			}
+
 
 		</style>
 	</head>
@@ -1090,106 +1097,176 @@
 			  if (isEnvelopeRead()) {
 			    hideNotification();
 			  }
+
+				// ===== NUOVA: CASELLA DI POSTA DINAMICA =====
+				function showMailboxModal() {
+				  // Calcola quali messaggi mostrare
+				  const messages = [];
+				  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+				  
+				  // Struttura dati di tutti i messaggi disponibili
+				  const allMessages = [
+				    {
+				      id: 'welcome',
+				      icon: '📬',
+				      subject: 'Benvenuto al Calendario',
+				      content: 'Benvenuto al Calendario dell\'Avvento!'
+				    },
+				    {
+				      id: 'day5_milestone',
+				      triggerDay: 5,
+				      icon: '📬',
+				      subject: 'Mezzo Cammino!',
+				      content: 'Fantastico! Hai completato 5 giorni!'
+				    },
+				    {
+				      id: 'day10_milestone',
+				      triggerDay: 10,
+				      icon: '📬',
+				      subject: 'Primo Test Completato!',
+				      content: 'Complimenti! Sei un vero esperto!'
+				    },
+				    {
+				      id: 'day15_milestone',
+				      triggerDay: 15,
+				      icon: '📬',
+				      subject: 'Meta Calendario!',
+				      content: 'Sei a metà del percorso!'
+				    },
+				    {
+				      id: 'day20_milestone',
+				      triggerDay: 20,
+				      icon: '📬',
+				      subject: 'Home Stretch!',
+				      content: 'Ormai sei quasi alla fine!'
+				    },
+				    {
+				      id: 'day25_milestone',
+				      triggerDay: 25,
+				      icon: '📬',
+				      subject: 'Finale!',
+				      content: 'Ultimi giorni fino a Natale!'
+				    }
+				  ];
+				  
+				  // Aggiungi sempre il messaggio di benvenuto
+				  messages.push({
+				    ...allMessages,
+				    isOpen: readMessages.includes('welcome'),
+				    icon: readMessages.includes('welcome') ? '📭' : '📬'
+				  });
+				  
+				  // Aggiungi messaggi milestone se il giorno è completato
+				  allMessages.slice(1).forEach(msg => {
+				    if (msg.triggerDay && progress[msg.triggerDay - 1]?.solved) {
+				      messages.unshift({
+				        ...msg,
+				        isOpen: readMessages.includes(msg.id),
+				        icon: readMessages.includes(msg.id) ? '📭' : '📬'
+				      });
+				    }
+				  });
+				  
+				  // Crea il modal della casella
+				  const mailboxModal = document.createElement('div');
+				  mailboxModal.className = 'mailbox-modal';
+				  
+				  const container = document.createElement('div');
+				  container.className = 'mailbox-container';
+				  
+				  // Pulsante chiudi
+				  const closeBtn = document.createElement('button');
+				  closeBtn.className = 'mailbox-close-btn';
+				  closeBtn.innerHTML = '×';
+				  closeBtn.onclick = (e) => {
+				    e.stopPropagation();
+				    mailboxModal.remove();
+				  };
+				  
+				  // Titolo
+				  const title = document.createElement('h2');
+				  title.className = 'mailbox-title';
+				  title.innerHTML = '📬 Casella di Posta';
+				  
+				  // Lista messaggi
+				  const messagesList = document.createElement('div');
+				  messagesList.className = 'messages-list';
+				  
+				  messages.forEach((msg, idx) => {
+				    const item = document.createElement('div');
+				    item.className = 'mailbox-item';
+				    
+				    const header = document.createElement('div');
+				    header.className = 'mailbox-item-header';
+				    
+				    const icon = document.createElement('span');
+				    icon.className = 'mailbox-icon';
+				    icon.innerHTML = msg.icon;
+				    
+				    const subject = document.createElement('span');
+				    subject.className = 'mailbox-subject';
+				    subject.innerHTML = msg.subject;
+				    
+				    header.appendChild(icon);
+				    header.appendChild(subject);
+				    item.appendChild(header);
+				    
+				    // Click per leggere
+				    item.onclick = () => {
+				      localStorage.setItem('mailbox_read', JSON.stringify([...readMessages, msg.id]));
+				      
+				      // Aggiorna icona
+				      icon.innerHTML = '📭';
+				      
+				      // Mostra/nascondi contenuto
+				      let content = item.querySelector('.mailbox-item-content');
+				      if (content) {
+				        content.remove();
+				      } else {
+				        content = document.createElement('div');
+				        content.className = 'mailbox-item-content';
+				        content.innerHTML = msg.content;
+				        item.appendChild(content);
+				      }
+				    };
+				    
+				    messagesList.appendChild(item);
+				  });
+				  
+				  container.appendChild(closeBtn);
+				  container.appendChild(title);
+				  container.appendChild(messagesList);
+				  mailboxModal.appendChild(container);
+				  
+				  // Chiudi cliccando fuori
+				  mailboxModal.onclick = (e) => {
+				    if (e.target === mailboxModal) {
+				      mailboxModal.remove();
+				    }
+				  };
+				  
+				  // Chiudi con ESC
+				  const handleEsc = (e) => {
+				    if (e.key === 'Escape') {
+				      mailboxModal.remove();
+				      document.removeEventListener('keydown', handleEsc);
+				    }
+				  };
+				  document.addEventListener('keydown', handleEsc);
+				  
+				  document.body.appendChild(mailboxModal);
+				  
+				  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
+				}
+
 			
-			  // ===== FUNZIONE PRINCIPALE: Mostra box con busta =====
-			  function showEnvelopeBox() {
-			    const isRead = isEnvelopeRead();
-			    
-			    // Crea il modal della busta
-			    const envelopeModal = document.createElement('div');
-			    envelopeModal.className = 'envelope-modal';
-			    envelopeModal.id = 'envelopeModal';
-			    
-			    const envelopeBox = document.createElement('div');
-			    envelopeBox.className = 'envelope-box';
-			    
-			    // Pulsante chiudi (X)
-			    const closeBtn = document.createElement('div');
-			    closeBtn.className = 'envelope-close';
-			    closeBtn.innerHTML = '×';
-			    closeBtn.onclick = (e) => {
-			      e.stopPropagation();
-			      envelopeModal.remove();
-			    };
-			    
-			    // Icona busta (chiusa o aperta)
-			    const envelopeIcon = document.createElement('div');
-			    envelopeIcon.className = 'envelope-icon';
-			    envelopeIcon.innerHTML = isRead ? '📭' : '📬'; // Aperta se letta, chiusa altrimenti
-			    
-			    // Titolo/Sottotitolo
-			    const envelopeTitle = document.createElement('div');
-			    envelopeTitle.className = 'envelope-text';
-			    envelopeTitle.innerHTML = isRead ? 'Messaggio già letto' : 'Nuovo Messaggio';
-			    
-			    // Pulsante unico
-			    const button = document.createElement('button');
-			    button.className = 'envelope-button';
-			    button.innerHTML = isRead ? 'Rileggi Messaggio' : 'Leggi Messaggio';
-			    button.onclick = (e) => {
-			      e.stopPropagation();
-			      markEnvelopeAsRead();
-			      hideNotification();
-			      envelopeModal.remove();
-			      // Apri il modal principale con il messaggio
-			      gameModal.style.display = 'flex';
-			      document.body.style.overflow = 'hidden';
-			    };
-			    
-			    // Assembla il box - TUTTO SU UNA RIGA CONCETTUALMENTE
-			    envelopeBox.appendChild(closeBtn);
-			    envelopeBox.appendChild(envelopeIcon);
-			    envelopeBox.appendChild(envelopeTitle);
-			    envelopeBox.appendChild(button);
-			    
-			    envelopeModal.appendChild(envelopeBox);
-			    
-			    // Chiudi cliccando fuori dal box
-			    envelopeModal.onclick = (e) => {
-			      if (e.target === envelopeModal) {
-			        envelopeModal.remove();
-			      }
-			    };
-			    
-			    // Chiudi con ESC
-			    const handleEsc = (e) => {
-			      if (e.key === 'Escape') {
-			        envelopeModal.remove();
-			        document.removeEventListener('keydown', handleEsc);
-			      }
-			    };
-			    document.addEventListener('keydown', handleEsc);
-			    
-			    document.body.appendChild(envelopeModal);
-			  }
 			 
-			// ===== EVENTO: Click sul gufo =====
-			owlButton.addEventListener('click', function() {
-			  console.log('🦉 Click gufo - Verifico i messaggi disponibili');
-			  
-			  // Leggi i flag da localStorage
-			  const periodicNotif = document.getElementById('periodicNotification');
-			  const day5MessageAvailable = localStorage.getItem('day5_message_available') === 'true';
-			  const day5MessageSeen = localStorage.getItem('periodic_day5_milestone_seen');
-			  
-			  console.log('🦉 Stato messaggi:', {
-			    periodicNotifVisible: periodicNotif?.style.display,
-			    day5Available: day5MessageAvailable,
-			    day5Seen: day5MessageSeen
-			  });
-			  
-			  // SE IL GIORNO 5 È COMPLETATO E IL MESSAGGIO NON È STATO LETTO
-			  if (day5MessageAvailable && !day5MessageSeen) {
-			    console.log('📬 Mostrando PRIMO messaggio (giorno 5)');
-			    showPeriodicMessage(PERIODIC_MESSAGES.day5_milestone, 'day5_milestone');
-			    periodicNotif.style.display = 'none';
-			  } 
-			  // ALTRIMENTI MOSTRA IL MESSAGGIO NORMALE
-			  else {
-			    console.log('📭 Mostrando messaggio normale (benvenuto)');
-			    showEnvelopeBox();
-			  }
-			});
+				// ===== EVENTO: Click sul gufo =====
+				owlButton.addEventListener('click', function() {
+				  console.log('🦉 Click gufo - Aprendo la casella di posta');
+				  showMailboxModal();
+				});
+
 
 
 
