@@ -130,7 +130,6 @@
 			border: none;
 			color: white;
 			transition: transform 0.2s ease;
-			z-index: 1001;  
 		  }
 		  .close-button:hover {
 			transform: scale(1.2);
@@ -352,9 +351,9 @@
 
 		  /* ===== STILI PER IL PULSANTE GUFO NATALIZIO ===== */
 		  .owl-button {
-		    position: absolute;
+		    position: fixed;
 		    top: 20px;
-		    right: 20px;
+		    right: 90px;
 		    background: linear-gradient(135deg, #8B0000, #228B22);
 		    border: 3px solid #FFD700;
 		    border-radius: 50%;
@@ -364,21 +363,11 @@
 		    align-items: center;
 		    justify-content: center;
 		    cursor: pointer;
-		    z-index: 10;
+		    z-index: 1000;
 		    transition: all 0.3s ease;
 		    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
 		    animation: pulse-owl 2s infinite;
 		  }
-
-			.owl-button.inactive {
-				display: none;
-			}
-
-			.owl-button.active {
-				opacity: 1;            
-				pointer-events: auto;    
-				user-select: auto;       
-			}
 	
 		  .owl-button:hover {
 		    transform: scale(1.1) rotate(5deg);
@@ -469,7 +458,6 @@
 		    position: absolute;
 		    top: 15px;
 		    right: 15px;
-			z-index: 2000;
 		    background: #8B0000;
 		    color: white;
 		    border: 2px solid #FFD700;
@@ -696,7 +684,6 @@
 				owlButton.addEventListener('click', function() {
 				  gameModal.style.display = 'flex';
 				  document.body.style.overflow = 'hidden';
-				  owlButton.classList.add("inactive");
 				  
 				  // Nascondi la notifica e segna come visualizzato
 				  hideNotification();
@@ -707,7 +694,7 @@
 				closeModal.addEventListener('click', function() {
 				  gameModal.style.display = 'none';
 				  document.body.style.overflow = 'auto';
-				  owlButton.classList.remove("inactive");
+				  owlButton.classList.remove('inactive');
 				});
 
 				// Chiudi il modal quando si clicca fuori dal contenuto
@@ -715,7 +702,6 @@
 				  if (e.target === gameModal) {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					
 				  }
 				});
 
@@ -724,7 +710,6 @@
 				  if (e.key === 'Escape' && gameModal.style.display === 'flex') {
 					gameModal.style.display = 'none';
 					document.body.style.overflow = 'auto';
-					
 				  }
 				});
 			})();
@@ -1024,7 +1009,7 @@
 			// COMPONENTE REACT: TEST A CROCETTE (FUORI da App)
 			// ========================================
 			
-			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS, onClose }) {
+			function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
 				if (!test) return null;
 				
 				const isSubmitted = testSubmitted[testNumber] || false;
@@ -1033,16 +1018,16 @@
 				const isLocked = !allPreviousDaysCompleted;
 				
 				if (isLocked) {
-					return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
-						React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
+					return React.createElement("div", { className: "full-screen-modal" },
+						React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
 						React.createElement("h1", null, `Test ${testNumber}`),
 						React.createElement("p", { style: { fontSize: "1.2rem", marginTop: "2rem", color: "#f87171" } }, "🔒 Questo test è bloccato!"),
 						React.createElement("p", { style: { marginTop: "1rem", color: "#ccc" } }, `Devi completare prima i giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`)
 					);
 				}
 				
-				return React.createElement("div", { className: "full-screen-modal", style: { display: activeModal ? 'flex' : 'none' } },
-					React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
+				return React.createElement("div", { className: "full-screen-modal" },
+					React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
 					React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
 					React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
 					React.createElement("div", { className: "modal-content", style: { maxWidth: "800px", maxHeight: "70vh", overflowY: "auto" } },
@@ -1079,7 +1064,7 @@
 							})
 						),
 						!isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(testNumber), disabled: Object.keys(testAnswers).length < test.questions.length, style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: Object.keys(testAnswers).length < test.questions.length ? "#666" : "#4ade80", color: "#000", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", fontWeight: "bold", cursor: "pointer" } }, "Invia Risposte"),
-						isSubmitted && React.createElement("button", { onClick: () => onClose(), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
+						isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(null), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
 					)
 				);
 			}
@@ -1208,11 +1193,6 @@
 			const [settingsModal, setSettingsModal] = useState(false);
 			const [initError, setInitError] = useState(null);
 			const [enlargedImage, setEnlargedImage] = useState(null);
-			const closeModal = () => {
-			  setActiveModal(null);
-			  setEnlargedImage(null);
-			  setFeedback("");
-			};
 			
 			// Gestione apertura settings da pulsante esterno
 			useEffect(() => {
@@ -1453,7 +1433,6 @@
 					if (!locked) {
 					  setActiveModal(i);
 					  setFeedback("");
-					
 					  
 					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
 					  if (!shuffledOptions[i]) {
@@ -1538,15 +1517,14 @@
 				  progress: progress,
 				  handleTestAnswerChange: handleTestAnswerChange,
 				  handleTestSubmit: handleTestSubmit,
-				  PERIODIC_TESTS: PERIODIC_TESTS,
-				  onClose: () => setActiveTest(null)
+				  PERIODIC_TESTS: PERIODIC_TESTS
 			  }),
 			  
 			  // Modal gioco
 			  activeModal !== null && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => setActiveModal(null) }, "×"),
 				React.createElement("div", { className: "modal-content" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
 				  React.createElement("div", { className: "mb-4 text-center" },
@@ -1685,7 +1663,7 @@
 			  settingsModal && React.createElement(
 				"div",
 				{ className: "full-screen-modal" },
-				React.createElement("button", { className: "close-button", onClick: () => onClose() }, "×"),
+				React.createElement("button", { className: "close-button", onClick: () => setSettingsModal(false) }, "×"),
 				React.createElement("div", { className: "modal-content max-w-2xl" },
 				  React.createElement("h2", { className: "text-3xl font-bold mb-6" }, "⚙️ Impostazioni"),
 				  
