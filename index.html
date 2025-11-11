@@ -1114,30 +1114,33 @@ function updateNotificationVisibility() {
 updateNotificationVisibility();
 
 
-// 🆕 NUOVO: Controlla messaggi non letti ogni 30 secondi
+// 🆕 NUOVO: Controlla messaggi non letti ogni 3 secondi
 setInterval(function() {
-  console.log('🔍 Controllo periotico messaggi non letti...');
+  console.log('🔍 Controllo periodico messaggi non letti...');
   
   const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
   const allMessages = ['welcome', 'day5_milestone', 'day10_milestone'];
   const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
   
-  console.log('📬 Messaggi non letti:', unreadMessages.length);
+  console.log('📬 Messaggi non letti:', unreadMessages.length, unreadMessages);
   
   if (unreadMessages.length > 0) {
     // Ci sono messaggi non letti: MOSTRA la notifica
+    const owlNotification = document.getElementById('owlNotification');
     if (owlNotification) {
       owlNotification.classList.remove('hidden');
-      console.log('✅ Notifica MOSTRA (sono presenti messaggi non letti)');
+      console.log('✅ Notifica MOSTRA (messaggi non letti trovati)');
     }
   } else {
     // Nessun messaggio non letto: NASCONDI la notifica
+    const owlNotification = document.getElementById('owlNotification');
     if (owlNotification) {
       owlNotification.classList.add('hidden');
       console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
     }
   }
-}, 1000);  // ← Ogni 30 secondi (30000 millisecondi)
+}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
+
 
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
