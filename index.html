@@ -1114,13 +1114,35 @@ function updateNotificationVisibility() {
 updateNotificationVisibility();
 
 
-// 🆕 NUOVO: Controlla la notifica quando la pagina carica
-console.log('✅ Esecuzione init: updateNotificationVisibility()');
-updateNotificationVisibility();
+// 🆕 NUOVO: Controlla messaggi non letti ogni 30 secondi
+setInterval(function() {
+  console.log('🔍 Controllo periotico messaggi non letti...');
+  
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const allMessages = ['welcome', 'day5_milestone', 'day10_milestone'];
+  const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
+  
+  console.log('📬 Messaggi non letti:', unreadMessages.length);
+  
+  if (unreadMessages.length > 0) {
+    // Ci sono messaggi non letti: MOSTRA la notifica
+    if (owlNotification) {
+      owlNotification.classList.remove('hidden');
+      console.log('✅ Notifica MOSTRA (sono presenti messaggi non letti)');
+    }
+  } else {
+    // Nessun messaggio non letto: NASCONDI la notifica
+    if (owlNotification) {
+      owlNotification.classList.add('hidden');
+      console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
+    }
+  }
+}, 30000);  // ← Ogni 30 secondi (30000 millisecondi)
 
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
   console.log('🦉 Click gufo - Aprendo la casella di posta');
+
 
   
   // Verifica che PERIODIC_MESSAGES esista
