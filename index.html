@@ -2092,13 +2092,13 @@ img.addEventListener('click', function(e) {
 			const [periodicNotificationVisible, setPeriodicNotificationVisible] = useState({});
 			
 			// Al caricamento, controlla se il giorno 5 è stato completato
-			useEffect(() => {
-			  const day5Completed = progress?.solved;  // Giorno 5 è indice 4
-			  if (day5Completed && !periodicMessages.day5_milestone) {
-			    // Messaggio periodico non è stato visto ancora
-			    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
-			  }
-			}, [progress]);
+useEffect(() => {
+  const day5Completed = progress?.solved;  // ✅ CORRETTO (indice 4 = Giorno 5)
+  if (day5Completed && !periodicMessages.day5_milestone) {
+    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+  }
+}, [progress]);
+
 
 	  
 			// INIZIALIZZAZIONE SEMPLIFICATA
