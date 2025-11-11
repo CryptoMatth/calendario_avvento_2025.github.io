@@ -1101,6 +1101,19 @@
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
   console.log('🦉 Click gufo - Aprendo la casella di posta');
+
+	// 🆕 NUOVO: Mostra le notifiche periodiche se disponibili
+// Controlla il giorno 5
+if (localStorage.getItem('day5_message_available') === 'true' && 
+    localStorage.getItem('day5_message_viewed') !== 'true') {
+  const periodicNotif = document.getElementById('periodicNotification');
+  if (periodicNotif) {
+    periodicNotif.style.display = 'flex';
+    periodicNotif.style.animation = 'bounce-gift 0.8s infinite';
+    console.log('📬 Notifica giorno 5 visualizzata');
+  }
+}
+
   
   // Verifica che PERIODIC_MESSAGES esista
   console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
@@ -1489,6 +1502,10 @@ img.addEventListener('click', function(e) {
     }
   };
   document.addEventListener('keydown', handleEsc);
+
+	  // 🆕 NUOVO: Marca i messaggi come visualizzati
+  localStorage.setItem('day5_message_viewed', 'true');
+
   
   document.body.appendChild(mailboxModal);
   console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
