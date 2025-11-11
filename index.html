@@ -1097,69 +1097,10 @@
 			  if (isEnvelopeRead()) {
 			    hideNotification();
 			  }
-				// 🆕 NUOVO: Controlla messaggi non letti al caricamento
-function checkUnreadMessages() {
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const possibleMessages = ['welcome', 'day5_milestone', 'day10_milestone'];
-  
-  const hasUnreadMessages = possibleMessages.some(msgId => !readMessages.includes(msgId));
-  
-  if (hasUnreadMessages && owlNotification) {
-    // Se c'è un messaggio non letto, mostra il regalo
-    owlNotification.classList.remove('hidden');
-    console.log('📬 Hai messaggi non letti!');
-  }
-}
-
-// Esegui il check al caricamento
-checkUnreadMessages();
-
 
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
   console.log('🦉 Click gufo - Aprendo la casella di posta');
-
-	// 🆕 NUOVO: Mostra le notifiche periodiche se disponibili
-// Controlla il giorno 5
-if (localStorage.getItem('day5_message_available') === 'true' && 
-    localStorage.getItem('day5_message_viewed') !== 'true') {
-  const periodicNotif = document.getElementById('periodicNotification');
-  if (periodicNotif) {
-    periodicNotif.style.display = 'flex';
-    periodicNotif.style.animation = 'bounce-gift 0.8s infinite';
-    console.log('📬 Notifica giorno 5 visualizzata');
-  }
-}
-
-	// ===== EVENTO: Click sul gufo =====
-owlButton.addEventListener('click', function() {
-  console.log('🦉 Click gufo - Aprendo la casella di posta');
-
-  // 🆕 NUOVO: Controlla se c'è un messaggio non letto
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const possibleMessages = ['welcome', 'day5_milestone', 'day10_milestone'];
-  
-  // Controlla se almeno un messaggio NON è letto
-  const hasUnreadMessages = possibleMessages.some(msgId => !readMessages.includes(msgId));
-  
-  if (hasUnreadMessages) {
-    // Mostra il regalo
-    const periodicNotif = document.getElementById('periodicNotification');
-    if (periodicNotif) {
-      periodicNotif.style.display = 'flex';
-      periodicNotif.style.animation = 'bounce-gift 0.8s infinite, pulse-gift 2s infinite';
-      console.log('📬 Notifica: hai messaggi non letti');
-    }
-  } else {
-    // Nascondi il regalo se tutto è stato letto
-    hideNotification();
-  }
-
-  // Verifica che PERIODIC_MESSAGES esista
-  console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
-  // ... resto del codice ...
-
-
   
   // Verifica che PERIODIC_MESSAGES esista
   console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
@@ -1167,7 +1108,8 @@ owlButton.addEventListener('click', function() {
     console.error('❌ PERIODIC_MESSAGES non è definito!');
     return;
   }
-
+  
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
   const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
   const messages = [];
@@ -1547,20 +1489,10 @@ img.addEventListener('click', function(e) {
     }
   };
   document.addEventListener('keydown', handleEsc);
-
-	  // 🆕 NUOVO: Marca i messaggi come visualizzati
-  localStorage.setItem('day5_message_viewed', 'true');
-
-  // ✅ Marca la busta come letta
-  markEnvelopeAsRead();
-  
-  // ✅ Nascondi la notifica
-  hideNotification();
   
   document.body.appendChild(mailboxModal);
   console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 });
-
 
 
 
@@ -2137,13 +2069,13 @@ img.addEventListener('click', function(e) {
 			const [periodicNotificationVisible, setPeriodicNotificationVisible] = useState({});
 			
 			// Al caricamento, controlla se il giorno 5 è stato completato
-useEffect(() => {
-  const day5Completed = progress?.solved;  // ✅ CORRETTO (indice 4 = Giorno 5)
-  if (day5Completed && !periodicMessages.day5_milestone) {
-    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
-  }
-}, [progress]);
-
+			useEffect(() => {
+			  const day5Completed = progress?.solved;  // Giorno 5 è indice 4
+			  if (day5Completed && !periodicMessages.day5_milestone) {
+			    // Messaggio periodico non è stato visto ancora
+			    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+			  }
+			}, [progress]);
 
 	  
 			// INIZIALIZZAZIONE SEMPLIFICATA
