@@ -1506,10 +1506,16 @@ img.addEventListener('click', function(e) {
 	  // 🆕 NUOVO: Marca i messaggi come visualizzati
   localStorage.setItem('day5_message_viewed', 'true');
 
+  // ✅ Marca la busta come letta
+  markEnvelopeAsRead();
+  
+  // ✅ Nascondi la notifica
+  hideNotification();
   
   document.body.appendChild(mailboxModal);
   console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 });
+
 
 
 
