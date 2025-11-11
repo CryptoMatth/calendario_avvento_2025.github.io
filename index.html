@@ -1121,7 +1121,7 @@ owlButton.addEventListener('click', function() {
     icon: '📬',
     subject: 'Benvenuto al Calendario',
     content: 'Benvenuto al Calendario dell\'Avvento!',
-    image: 'fotoSherlocknatalizio.png',
+    image: '/foto/Sherlock_natalizio.png',
     fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
   };
   
@@ -1307,75 +1307,78 @@ owlButton.addEventListener('click', function() {
       msgTitle.innerHTML = msg.subject;
       messageContent.appendChild(msgTitle);
       
-      // IMMAGINE - IMPORTANTE
-      if (msg.image) {
-        console.log('🖼️ Caricamento immagine:', msg.image);
-        
-        const img = document.createElement('img');
-        img.src = msg.image;
-        img.alt = msg.subject;
-        img.style.width = '100%';
-        img.style.maxHeight = '400px';
-        img.style.objectFit = 'cover';
-        img.style.borderRadius = '10px';
-        img.style.marginBottom = '20px';
-        img.style.border = '2px solid #FFD700';
-        img.style.cursor = 'pointer';
-        
-        img.onerror = () => {
-          console.error('❌ Immagine non trovata:', msg.image);
-          img.style.display = 'none';
-        };
-        
-        img.onload = () => {
-          console.log('✅ Immagine caricata:', msg.image);
-        };
-        
-        img.onclick = (e) => {
-          e.stopPropagation();
-          
-          const fullscreenImg = document.createElement('div');
-          fullscreenImg.style.position = 'fixed';
-          fullscreenImg.style.top = '0';
-          fullscreenImg.style.left = '0';
-          fullscreenImg.style.width = '100%';
-          fullscreenImg.style.height = '100%';
-          fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-          fullscreenImg.style.display = 'flex';
-          fullscreenImg.style.alignItems = 'center';
-          fullscreenImg.style.justifyContent = 'center';
-          fullscreenImg.style.zIndex = '9999';
-          
-          const largeImg = document.createElement('img');
-          largeImg.src = msg.image;
-          largeImg.alt = msg.subject;
-          largeImg.style.maxWidth = '90vw';
-          largeImg.style.maxHeight = '90vh';
-          largeImg.style.objectFit = 'contain';
-          
-          const closeLargeImg = document.createElement('button');
-          closeLargeImg.innerHTML = '×';
-          closeLargeImg.style.position = 'absolute';
-          closeLargeImg.style.top = '20px';
-          closeLargeImg.style.right = '20px';
-          closeLargeImg.style.fontSize = '2.5rem';
-          closeLargeImg.style.color = 'white';
-          closeLargeImg.style.background = 'none';
-          closeLargeImg.style.border = 'none';
-          closeLargeImg.style.cursor = 'pointer';
-          
-          closeLargeImg.onclick = () => fullscreenImg.remove();
-          fullscreenImg.onclick = () => fullscreenImg.remove();
-          
-          fullscreenImg.appendChild(closeLargeImg);
-          fullscreenImg.appendChild(largeImg);
-          document.body.appendChild(fullscreenImg);
-        };
-        
-        messageContent.appendChild(img);
-      } else {
-        console.warn('⚠️ Nessuna immagine per:', msg.id);
-      }
+// IMMAGINE - IMPORTANTE
+if (msg.image) {
+  console.log('🖼️ Caricamento immagine:', msg.image);
+  
+  const img = document.createElement('img');
+  img.src = msg.image;
+  img.alt = msg.subject;
+  img.style.width = '100%';
+  img.style.maxHeight = '400px';
+  img.style.objectFit = 'cover';
+  img.style.borderRadius = '10px';
+  img.style.marginBottom = '20px';
+  img.style.border = '2px solid #FFD700';
+  img.style.cursor = 'pointer';
+  
+  img.onerror = () => {
+    console.error('❌ Immagine non trovata:', msg.image);
+    img.style.display = 'none';
+  };
+  
+  img.onload = () => {
+    console.log('✅ Immagine caricata:', msg.image);
+  };
+  
+  img.onclick = (e) => {
+    e.stopPropagation();
+    
+    const fullscreenImg = document.createElement('div');
+    fullscreenImg.style.position = 'fixed';
+    fullscreenImg.style.top = '0';
+    fullscreenImg.style.left = '0';
+    fullscreenImg.style.width = '100%';
+    fullscreenImg.style.height = '100%';
+    fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+    fullscreenImg.style.display = 'flex';
+    fullscreenImg.style.alignItems = 'center';
+    fullscreenImg.style.justifyContent = 'center';
+    fullscreenImg.style.zIndex = '9999';
+    
+    const largeImg = document.createElement('img');
+    largeImg.src = msg.image;
+    largeImg.alt = msg.subject;
+    largeImg.style.maxWidth = '90vw';
+    largeImg.style.maxHeight = '90vh';
+    largeImg.style.objectFit = 'contain';
+    
+    const closeLargeImg = document.createElement('button');
+    closeLargeImg.innerHTML = '×';
+    closeLargeImg.style.position = 'absolute';
+    closeLargeImg.style.top = '20px';
+    closeLargeImg.style.right = '20px';
+    closeLargeImg.style.fontSize = '2.5rem';
+    closeLargeImg.style.color = 'white';
+    closeLargeImg.style.background = 'none';
+    closeLargeImg.style.border = 'none';
+    closeLargeImg.style.cursor = 'pointer';
+    
+    closeLargeImg.onclick = () => fullscreenImg.remove();
+    fullscreenImg.onclick = () => fullscreenImg.remove();
+    
+    fullscreenImg.appendChild(closeLargeImg);
+    fullscreenImg.appendChild(largeImg);
+    document.body.appendChild(fullscreenImg);
+  };
+  
+  // ✅ QUESTO È IL PIÙ IMPORTANTE - AGGIUNGE L'IMMAGINE AL DOM
+  messageContent.appendChild(img);
+} else {
+  console.warn('⚠️ Nessuna immagine per:', msg.id);
+}
+
+
       
       // TESTO
       const msgText = document.createElement('div');
