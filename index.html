@@ -1114,15 +1114,29 @@ function updateNotificationVisibility() {
 updateNotificationVisibility();
 
 
-// 🆕 NUOVO: Controlla messaggi non letti ogni 3 secondi
 setInterval(function() {
   console.log('🔍 Controllo periodico messaggi non letti...');
   
   const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const allMessages = ['welcome', 'day5_milestone', 'day10_milestone'];
-  const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
+  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
+  // Messaggi che devono essere veramente presenti
+  const potentialMessages = ['welcome'];  // Welcome è sempre presente
+  
+  // Aggiungi milestone solo se il giorno relativo è stato completato
+  if (savedProgress[4]?.solved) {
+    potentialMessages.push('day5_milestone');  // Giorno 5 completato
+  }
+  if (savedProgress[9]?.solved) {
+    potentialMessages.push('day10_milestone');  // Giorno 10 completato
+  }
+  
+  // Ora filtra solo i messaggi che REALMENTE ESISTONO
+  const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
+  
+  console.log('📬 Messaggi esistenti:', potentialMessages);
   console.log('📬 Messaggi non letti:', unreadMessages.length, unreadMessages);
+
   
   if (unreadMessages.length > 0) {
     // Ci sono messaggi non letti: MOSTRA la notifica
