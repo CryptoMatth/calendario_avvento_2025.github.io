@@ -1167,8 +1167,7 @@ owlButton.addEventListener('click', function() {
     console.error('❌ PERIODIC_MESSAGES non è definito!');
     return;
   }
-  
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+
   const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
   const messages = [];
