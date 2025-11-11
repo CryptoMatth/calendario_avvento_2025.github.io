@@ -1126,10 +1126,6 @@ owlButton.addEventListener('click', function() {
   }
   
   const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-	// Controlla quanti messaggi rimangono non letti
-const totalMessages = messages.length;
-const unreadMessages = messages.filter(msg => !readMessages.includes(msg.id)).length;
-
   const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
   const messages = [];
@@ -1205,6 +1201,7 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a d
       console.log('✅ Messaggio milestone aggiunto:', msg.subject);
     }
   });
+
 	updateNotificationVisibility();
 
   
@@ -1259,7 +1256,7 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a d
         readMessages.push(msg.id);
         localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
       }
-		// Aggiorna la notifica quando vengono completati i giorni milestone
+		// Aggiorna la visibilità della notifica dopo aver letto il messaggio
 updateNotificationVisibility();
 
       
@@ -1505,37 +1502,11 @@ img.addEventListener('click', function(e) {
   container.appendChild(messagesList);
   mailboxModal.appendChild(container);
   
-mailboxModal.onclick = (e) => {
-  if (e.target === mailboxModal) {
-    // Controlla quanti messaggi rimangono non letti
-    const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-    
-    // Filtro: conta i messaggi che rimangono disponibili in base ai giorni completati
-    let totalAvailableMessages = 1; // Sempre il messaggio benvenuto
-    
-    // Conta i messaggi milestone in base ai giorni milestone completati
-    if (PERIODICMESSAGES.day5milestone && progress[4]?.solved) totalAvailableMessages++;
-    if (PERIODICMESSAGES.day10milestone && progress[9]?.solved) totalAvailableMessages++;
-    if (PERIODICMESSAGES.day15milestone && progress[14]?.solved) totalAvailableMessages++;
-    if (PERIODICMESSAGES.day20milestone && progress[19]?.solved) totalAvailableMessages++;
-    if (PERIODICMESSAGES.day25milestone && progress[24]?.solved) totalAvailableMessages++;
-    if (PERIODICMESSAGES.day30milestone && progress[29]?.solved) totalAvailableMessages++;
-    
-    const unreadMessages = totalAvailableMessages - readMessages.length;
-    const owlNotification = document.getElementById('owlNotification');
-    
-    // Se non ci sono più messaggi non letti, nascondi la notifica
-    if (unreadMessages === 0 && owlNotification) {
-      owlNotification.classList.add('hidden');
-    } else if (unreadMessages > 0 && owlNotification) {
-      owlNotification.classList.remove('hidden');
+  mailboxModal.onclick = (e) => {
+    if (e.target === mailboxModal) {
+      mailboxModal.remove();
     }
-    
-    mailboxModal.remove();
-  }
-}
-
-
+  };
   
   const handleEsc = (e) => {
     if (e.key === 'Escape') {
@@ -2029,28 +2000,14 @@ mailboxModal.onclick = (e) => {
 			    function hasBeenRead() {
 			        return localStorage.getItem(ENVELOPE_VIEWED_KEY) === 'true';
 			    }
-
-								// NUOVA FUNZIONE - Controlla i messaggi non letti
-function checkUnreadMessages() {
-    const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-    const totalMessages = 3; // Numero totale messaggi (Benvenuto + milestone)
-    const unreadCount = totalMessages - readMessages.length;
-    
-    const owlNotification = document.getElementById('owlNotification');
-    
-    if (unreadCount > 0 && owlNotification) {
-        owlNotification.classList.remove('hidden');
-    } else if (owlNotification) {
-        owlNotification.classList.add('hidden');
-    }
-}
 			    
-// Al caricamento: controlla se ci sono messaggi non letti
-checkUnreadMessages();
-
-
-
-
+			    // Al caricamento: se già letto, nascondi notifica
+			    if (hasBeenRead()) {
+			        const owlNotification = document.getElementById('owlNotification');
+			        if (owlNotification) {
+			            owlNotification.classList.add('hidden');
+			        }
+			    }
 			    
 			    // Questo è tutto. Il resto è gestito dalla nuova logica della busta
 			    // nel primo click del gufo che crea la envelope-modal
