@@ -1307,9 +1307,9 @@ owlButton.addEventListener('click', function() {
       msgTitle.innerHTML = msg.subject;
       messageContent.appendChild(msgTitle);
       
-// IMMAGINE - IMPORTANTE
+// IMMAGINE - IMPORTANTISSIMO
 if (msg.image) {
-  console.log('🖼️ Caricamento immagine:', msg.image);
+  console.log('🖼️ Tentando di caricare immagine:', msg.image);
   
   const img = document.createElement('img');
   img.src = msg.image;
@@ -1323,12 +1323,12 @@ if (msg.image) {
   img.style.cursor = 'pointer';
   
   img.onerror = () => {
-    console.error('❌ Immagine non trovata:', msg.image);
+    console.error('❌ ERRORE: Immagine non trovata:', msg.image);
     img.style.display = 'none';
   };
   
   img.onload = () => {
-    console.log('✅ Immagine caricata:', msg.image);
+    console.log('✅ SUCCESSO: Immagine caricata correttamente:', msg.image);
   };
   
   img.onclick = (e) => {
@@ -1372,11 +1372,13 @@ if (msg.image) {
     document.body.appendChild(fullscreenImg);
   };
   
-  // ✅ QUESTO È IL PIÙ IMPORTANTE - AGGIUNGE L'IMMAGINE AL DOM
+  // ✅✅✅ QUESTA RIGA È FONDAMENTALE - AGGIUNGE L'IMMAGINE AL DOM ✅✅✅
   messageContent.appendChild(img);
+  console.log('✅ Immagine aggiunta al DOM');
 } else {
-  console.warn('⚠️ Nessuna immagine per:', msg.id);
+  console.warn('⚠️ ATTENZIONE: msg.image è vuoto o undefined per il messaggio:', msg.id);
 }
+
 
 
       
