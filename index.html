@@ -1485,18 +1485,24 @@ mailboxModal.onclick = (e) => {
     // Controlla quanti messaggi rimangono non letti
     const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
     
-    // Conta i messaggi milestone disponibili in base ai giorni completati
-    const milestoneCount = messages.filter(msg => msg.triggerDay !== null).length;
-    const totalMessages = 1 + milestoneCount; // 1 benvenuto + i messaggi milestone
-    const unreadMessages = totalMessages - readMessages.length;
+    // Filtro: conta i messaggi che rimangono disponibili in base ai giorni completati
+    let totalAvailableMessages = 1; // Sempre il messaggio benvenuto
     
+    // Conta i messaggi milestone in base ai giorni milestone completati
+    if (PERIODICMESSAGES.day5milestone && progress[4]?.solved) totalAvailableMessages++;
+    if (PERIODICMESSAGES.day10milestone && progress[9]?.solved) totalAvailableMessages++;
+    if (PERIODICMESSAGES.day15milestone && progress[14]?.solved) totalAvailableMessages++;
+    if (PERIODICMESSAGES.day20milestone && progress[19]?.solved) totalAvailableMessages++;
+    if (PERIODICMESSAGES.day25milestone && progress[24]?.solved) totalAvailableMessages++;
+    if (PERIODICMESSAGES.day30milestone && progress[29]?.solved) totalAvailableMessages++;
+    
+    const unreadMessages = totalAvailableMessages - readMessages.length;
     const owlNotification = document.getElementById('owlNotification');
     
     // Se non ci sono più messaggi non letti, nascondi la notifica
     if (unreadMessages === 0 && owlNotification) {
       owlNotification.classList.add('hidden');
     } else if (unreadMessages > 0 && owlNotification) {
-      // Se rimangono messaggi, mantieni la notifica visibile
       owlNotification.classList.remove('hidden');
     }
     
