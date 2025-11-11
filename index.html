@@ -1484,8 +1484,11 @@ mailboxModal.onclick = (e) => {
   if (e.target === mailboxModal) {
     // Controlla quanti messaggi rimangono non letti
     const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-    const totalMessages = messages.length;
-    const unreadMessages = messages.filter(msg => !readMessages.includes(msg.id)).length;
+    
+    // Conta i messaggi milestone disponibili in base ai giorni completati
+    const milestoneCount = messages.filter(msg => msg.triggerDay !== null).length;
+    const totalMessages = 1 + milestoneCount; // 1 benvenuto + i messaggi milestone
+    const unreadMessages = totalMessages - readMessages.length;
     
     const owlNotification = document.getElementById('owlNotification');
     
@@ -1500,6 +1503,7 @@ mailboxModal.onclick = (e) => {
     mailboxModal.remove();
   }
 }
+
 
   
   const handleEsc = (e) => {
