@@ -1093,10 +1093,26 @@
 			    }
 			  }
 			
-			  // Al caricamento pagina: se busta già letta, nascondi notifica
-			  if (isEnvelopeRead()) {
-			    hideNotification();
-			  }
+// Controlla se ci sono messaggi non letti nella casella di posta
+function updateNotificationVisibility() {
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const allMessages = ['welcome', 'day5_milestone', 'day10_milestone']; // Tutti i messaggi possibili
+  const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
+  
+  if (unreadMessages.length > 0) {
+    // Se ci sono messaggi non letti, mostra la notifica
+    if (owlNotification) {
+      owlNotification.classList.remove('hidden');
+    }
+  } else {
+    // Se tutti i messaggi sono stati letti, nascondi la notifica
+    hideNotification();
+  }
+}
+
+// Al caricamento pagina
+updateNotificationVisibility();
+
 
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
@@ -1147,6 +1163,8 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5_milestone) {  // ← CAMBIA a da
 } else {
   console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 }
+	updateNotificationVisibility();
+
 
   
 // DAY 10
@@ -1164,6 +1182,8 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a d
 } else {
   console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 }
+	updateNotificationVisibility();
+
 
   
   // Aggiungi sempre il benvenuto
@@ -1185,6 +1205,8 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a d
       console.log('✅ Messaggio milestone aggiunto:', msg.subject);
     }
   });
+	updateNotificationVisibility();
+
   
   console.log('📋 Messaggi totali:', messages.length, messages);
   
@@ -1237,6 +1259,9 @@ if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a d
         readMessages.push(msg.id);
         localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
       }
+		// Aggiorna la notifica quando vengono completati i giorni milestone
+updateNotificationVisibility();
+
       
       icon.innerHTML = '📭';
       
