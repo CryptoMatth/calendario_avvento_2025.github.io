@@ -252,629 +252,650 @@
 
 			// ===== DATI DEI MESSAGGI PERIODICI =====
 			const PERIODIC_MESSAGES = {
-				day5_milestone: {
-					id: 'day5_milestone',
-					title: 'Primo test',
-					description: 'Crocchette! Mi hai portato crocchette? No? PeccatoCi penso se tornare la prossima volta. Nel frattempo, per punizione, ti faccio eseguire un test sulle costellazioni di questi giorni. Vediamo come te la cavi.',
-					image: 'foto/Sherlock_natalizio_arrabbiato.png'
-				},
-				day10_milestone: {
-					id: 'day10_milestone',
-					title: 'Cicci arrabbiato',
-					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
-					image: 'foto/Sherlock_natalizio.png'
-				}
+			  day5_milestone: {
+			    id: 'day5_milestone',
+			    title: '🎉 Mezzo Cammino!',
+			    subtitle: 'Fantastico! Hai completato il primo quinto del calendario!',
+			    description: 'Fantastico! Hai completato il primo quinto del calendario!\n\nHai scoperto 5 costellazioni e risponduto correttamente a tutte le domande!\n\nContinua così! Il prossimo traguardo è il giorno 10!\n\nBuon divertimento! 🌟',
+			    image: 'foto/Sherlock_natalizio.png'
+			  },
+			  day10_milestone: {
+			    id: 'day10_milestone',
+			    title: '🏆 Primo Test Completato!',
+			    subtitle: 'Complimenti! Hai superato il primo test!',
+			    description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+			    image: 'foto/Sherlock_natalizio.png'
+			  }
 			};
 
 			// ===== GESTIONE MODAL GUFO CON BOX BUSTA INTERMEDIA =====
 			(function() {
-				const owlButton = document.getElementById('owlButton');
-				const gameModal = document.getElementById('gameModal');
-				const closeModal = document.getElementById('closeModal');
-				const owlNotification = document.getElementById('owlNotification');
+			  const owlButton = document.getElementById('owlButton');
+			  const gameModal = document.getElementById('gameModal');
+			  const closeModal = document.getElementById('closeModal');
+			  const owlNotification = document.getElementById('owlNotification');
 
-				// 🆕 NUOVO: Funzione per mostrare messaggi periodici
-				function showPeriodicMessage(messageData, messageId) {
-					const isRead = localStorage.getItem(`periodic_${messageId}`) === 'true';
+				  // 🆕 NUOVO: Funzione per mostrare messaggi periodici
+			  function showPeriodicMessage(messageData, messageId) {
+			    const isRead = localStorage.getItem(`periodic_${messageId}`) === 'true';
 			    
-					// Crea il modal della busta
-					const envelopeModal = document.createElement('div');
-					envelopeModal.className = 'envelope-modal';
-					envelopeModal.id = 'periodicEnvelopeModal';
-					
-					const envelopeBox = document.createElement('div');
-					envelopeBox.className = 'envelope-box';
-					
-					// Pulsante chiudi
-					const closeBtn = document.createElement('div');
-					closeBtn.className = 'envelope-close';
-					closeBtn.innerHTML = '×';
-					closeBtn.onclick = (e) => {
-						e.stopPropagation();
-						envelopeModal.remove();
-					};
+			    // Crea il modal della busta
+			    const envelopeModal = document.createElement('div');
+			    envelopeModal.className = 'envelope-modal';
+			    envelopeModal.id = 'periodicEnvelopeModal';
 			    
-					// Icona busta
-					const envelopeIcon = document.createElement('div');
-					envelopeIcon.className = 'envelope-icon';
-					envelopeIcon.innerHTML = isRead ? '📭' : '📬';
-					
-					// Titolo
-					const envelopeTitle = document.createElement('div');
-					envelopeTitle.className = 'envelope-text';
-					envelopeTitle.innerHTML = messageData.title;
-					
-					// Sottotitolo
-					const envelopeSubtitle = document.createElement('div');
-					envelopeSubtitle.style.color = '#aaa';
-					envelopeSubtitle.style.fontSize = '0.9rem';
-					envelopeSubtitle.innerHTML = messageData.subtitle;
-					
-					// Pulsante
-					const button = document.createElement('button');
-					button.className = 'envelope-button';
-					button.innerHTML = 'Leggi il Messaggio';
-					button.onclick = (e) => {
-						e.stopPropagation();
-						localStorage.setItem(`periodic_${messageId}`, 'true');
-						envelopeModal.remove();
-					  
-						// Mostra il modal principale con il messaggio
-						showPeriodicMessageContent(messageData);
-					};
+			    const envelopeBox = document.createElement('div');
+			    envelopeBox.className = 'envelope-box';
 			    
-					// Assembla
-					envelopeBox.appendChild(closeBtn);
-					envelopeBox.appendChild(envelopeIcon);
-					envelopeBox.appendChild(envelopeTitle);
-					envelopeBox.appendChild(envelopeSubtitle);
-					envelopeBox.appendChild(button);
-					
-					envelopeModal.appendChild(envelopeBox);
-					
-					// Chiudi cliccando fuori
-					envelopeModal.onclick = (e) => {
-						if (e.target === envelopeModal) {
-							envelopeModal.remove();
-						}
-					};
+			    // Pulsante chiudi
+			    const closeBtn = document.createElement('div');
+			    closeBtn.className = 'envelope-close';
+			    closeBtn.innerHTML = '×';
+			    closeBtn.onclick = (e) => {
+			      e.stopPropagation();
+			      envelopeModal.remove();
+			    };
 			    
-					// Chiudi con ESC
-					const handleEsc = (e) => {
-						if (e.key === 'Escape') {
-							envelopeModal.remove();
-							document.removeEventListener('keydown', handleEsc);
-						}
-					};
-					document.addEventListener('keydown', handleEsc);
+			    // Icona busta
+			    const envelopeIcon = document.createElement('div');
+			    envelopeIcon.className = 'envelope-icon';
+			    envelopeIcon.innerHTML = isRead ? '📭' : '📬';
 			    
-					document.body.appendChild(envelopeModal);
-				}
+			    // Titolo
+			    const envelopeTitle = document.createElement('div');
+			    envelopeTitle.className = 'envelope-text';
+			    envelopeTitle.innerHTML = messageData.title;
+			    
+			    // Sottotitolo
+			    const envelopeSubtitle = document.createElement('div');
+			    envelopeSubtitle.style.color = '#aaa';
+			    envelopeSubtitle.style.fontSize = '0.9rem';
+			    envelopeSubtitle.innerHTML = messageData.subtitle;
+			    
+			    // Pulsante
+			    const button = document.createElement('button');
+			    button.className = 'envelope-button';
+			    button.innerHTML = 'Leggi il Messaggio';
+			    button.onclick = (e) => {
+			      e.stopPropagation();
+			      localStorage.setItem(`periodic_${messageId}`, 'true');
+			      envelopeModal.remove();
+			      
+			      // Mostra il modal principale con il messaggio
+			      showPeriodicMessageContent(messageData);
+			    };
+			    
+			    // Assembla
+			    envelopeBox.appendChild(closeBtn);
+			    envelopeBox.appendChild(envelopeIcon);
+			    envelopeBox.appendChild(envelopeTitle);
+			    envelopeBox.appendChild(envelopeSubtitle);
+			    envelopeBox.appendChild(button);
+			    
+			    envelopeModal.appendChild(envelopeBox);
+			    
+			    // Chiudi cliccando fuori
+			    envelopeModal.onclick = (e) => {
+			      if (e.target === envelopeModal) {
+			        envelopeModal.remove();
+			      }
+			    };
+			    
+			    // Chiudi con ESC
+			    const handleEsc = (e) => {
+			      if (e.key === 'Escape') {
+			        envelopeModal.remove();
+			        document.removeEventListener('keydown', handleEsc);
+			      }
+			    };
+			    document.addEventListener('keydown', handleEsc);
+			    
+			    document.body.appendChild(envelopeModal);
+			  }
 			
-				// 🆕 NUOVO: Funzione per mostrare il contenuto del messaggio periodico
-				function showPeriodicMessageContent(messageData) {
-					// Usa il modal principale ma modifica il contenuto
-					const modal = document.getElementById('gameModal');
-					const content = modal.querySelector('.modal-content');
-					
-					// Modifica il contenuto
-					const title = content.querySelector('.modal-title');
-					const image = content.querySelector('.modal-image');
-					const text = content.querySelector('.modal-text');
-					
-					title.innerHTML = messageData.title;
-					image.src = messageData.image;
-					text.innerHTML = `<p style="white-space: pre-line; line-height: 1.8;">${messageData.description}</p>`;
-					
-					// Apri il modal
-					modal.style.display = 'flex';
-					document.body.style.overflow = 'hidden';
-				}
+			  // 🆕 NUOVO: Funzione per mostrare il contenuto del messaggio periodico
+			  function showPeriodicMessageContent(messageData) {
+			    // Usa il modal principale ma modifica il contenuto
+			    const modal = document.getElementById('gameModal');
+			    const content = modal.querySelector('.modal-content');
+			    
+			    // Modifica il contenuto
+			    const title = content.querySelector('.modal-title');
+			    const image = content.querySelector('.modal-image');
+			    const text = content.querySelector('.modal-text');
+			    
+			    title.innerHTML = messageData.title;
+			    image.src = messageData.image;
+			    text.innerHTML = `<p style="white-space: pre-line; line-height: 1.8;">${messageData.description}</p>`;
+			    
+			    // Apri il modal
+			    modal.style.display = 'flex';
+			    document.body.style.overflow = 'hidden';
+			  }
 
 			
-				// Chiave localStorage per tracciare se il messaggio è stato letto
-				const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
+			  // Chiave localStorage per tracciare se il messaggio è stato letto
+			  const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
 			
-				// Funzione: Controlla se la busta è stata letta
-				function isEnvelopeRead() {
-					return localStorage.getItem(ENVELOPE_READ_KEY) === 'true';
-				}
+			  // Funzione: Controlla se la busta è stata letta
+			  function isEnvelopeRead() {
+			    return localStorage.getItem(ENVELOPE_READ_KEY) === 'true';
+			  }
 			
-				// Funzione: Segna busta come letta
-				function markEnvelopeAsRead() {
-					localStorage.setItem(ENVELOPE_READ_KEY, 'true');
-				}
+			  // Funzione: Segna busta come letta
+			  function markEnvelopeAsRead() {
+			    localStorage.setItem(ENVELOPE_READ_KEY, 'true');
+			  }
 			
-				// Funzione: Nascondi notifica
-				function hideNotification() {
-					if (owlNotification) {
-						owlNotification.classList.add('hidden');
-					}
-				}
+			  // Funzione: Nascondi notifica
+			  function hideNotification() {
+			    if (owlNotification) {
+			      owlNotification.classList.add('hidden');
+			    }
+			  }
 			
-				// Controlla se ci sono messaggi non letti nella casella di posta
-				function updateNotificationVisibility() {
-					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-					const allMessages = ['welcome', 'day5_milestone', 'day10_milestone']; // Tutti i messaggi possibili
-					const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
-				  
-					if (unreadMessages.length > 0) {
-						// Se ci sono messaggi non letti, mostra la notifica
-						if (owlNotification) {
-							owlNotification.classList.remove('hidden');
-						}
-					} else {
-						// Se tutti i messaggi sono stati letti, nascondi la notifica
-						hideNotification();
-					}
-				}
-
-				// Al caricamento pagina
-				updateNotificationVisibility();
-
-
-				setInterval(function() {
-					console.log('🔍 Controllo periodico messaggi non letti...');
-				  
-					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-					const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
-				  
-					// Messaggi che devono essere veramente presenti
-					const potentialMessages = ['welcome'];  // Welcome è sempre presente
-				  
-					// Aggiungi milestone solo se il giorno relativo è stato completato
-					if (savedProgress[4]?.solved) {
-						potentialMessages.push('day5_milestone');  // Giorno 5 completato
-					}
-					if (savedProgress[9]?.solved) {
-						potentialMessages.push('day10_milestone');  // Giorno 10 completato
-					}
-				  
-					// Ora filtra solo i messaggi che REALMENTE ESISTONO
-					const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
-				  
-					console.log('📬 Messaggi esistenti:', potentialMessages);
-					console.log('📬 Messaggi non letti:', unreadMessages.length, unreadMessages);
-
-				  
-					if (unreadMessages.length > 0) {
-						// Ci sono messaggi non letti: MOSTRA la notifica
-						const owlNotification = document.getElementById('owlNotification');
-						if (owlNotification) {
-							owlNotification.classList.remove('hidden');
-							console.log('✅ Notifica MOSTRA (messaggi non letti trovati)');
-						}
-					} else {
-						// Nessun messaggio non letto: NASCONDI la notifica
-						const owlNotification = document.getElementById('owlNotification');
-						if (owlNotification) {
-							owlNotification.classList.add('hidden');
-							console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
-						}
-					}
-				}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
-
-
-				// ===== EVENTO: Click sul gufo =====
-				owlButton.addEventListener('click', function() {
-					console.log('🦉 Click gufo - Aprendo la casella di posta');
-
-					// Verifica che PERIODIC_MESSAGES esista
-					console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
-					if (typeof PERIODIC_MESSAGES === 'undefined') {
-						console.error('❌ PERIODIC_MESSAGES non è definito!');
-						return;
-					}
+// Controlla se ci sono messaggi non letti nella casella di posta
+function updateNotificationVisibility() {
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const allMessages = ['welcome', 'day5_milestone', 'day10_milestone']; // Tutti i messaggi possibili
+  const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
   
-					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-					const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+  if (unreadMessages.length > 0) {
+    // Se ci sono messaggi non letti, mostra la notifica
+    if (owlNotification) {
+      owlNotification.classList.remove('hidden');
+    }
+  } else {
+    // Se tutti i messaggi sono stati letti, nascondi la notifica
+    hideNotification();
+  }
+}
+
+// Al caricamento pagina
+updateNotificationVisibility();
+
+
+setInterval(function() {
+  console.log('🔍 Controllo periodico messaggi non letti...');
   
-					const messages = [];
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
-					// MESSAGGIO BENVENUTO - SEMPLICE
-					const welcomeMsg = {
-						id: 'welcome',
-						triggerDay: null,
-						icon: '📬',
-						subject: 'Benvenuto al Calendario',
-						content: 'Benvenuto al Calendario dell\'Avvento!',
-						image: 'foto/Sherlock_natalizio.png',
-						fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
-					};
+  // Messaggi che devono essere veramente presenti
+  const potentialMessages = ['welcome'];  // Welcome è sempre presente
   
-					// MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
-					const milestoneMessages = [];
+  // Aggiungi milestone solo se il giorno relativo è stato completato
+  if (savedProgress[4]?.solved) {
+    potentialMessages.push('day5_milestone');  // Giorno 5 completato
+  }
+  if (savedProgress[9]?.solved) {
+    potentialMessages.push('day10_milestone');  // Giorno 10 completato
+  }
   
-					// DAY 5
-					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5_milestone) {  // ← CAMBIA a day5_MILESTONE
-						milestoneMessages.push({
-							id: 'day5_milestone',
-							triggerDay: 5,
-							icon: '📬',
-							subject: PERIODIC_MESSAGES.day5_milestone.title || 'Mezzo Cammino!',  // ← CAMBIA
-							content: PERIODIC_MESSAGES.day5_milestone.subtitle || 'Fantastico!',  // ← CAMBIA
-							image: PERIODIC_MESSAGES.day5_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
-							fullDescription: PERIODIC_MESSAGES.day5_milestone.description || 'Messaggio'  // ← CAMBIA
-						});
-						console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5_milestone.title);  // ← CAMBIA
-					} else {
-						console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
-					}
-					updateNotificationVisibility();
+  // Ora filtra solo i messaggi che REALMENTE ESISTONO
+  const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
   
-					// DAY 10
-					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a day10_MILESTONE
-						milestoneMessages.push({
-							id: 'day10_milestone',
-							triggerDay: 10,
-							icon: '📬',
-							subject: PERIODIC_MESSAGES.day10_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
-							content: PERIODIC_MESSAGES.day10_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
-							image: PERIODIC_MESSAGES.day10_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
-							fullDescription: PERIODIC_MESSAGES.day10_milestone.description || 'Messaggio'  // ← CAMBIA
-						});
-						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10_milestone.title);  // ← CAMBIA
-					} else {
-						console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
-					}
-					updateNotificationVisibility();
+  console.log('📬 Messaggi esistenti:', potentialMessages);
+  console.log('📬 Messaggi non letti:', unreadMessages.length, unreadMessages);
 
-					// Aggiungi sempre il benvenuto
-					messages.push({
-						...welcomeMsg,
-						isOpen: readMessages.includes('welcome'),
-						icon: readMessages.includes('welcome') ? '📭' : '📬'
-					});
   
-					// Aggiungi milestone se il giorno è completato
-					milestoneMessages.forEach(msg => {
-						const dayEntry = savedProgress[msg.triggerDay - 1];
-						if (dayEntry && dayEntry.solved) {
-							messages.unshift({
-								...msg,
-								isOpen: readMessages.includes(msg.id),
-								icon: readMessages.includes(msg.id) ? '📭' : '📬'
-							});
-							console.log('✅ Messaggio milestone aggiunto:', msg.subject);
-						}
-					});
+  if (unreadMessages.length > 0) {
+    // Ci sono messaggi non letti: MOSTRA la notifica
+    const owlNotification = document.getElementById('owlNotification');
+    if (owlNotification) {
+      owlNotification.classList.remove('hidden');
+      console.log('✅ Notifica MOSTRA (messaggi non letti trovati)');
+    }
+  } else {
+    // Nessun messaggio non letto: NASCONDI la notifica
+    const owlNotification = document.getElementById('owlNotification');
+    if (owlNotification) {
+      owlNotification.classList.add('hidden');
+      console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
+    }
+  }
+}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
 
-					updateNotificationVisibility();
 
-					console.log('📋 Messaggi totali:', messages.length, messages);
+// ===== EVENTO: Click sul gufo =====
+owlButton.addEventListener('click', function() {
+  console.log('🦉 Click gufo - Aprendo la casella di posta');
+
+
   
-					// ===== CREA MODAL CASELLA =====
-					const mailboxModal = document.createElement('div');
-					mailboxModal.className = 'mailbox-modal';
-
-					const container = document.createElement('div');
-					container.className = 'mailbox-container';
-
-					const closeBtn = document.createElement('button');
-					closeBtn.className = 'mailbox-close-btn';
-					closeBtn.innerHTML = '×';
-					closeBtn.onclick = (e) => {
-						e.stopPropagation();
-						mailboxModal.remove();
-					};
+  // Verifica che PERIODIC_MESSAGES esista
+  console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
+  if (typeof PERIODIC_MESSAGES === 'undefined') {
+    console.error('❌ PERIODIC_MESSAGES non è definito!');
+    return;
+  }
   
-					const title = document.createElement('h2');
-					title.className = 'mailbox-title';
-					title.innerHTML = '📬 Casella di Posta';
-
-					const messagesList = document.createElement('div');
-					messagesList.className = 'messages-list';
+  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
-					messages.forEach((msg) => {
-						const item = document.createElement('div');
-						item.className = 'mailbox-item';
+  const messages = [];
+  
+  // MESSAGGIO BENVENUTO - SEMPLICE
+  const welcomeMsg = {
+    id: 'welcome',
+    triggerDay: null,
+    icon: '📬',
+    subject: 'Benvenuto al Calendario',
+    content: 'Benvenuto al Calendario dell\'Avvento!',
+    image: 'foto/Sherlock_natalizio.png',
+    fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
+  };
+  
+  // MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
+  const milestoneMessages = [];
+  
+// DAY 5
+if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5_milestone) {  // ← CAMBIA a day5_MILESTONE
+  milestoneMessages.push({
+    id: 'day5_milestone',
+    triggerDay: 5,
+    icon: '📬',
+    subject: PERIODIC_MESSAGES.day5_milestone.title || 'Mezzo Cammino!',  // ← CAMBIA
+    content: PERIODIC_MESSAGES.day5_milestone.subtitle || 'Fantastico!',  // ← CAMBIA
+    image: PERIODIC_MESSAGES.day5_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+    fullDescription: PERIODIC_MESSAGES.day5_milestone.description || 'Messaggio'  // ← CAMBIA
+  });
+  console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5_milestone.title);  // ← CAMBIA
+} else {
+  console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+}
+	updateNotificationVisibility();
 
-						const header = document.createElement('div');
-						header.className = 'mailbox-item-header';
 
-						const icon = document.createElement('span');
-						icon.className = 'mailbox-icon';
-						icon.innerHTML = msg.icon;
+  
+// DAY 10
+if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a day10_MILESTONE
+  milestoneMessages.push({
+    id: 'day10_milestone',
+    triggerDay: 10,
+    icon: '📬',
+    subject: PERIODIC_MESSAGES.day10_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+    content: PERIODIC_MESSAGES.day10_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+    image: PERIODIC_MESSAGES.day10_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+    fullDescription: PERIODIC_MESSAGES.day10_milestone.description || 'Messaggio'  // ← CAMBIA
+  });
+  console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10_milestone.title);  // ← CAMBIA
+} else {
+  console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+}
+	updateNotificationVisibility();
 
-						const subject = document.createElement('span');
-						subject.className = 'mailbox-subject';
-						subject.innerHTML = msg.subject;
 
-						header.appendChild(icon);
-						header.appendChild(subject);
-						item.appendChild(header);
+  
+  // Aggiungi sempre il benvenuto
+  messages.push({
+    ...welcomeMsg,
+    isOpen: readMessages.includes('welcome'),
+    icon: readMessages.includes('welcome') ? '📭' : '📬'
+  });
+  
+  // Aggiungi milestone se il giorno è completato
+  milestoneMessages.forEach(msg => {
+    const dayEntry = savedProgress[msg.triggerDay - 1];
+    if (dayEntry && dayEntry.solved) {
+      messages.unshift({
+        ...msg,
+        isOpen: readMessages.includes(msg.id),
+        icon: readMessages.includes(msg.id) ? '📭' : '📬'
+      });
+      console.log('✅ Messaggio milestone aggiunto:', msg.subject);
+    }
+  });
+
+	updateNotificationVisibility();
+
+  
+  console.log('📋 Messaggi totali:', messages.length, messages);
+  
+  // ===== CREA MODAL CASELLA =====
+  const mailboxModal = document.createElement('div');
+  mailboxModal.className = 'mailbox-modal';
+  
+  const container = document.createElement('div');
+  container.className = 'mailbox-container';
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'mailbox-close-btn';
+  closeBtn.innerHTML = '×';
+  closeBtn.onclick = (e) => {
+    e.stopPropagation();
+    mailboxModal.remove();
+  };
+  
+  const title = document.createElement('h2');
+  title.className = 'mailbox-title';
+  title.innerHTML = '📬 Casella di Posta';
+  
+  const messagesList = document.createElement('div');
+  messagesList.className = 'messages-list';
+  
+  messages.forEach((msg) => {
+    const item = document.createElement('div');
+    item.className = 'mailbox-item';
     
-						// CLICK
-						item.onclick = (e) => {
-							e.stopPropagation();
-      
-							if (!readMessages.includes(msg.id)) {
-								readMessages.push(msg.id);
-								localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
-							}
-							// Aggiorna la visibilità della notifica dopo aver letto il messaggio
-							updateNotificationVisibility();
-
-      
-							icon.innerHTML = '📭';
-      
-							// MODAL MESSAGGI
-							const messageModal = document.createElement('div');
-							messageModal.style.position = 'fixed';
-							messageModal.style.top = '0';
-							messageModal.style.left = '0';
-							messageModal.style.width = '100%';
-							messageModal.style.height = '100%';
-							messageModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
-							messageModal.style.display = 'flex';
-							messageModal.style.alignItems = 'center';
-							messageModal.style.justifyContent = 'center';
-							messageModal.style.zIndex = '3000';
-							messageModal.style.backdropFilter = 'blur(5px)';
-							messageModal.style.overflowY = 'auto';
-							messageModal.style.padding = '20px';
-
-							const messageContent = document.createElement('div');
-							messageContent.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
-							messageContent.style.border = '3px solid #FFD700';
-							messageContent.style.borderRadius = '20px';
-							messageContent.style.padding = '40px';
-							messageContent.style.maxWidth = '700px';
-							messageContent.style.width = '100%';
-							messageContent.style.maxHeight = '90vh';
-							messageContent.style.overflowY = 'auto';
-							messageContent.style.position = 'relative';
-							messageContent.style.boxShadow = '0 10px 50px rgba(255, 215, 0, 0.3)';
-      
-							// CHIUDI X
-							const closeMessageBtn = document.createElement('button');
-							closeMessageBtn.innerHTML = '×';
-							closeMessageBtn.style.position = 'absolute';
-							closeMessageBtn.style.top = '15px';
-							closeMessageBtn.style.right = '15px';
-							closeMessageBtn.style.background = '#8B0000';
-							closeMessageBtn.style.color = 'white';
-							closeMessageBtn.style.border = '2px solid #FFD700';
-							closeMessageBtn.style.borderRadius = '50%';
-							closeMessageBtn.style.width = '40px';
-							closeMessageBtn.style.height = '40px';
-							closeMessageBtn.style.fontSize = '1.5rem';
-							closeMessageBtn.style.cursor = 'pointer';
-							closeMessageBtn.style.transition = 'all 0.3s';
-							closeMessageBtn.style.display = 'flex';
-							closeMessageBtn.style.alignItems = 'center';
-							closeMessageBtn.style.justifyContent = 'center';
-      
-							closeMessageBtn.onmouseover = () => {
-								closeMessageBtn.style.background = '#FF0000';
-								closeMessageBtn.style.transform = 'rotate(90deg)';
-							};
-							closeMessageBtn.onmouseout = () => {
-								closeMessageBtn.style.background = '#8B0000';
-								closeMessageBtn.style.transform = 'rotate(0deg)';
-							};
-
-							closeMessageBtn.onclick = (e) => {
-								e.stopPropagation();
-								messageModal.remove();
-							};
-      
-							messageContent.appendChild(closeMessageBtn);
-      
-							// TITOLO
-							const msgTitle = document.createElement('h2');
-							msgTitle.style.color = '#FFD700';
-							msgTitle.style.fontSize = '2rem';
-							msgTitle.style.fontWeight = 'bold';
-							msgTitle.style.marginBottom = '20px';
-							msgTitle.style.textAlign = 'center';
-							msgTitle.innerHTML = msg.subject;
-							messageContent.appendChild(msgTitle);
-      
-							// IMMAGINE - IMPORTANTE!
-							if (msg.image) {
-								console.log('🖼️ Tentando di caricare immagine:', msg.image);
-  
-								const img = document.createElement('img');
-								img.src = msg.image;
-								img.alt = msg.subject;
-								img.style.width = '100%';
-								img.style.maxHeight = '400px';
-								img.style.objectFit = 'cover';
-								img.style.borderRadius = '10px';
-								img.style.marginBottom = '20px';
-								img.style.border = '2px solid #FFD700';
-								img.style.cursor = 'pointer';
-  
-								img.onerror = () => {
-									console.error('❌ ERRORE: Immagine non trovata:', msg.image);
-									img.style.display = 'none';
-								};
-  
-								img.onload = () => {
-									console.log('✅ SUCCESSO: Immagine caricata:', msg.image);
-								};
-  
-								// CLICK PER INGRANDIRE L'IMMAGINE
-								img.addEventListener('click', function(e) {
-									e.stopPropagation();
-									console.log('🖼️ Click rilevato su immagine nel messaggio');
-  
-									// Crea il modal fullscreen
-									const modal = document.createElement('div');
-									modal.style.position = 'fixed';
-									modal.style.top = '0';
-									modal.style.left = '0';
-									modal.style.width = '100%';
-									modal.style.height = '100%';
-									modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-									modal.style.display = 'flex';
-									modal.style.alignItems = 'center';
-									modal.style.justifyContent = 'center';
-									modal.style.zIndex = '9999';
-									modal.style.backdropFilter = 'blur(5px)';
-									modal.style.animation = 'fadeIn 0.3s ease-in-out';
-  
-									// Pulsante X
-									const closeBtn = document.createElement('button');
-									closeBtn.innerHTML = '✕';
-									closeBtn.style.position = 'absolute';
-									closeBtn.style.top = '20px';
-									closeBtn.style.right = '20px';
-									closeBtn.style.fontSize = '2.5rem';
-									closeBtn.style.color = 'white';
-									closeBtn.style.background = 'none';
-									closeBtn.style.border = 'none';
-									closeBtn.style.cursor = 'pointer';
-									closeBtn.style.zIndex = '10000';
-									closeBtn.style.transition = 'transform 0.2s';
-									closeBtn.style.padding = '10px 15px';
-  
-									closeBtn.onmouseover = () => {
-										closeBtn.style.transform = 'scale(1.3)';
-										closeBtn.style.color = '#ff6b6b';
-									};
-									closeBtn.onmouseout = () => {
-										closeBtn.style.transform = 'scale(1)';
-										closeBtn.style.color = 'white';
-									};
-									closeBtn.onclick = (evt) => {
-										evt.stopPropagation();
-										console.log('🖼️ X cliccato, chiudendo modal');
-										modal.remove();
-									};
-  
-									// Immagine ingrandita
-									const fullImg = document.createElement('img');
-									fullImg.src = msg.image;
-									fullImg.style.maxWidth = '90vw';
-									fullImg.style.maxHeight = '90vh';
-									fullImg.style.objectFit = 'contain';
-									fullImg.style.borderRadius = '10px';
-									fullImg.style.cursor = 'auto';
-									fullImg.onclick = (evt) => evt.stopPropagation();
-
-									// Hint in basso
-									const hint = document.createElement('div');
-									hint.innerHTML = 'Clicca per chiudere';
-									hint.style.position = 'absolute';
-									hint.style.bottom = '20px';
-									hint.style.left = '50%';
-									hint.style.transform = 'translateX(-50%)';
-									hint.style.color = '#aaa';
-									hint.style.fontSize = '0.9rem';
-									hint.style.opacity = '0.7';
-									hint.style.pointerEvents = 'none';
-  
-									// Chiudi cliccando fuori
-									modal.onclick = () => {
-										console.log('🖼️ Click esterno, chiudo modal');
-										modal.remove();
-									};
-  
-									// Chiudi con ESC
-									const handleEsc = (e) => {
-										if (e.key === 'Escape') {
-											console.log('🖼️ ESC premuto, chiudo modal');
-											modal.remove();
-											document.removeEventListener('keydown', handleEsc);
-										}
-									};
-									document.addEventListener('keydown', handleEsc);
-  
-									// Assembla il modal
-									modal.appendChild(closeBtn);
-									modal.appendChild(fullImg);
-									modal.appendChild(hint);
-									document.body.appendChild(modal);
-
-									console.log('🖼️ Modal immagine creato');
-								});
-
-								messageContent.appendChild(img);  // AGGIUNGE L'IMMAGINE AL DOM!
-								console.log('✅ Immagine aggiunta al DOM');
-							} else {
-								console.warn('⚠️ msg.image è vuoto o undefined');
-							}
-
-							// TESTO
-							const msgText = document.createElement('div');
-							msgText.style.color = '#e0e0e0';
-							msgText.style.fontSize = '1rem';
-							msgText.style.lineHeight = '1.8';
-							msgText.style.marginTop = '20px';
-							msgText.innerHTML = msg.fullDescription || msg.content;
-							messageContent.appendChild(msgText);
-
-							messageModal.appendChild(messageContent);
-      
-							messageModal.onclick = (e) => {
-								if (e.target === messageModal) {
-								mes	sageModal.remove();
-								}
-							};
-      
-							const handleEsc = (e) => {
-								if (e.key === 'Escape') {
-									messageModal.remove();
-									document.removeEventListener('keydown', handleEsc);
-								}
-							};
-							document.addEventListener('keydown', handleEsc);
-      
-							document.body.appendChild(messageModal);
-							console.log('📭 Modal messaggio aperto:', msg.subject);
-						};
+    const header = document.createElement('div');
+    header.className = 'mailbox-item-header';
     
-						messagesList.appendChild(item);
-					});
+    const icon = document.createElement('span');
+    icon.className = 'mailbox-icon';
+    icon.innerHTML = msg.icon;
+    
+    const subject = document.createElement('span');
+    subject.className = 'mailbox-subject';
+    subject.innerHTML = msg.subject;
+    
+    header.appendChild(icon);
+    header.appendChild(subject);
+    item.appendChild(header);
+    
+    // CLICK
+    item.onclick = (e) => {
+      e.stopPropagation();
+      
+      if (!readMessages.includes(msg.id)) {
+        readMessages.push(msg.id);
+        localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
+      }
+		// Aggiorna la visibilità della notifica dopo aver letto il messaggio
+updateNotificationVisibility();
+
+      
+      icon.innerHTML = '📭';
+      
+      // MODAL MESSAGGI
+      const messageModal = document.createElement('div');
+      messageModal.style.position = 'fixed';
+      messageModal.style.top = '0';
+      messageModal.style.left = '0';
+      messageModal.style.width = '100%';
+      messageModal.style.height = '100%';
+      messageModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+      messageModal.style.display = 'flex';
+      messageModal.style.alignItems = 'center';
+      messageModal.style.justifyContent = 'center';
+      messageModal.style.zIndex = '3000';
+      messageModal.style.backdropFilter = 'blur(5px)';
+      messageModal.style.overflowY = 'auto';
+      messageModal.style.padding = '20px';
+      
+      const messageContent = document.createElement('div');
+      messageContent.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
+      messageContent.style.border = '3px solid #FFD700';
+      messageContent.style.borderRadius = '20px';
+      messageContent.style.padding = '40px';
+      messageContent.style.maxWidth = '700px';
+      messageContent.style.width = '100%';
+      messageContent.style.maxHeight = '90vh';
+      messageContent.style.overflowY = 'auto';
+      messageContent.style.position = 'relative';
+      messageContent.style.boxShadow = '0 10px 50px rgba(255, 215, 0, 0.3)';
+      
+      // CHIUDI X
+      const closeMessageBtn = document.createElement('button');
+      closeMessageBtn.innerHTML = '×';
+      closeMessageBtn.style.position = 'absolute';
+      closeMessageBtn.style.top = '15px';
+      closeMessageBtn.style.right = '15px';
+      closeMessageBtn.style.background = '#8B0000';
+      closeMessageBtn.style.color = 'white';
+      closeMessageBtn.style.border = '2px solid #FFD700';
+      closeMessageBtn.style.borderRadius = '50%';
+      closeMessageBtn.style.width = '40px';
+      closeMessageBtn.style.height = '40px';
+      closeMessageBtn.style.fontSize = '1.5rem';
+      closeMessageBtn.style.cursor = 'pointer';
+      closeMessageBtn.style.transition = 'all 0.3s';
+      closeMessageBtn.style.display = 'flex';
+      closeMessageBtn.style.alignItems = 'center';
+      closeMessageBtn.style.justifyContent = 'center';
+      
+      closeMessageBtn.onmouseover = () => {
+        closeMessageBtn.style.background = '#FF0000';
+        closeMessageBtn.style.transform = 'rotate(90deg)';
+      };
+      closeMessageBtn.onmouseout = () => {
+        closeMessageBtn.style.background = '#8B0000';
+        closeMessageBtn.style.transform = 'rotate(0deg)';
+      };
+      
+      closeMessageBtn.onclick = (e) => {
+        e.stopPropagation();
+        messageModal.remove();
+      };
+      
+      messageContent.appendChild(closeMessageBtn);
+      
+      // TITOLO
+      const msgTitle = document.createElement('h2');
+      msgTitle.style.color = '#FFD700';
+      msgTitle.style.fontSize = '2rem';
+      msgTitle.style.fontWeight = 'bold';
+      msgTitle.style.marginBottom = '20px';
+      msgTitle.style.textAlign = 'center';
+      msgTitle.innerHTML = msg.subject;
+      messageContent.appendChild(msgTitle);
+      
+// IMMAGINE - IMPORTANTE!
+if (msg.image) {
+  console.log('🖼️ Tentando di caricare immagine:', msg.image);
   
-					container.appendChild(closeBtn);
-					container.appendChild(title);
-					container.appendChild(messagesList);
-					mailboxModal.appendChild(container);
+  const img = document.createElement('img');
+  img.src = msg.image;
+  img.alt = msg.subject;
+  img.style.width = '100%';
+  img.style.maxHeight = '400px';
+  img.style.objectFit = 'cover';
+  img.style.borderRadius = '10px';
+  img.style.marginBottom = '20px';
+  img.style.border = '2px solid #FFD700';
+  img.style.cursor = 'pointer';
   
-					mailboxModal.onclick = (e) => {
-						if (e.target === mailboxModal) {
-							mailboxModal.remove();
-						}
-					};
+  img.onerror = () => {
+    console.error('❌ ERRORE: Immagine non trovata:', msg.image);
+    img.style.display = 'none';
+  };
   
-					const handleEsc = (e) => {
-						if (e.key === 'Escape') {
-							mailboxModal.remove();
-							document.removeEventListener('keydown', handleEsc);
-						}
-					};
-					document.addEventListener('keydown', handleEsc);
+  img.onload = () => {
+    console.log('✅ SUCCESSO: Immagine caricata:', msg.image);
+  };
   
-					document.body.appendChild(mailboxModal);
-					console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
-				});
+  // CLICK PER INGRANDIRE L'IMMAGINE
+img.addEventListener('click', function(e) {
+  e.stopPropagation();
+  console.log('🖼️ Click rilevato su immagine nel messaggio');
+  
+  // Crea il modal fullscreen
+  const modal = document.createElement('div');
+  modal.style.position = 'fixed';
+  modal.style.top = '0';
+  modal.style.left = '0';
+  modal.style.width = '100%';
+  modal.style.height = '100%';
+  modal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+  modal.style.display = 'flex';
+  modal.style.alignItems = 'center';
+  modal.style.justifyContent = 'center';
+  modal.style.zIndex = '9999';
+  modal.style.backdropFilter = 'blur(5px)';
+  modal.style.animation = 'fadeIn 0.3s ease-in-out';
+  
+  // Pulsante X
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = '✕';
+  closeBtn.style.position = 'absolute';
+  closeBtn.style.top = '20px';
+  closeBtn.style.right = '20px';
+  closeBtn.style.fontSize = '2.5rem';
+  closeBtn.style.color = 'white';
+  closeBtn.style.background = 'none';
+  closeBtn.style.border = 'none';
+  closeBtn.style.cursor = 'pointer';
+  closeBtn.style.zIndex = '10000';
+  closeBtn.style.transition = 'transform 0.2s';
+  closeBtn.style.padding = '10px 15px';
+  
+  closeBtn.onmouseover = () => {
+    closeBtn.style.transform = 'scale(1.3)';
+    closeBtn.style.color = '#ff6b6b';
+  };
+  closeBtn.onmouseout = () => {
+    closeBtn.style.transform = 'scale(1)';
+    closeBtn.style.color = 'white';
+  };
+  closeBtn.onclick = (evt) => {
+    evt.stopPropagation();
+    console.log('🖼️ X cliccato, chiudendo modal');
+    modal.remove();
+  };
+  
+  // Immagine ingrandita
+  const fullImg = document.createElement('img');
+  fullImg.src = msg.image;
+  fullImg.style.maxWidth = '90vw';
+  fullImg.style.maxHeight = '90vh';
+  fullImg.style.objectFit = 'contain';
+  fullImg.style.borderRadius = '10px';
+  fullImg.style.cursor = 'auto';
+  fullImg.onclick = (evt) => evt.stopPropagation();
+  
+  // Hint in basso
+  const hint = document.createElement('div');
+  hint.innerHTML = 'Clicca per chiudere';
+  hint.style.position = 'absolute';
+  hint.style.bottom = '20px';
+  hint.style.left = '50%';
+  hint.style.transform = 'translateX(-50%)';
+  hint.style.color = '#aaa';
+  hint.style.fontSize = '0.9rem';
+  hint.style.opacity = '0.7';
+  hint.style.pointerEvents = 'none';
+  
+  // Chiudi cliccando fuori
+  modal.onclick = () => {
+    console.log('🖼️ Click esterno, chiudo modal');
+    modal.remove();
+  };
+  
+  // Chiudi con ESC
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') {
+      console.log('🖼️ ESC premuto, chiudo modal');
+      modal.remove();
+      document.removeEventListener('keydown', handleEsc);
+    }
+  };
+  document.addEventListener('keydown', handleEsc);
+  
+  // Assembla il modal
+  modal.appendChild(closeBtn);
+  modal.appendChild(fullImg);
+  modal.appendChild(hint);
+  document.body.appendChild(modal);
+  
+  console.log('🖼️ Modal immagine creato');
+});
+
+  messageContent.appendChild(img);  // AGGIUNGE L'IMMAGINE AL DOM!
+  console.log('✅ Immagine aggiunta al DOM');
+} else {
+  console.warn('⚠️ msg.image è vuoto o undefined');
+}
+
+
+
+
+      
+      // TESTO
+      const msgText = document.createElement('div');
+      msgText.style.color = '#e0e0e0';
+      msgText.style.fontSize = '1rem';
+      msgText.style.lineHeight = '1.8';
+      msgText.style.marginTop = '20px';
+      msgText.innerHTML = msg.fullDescription || msg.content;
+      messageContent.appendChild(msgText);
+      
+      messageModal.appendChild(messageContent);
+      
+      messageModal.onclick = (e) => {
+        if (e.target === messageModal) {
+          messageModal.remove();
+        }
+      };
+      
+      const handleEsc = (e) => {
+        if (e.key === 'Escape') {
+          messageModal.remove();
+          document.removeEventListener('keydown', handleEsc);
+        }
+      };
+      document.addEventListener('keydown', handleEsc);
+      
+      document.body.appendChild(messageModal);
+      console.log('📭 Modal messaggio aperto:', msg.subject);
+    };
+    
+    messagesList.appendChild(item);
+  });
+  
+  container.appendChild(closeBtn);
+  container.appendChild(title);
+  container.appendChild(messagesList);
+  mailboxModal.appendChild(container);
+  
+  mailboxModal.onclick = (e) => {
+    if (e.target === mailboxModal) {
+      mailboxModal.remove();
+    }
+  };
+  
+  const handleEsc = (e) => {
+    if (e.key === 'Escape') {
+      mailboxModal.remove();
+      document.removeEventListener('keydown', handleEsc);
+    }
+  };
+  document.addEventListener('keydown', handleEsc);
+  
+  document.body.appendChild(mailboxModal);
+  console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
+});
+
+
+
+
+
+
 			
-				// ===== CHIUSURA MODAL PRINCIPALE =====
-				closeModal.addEventListener('click', function() {
-					gameModal.style.display = 'none';
-					document.body.style.overflow = 'auto';
-				});
+			  // ===== CHIUSURA MODAL PRINCIPALE =====
+			  closeModal.addEventListener('click', function() {
+			    gameModal.style.display = 'none';
+			    document.body.style.overflow = 'auto';
+			  });
 			
-				// Chiudi cliccando fuori
-				gameModal.addEventListener('click', function(e) {
-					if (e.target === gameModal) {
-						gameModal.style.display = 'none';
-						document.body.style.overflow = 'auto';
-					}
-				});
+			  // Chiudi cliccando fuori
+			  gameModal.addEventListener('click', function(e) {
+			    if (e.target === gameModal) {
+			      gameModal.style.display = 'none';
+			      document.body.style.overflow = 'auto';
+			    }
+			  });
 			
-				// Chiudi con ESC
-				document.addEventListener('keydown', function(e) {
-					if (e.key === 'Escape' && gameModal.style.display === 'flex') {
-						gameModal.style.display = 'none';
-						document.body.style.overflow = 'auto';
-					}
-				});
+			  // Chiudi con ESC
+			  document.addEventListener('keydown', function(e) {
+			    if (e.key === 'Escape' && gameModal.style.display === 'flex') {
+			      gameModal.style.display = 'none';
+			      document.body.style.overflow = 'auto';
+			    }
+			  });
 			})();
 
+
+	  
 			const { useState, useEffect } = React;
 	  
 			// ========================================
@@ -938,6 +959,7 @@
 				console.log(`💾 Dati giorno ${dayIndex + 1} aggiornati:`, dayData);
 				saveProgressToStorage();
 			}
+	  
 	  
 			// ========================================
 			// Dati delle costellazioni con informazioni dettagliate (aggiornati con dati reali)
@@ -1059,7 +1081,8 @@
 			// ========================================
 			// NUOVA STRUTTURA: TEST PERIODICI OGNI 5 GIORNI
 			// ========================================
-										 
+			
+											 
 			function createTestQuestions(dayRange, constellations) {
 				return constellations.map((constellation, index) => ({
 					dayNumber: dayRange[index],
@@ -1069,6 +1092,7 @@
 					correctAnswer: constellation.name
 				}));
 			}
+			
 								  
 			const PERIODIC_TESTS = [
 				{
@@ -1109,6 +1133,8 @@
 				}
 			];
 
+	  
+	  
 			// ========================================
 			// Utility functions
 			// ========================================
@@ -1336,39 +1362,42 @@
  			const currentYear = today.getFullYear();
 
 
-			// ========================================
-			// CONTROLLO GIORNO
-			// ========================================
-			let maxDay;
-			console.log("📅 Data corrente:", today);
-			console.log("📅 Mese corrente:", currentMonth, "(0=gen, 9=ott, 11=dic)");
-			console.log("📅 Giorno corrente:", currentDay);
-			if (currentMonth === 11 && currentYear === 2025) {
-				// Se siamo a dicembre 2025, sblocca fino al giorno corrente
-				maxDay = currentDay;
-				console.log("🗓️ Modalità dicembre: giorni sbloccati fino al", maxDay);
-			} else if (currentMonth < 11 || currentYear < 2025) { //DA MODIFICARE
-				// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 6 giorni per TESTING
-				maxDay = 10; // FISSO per testing
-				console.log("🧪 Modalità testing PRE-dicembre: giorni sbloccati:", maxDay);
-			} else {
-				// Se siamo DOPO dicembre, sblocca tutto
-				maxDay = 31;
-				console.log("🎉 Modalità post-dicembre: tutti i giorni sbloccati");
-			}
-			console.log("✅ Giorni max disponibili:", maxDay);
+
+				
+			
+				// ========================================
+				// CONTROLLO GIORNO
+				// ========================================
+				let maxDay;
+				console.log("📅 Data corrente:", today);
+				console.log("📅 Mese corrente:", currentMonth, "(0=gen, 9=ott, 11=dic)");
+				console.log("📅 Giorno corrente:", currentDay);
+				if (currentMonth === 11 && currentYear === 2025) {
+					// Se siamo a dicembre 2025, sblocca fino al giorno corrente
+					maxDay = currentDay;
+					console.log("🗓️ Modalità dicembre: giorni sbloccati fino al", maxDay);
+				} else if (currentMonth < 11 || currentYear < 2025) { //DA MODIFICARE
+					// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 6 giorni per TESTING
+					maxDay = 10; // FISSO per testing
+					console.log("🧪 Modalità testing PRE-dicembre: giorni sbloccati:", maxDay);
+				} else {
+					// Se siamo DOPO dicembre, sblocca tutto
+					maxDay = 31;
+					console.log("🎉 Modalità post-dicembre: tutti i giorni sbloccati");
+				}
+				console.log("✅ Giorni max disponibili:", maxDay);
 			
 			// FALLBACK DI EMERGENZA come richiesto
 			if (typeof maxDay !== 'number' || isNaN(maxDay) || maxDay < 0) {
-				console.warn("⚠️ FALLBACK ATTIVATO: Logica date fallita, forzando 5 giorni per testing");
-				maxDay = 5;
+			  console.warn("⚠️ FALLBACK ATTIVATO: Logica date fallita, forzando 5 giorni per testing");
+			  maxDay = 5;
 			}
 			
 			const [progress, setProgress] = useState(gameProgress);
 	  
 			useEffect(() => {
-				gameProgress = { ...progress };
-				saveProgressToStorage();
+			  gameProgress = { ...progress };
+			  saveProgressToStorage();
 			}, [progress]);
 			
 			const [activeModal, setActiveModal] = useState(null);
@@ -1378,9 +1407,9 @@
 			
 			// Gestione apertura settings da pulsante esterno
 			useEffect(() => {
-				const handleOpenSettings = () => setSettingsModal(true);
-				window.addEventListener('openSettings', handleOpenSettings);
-				return () => window.removeEventListener('openSettings', handleOpenSettings);
+			  const handleOpenSettings = () => setSettingsModal(true);
+			  window.addEventListener('openSettings', handleOpenSettings);
+			  return () => window.removeEventListener('openSettings', handleOpenSettings);
 			}, []);
 			
 	  		const [usedHintsDisplay, setUsedHintsDisplay] = useState({});
@@ -1400,319 +1429,321 @@
 
 			// ===== STATE PER MESSAGGI PERIODICI =====
 			const [periodicMessages, setPeriodicMessages] = useState(() => {
-				try {
-					const saved = localStorage.getItem('periodicMessages');
-					return saved ? JSON.parse(saved) : {};
-				} catch {
-					return {};
-				}
+			  try {
+			    const saved = localStorage.getItem('periodicMessages');
+			    return saved ? JSON.parse(saved) : {};
+			  } catch {
+			    return {};
+			  }
 			});
 			
 			const [periodicNotificationVisible, setPeriodicNotificationVisible] = useState({});
 			
 			// Al caricamento, controlla se il giorno 5 è stato completato
 			useEffect(() => {
-				const day5Completed = progress?.solved;  // Giorno 5 è indice 4
-				if (day5Completed && !periodicMessages.day5_milestone) {
-					// Messaggio periodico non è stato visto ancora
-					setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
-				}
+			  const day5Completed = progress?.solved;  // Giorno 5 è indice 4
+			  if (day5Completed && !periodicMessages.day5_milestone) {
+			    // Messaggio periodico non è stato visto ancora
+			    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+			  }
 			}, [progress]);
 
 	  
 			// INIZIALIZZAZIONE SEMPLIFICATA
 			useEffect(() => {
-				console.log('🚀 Inizializzando calendario semplificato...');
+			  console.log('🚀 Inizializzando calendario semplificato...');
 			  
-				try {
-					// Carica progresso dalla memoria JavaScript
-					const savedProgress = loadProgress();
-					console.log('✅ Progresso caricato dalla memoria:', Object.keys(savedProgress).length, 'giorni');
-					
-					setProgress(savedProgress);
-					setInitialized(true);
-					
-					if (Object.keys(savedProgress).length > 0) {
-						showToast('💾 Progressi in memoria trovati!', 'success');
-					}
+			  try {
+				// Carica progresso dalla memoria JavaScript
+				const savedProgress = loadProgress();
+				console.log('✅ Progresso caricato dalla memoria:', Object.keys(savedProgress).length, 'giorni');
 				
-				} catch (error) {
-					console.error('❌ Errore inizializzazione:', error);
-					setProgress({});
-					setInitialized(true);
+				setProgress(savedProgress);
+				setInitialized(true);
+				
+				if (Object.keys(savedProgress).length > 0) {
+				  showToast('💾 Progressi in memoria trovati!', 'success');
 				}
+				
+			  } catch (error) {
+				console.error('❌ Errore inizializzazione:', error);
+				setProgress({});
+				setInitialized(true);
+			  }
 			}, []);
 	  
 			// SALVATAGGIO AUTOMATICO IN MEMORIA
 			useEffect(() => {
-				if (!initialized) return;
+			  if (!initialized) return;
 			  
-				// Aggiorna lo stato globale in memoria
-				gameProgress = { ...progress };
-				console.log('💾 Progresso aggiornato in memoria JavaScript');
+			  // Aggiorna lo stato globale in memoria
+			  gameProgress = { ...progress };
+			  console.log('💾 Progresso aggiornato in memoria JavaScript');
 			}, [progress, initialized]);
 	  
 			// Calcolo statistiche semplificato
 			useEffect(() => {
-				let score = 0;
-				let completed = 0;
+			  let score = 0;
+			  let completed = 0;
 			  
-				Object.entries(progress).forEach(([dayIndex, entry]) => {
-					const entryScore = entry.finalScore !== undefined ? entry.finalScore : (entry.score || 0);
-					score += entryScore;
+			  Object.entries(progress).forEach(([dayIndex, entry]) => {
+				const entryScore = entry.finalScore !== undefined ? entry.finalScore : (entry.score || 0);
+				score += entryScore;
 				
-					if (entry.solved) completed++;
-				});
+				if (entry.solved) completed++;
+			  });
 			  
-				setTotalScore(score);
+			  setTotalScore(score);
 			  
-				console.log('📈 Statistiche aggiornate:', {
-					punteggio: score,
-					completati: completed
-				});
+			  console.log('📈 Statistiche aggiornate:', {
+				punteggio: score,
+				completati: completed
+			  });
 			}, [progress]);
 	  
 			// Aggiornamento UI semplificato
 			useEffect(() => {
-				const totalScoreEl = document.getElementById("totalScore");
+			  const totalScoreEl = document.getElementById("totalScore");
 			  
-				if (totalScoreEl) {
-					totalScoreEl.innerText = `⭐ Punteggio Totale: ${totalScore}`;
-				}
+			  if (totalScoreEl) {
+				totalScoreEl.innerText = `⭐ Punteggio Totale: ${totalScore}`;
+			  }
 			}, [totalScore]);
 	  
 			// BUG FIX #1 & #2: LOGICA RISPOSTA CORRETTA
 			function handleAnswer(index, choice) {
-				const correct = FULL_CONSTELLATIONS[index].name;
+			  const correct = FULL_CONSTELLATIONS[index].name;
 			  
-				setProgress(prev => {
-					const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-					if (entry.solved) return prev;
+			  setProgress(prev => {
+				const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				if (entry.solved) return prev;
 				
-					// BUG FIX #1: INCREMENTA SEMPRE totalAttempts
-					setTotalAttempts(prevAttempts => ({
-						...prevAttempts,
-						[index]: (prevAttempts[index] || 0) + 1
-					}));
+				// BUG FIX #1: INCREMENTA SEMPRE totalAttempts
+				setTotalAttempts(prevAttempts => ({
+				  ...prevAttempts,
+				  [index]: (prevAttempts[index] || 0) + 1
+				}));
 				
-					if (choice === correct) {
-						// Risposta corretta
-						entry.solved = true;
-						entry.attempts = (totalAttempts[index] || 0) + 1; // BUG FIX #1: Salva conteggio corretto
-						entry.finalScore = entry.score;
-						entry.completedAt = new Date().toISOString();
+				if (choice === correct) {
+				  // Risposta corretta
+				  entry.solved = true;
+				  entry.attempts = (totalAttempts[index] || 0) + 1; // BUG FIX #1: Salva conteggio corretto
+				  entry.finalScore = entry.score;
+				  entry.completedAt = new Date().toISOString();
 
-						// 🎉 ATTIVA MESSAGGIO PERIODICO PER GIORNO 5
-						if (index === 4 && choice === correct) {  // Giorno 5 (0-indexed) E RISPOSTA CORRETTA!
-							console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
-
-							// Salva nel localStorage
-							localStorage.setItem('periodic_day5_milestone_triggered', 'true');
-							localStorage.setItem('day5_message_available', 'true');
-
-							// Mostra il pulsante di notifica
-							const periodicNotif = document.getElementById('periodicNotification');
-							if (periodicNotif) {
-								console.log('✅ Notifica periodica impostata su VISIBILE');
-								periodicNotif.style.display = 'flex !important';  // Forza il display
-								periodicNotif.style.animation = 'bounce-gift 0.8s infinite';
-							} else {
-							con	sole.warn('⚠️ Elemento periodicNotification non trovato nel DOM!');
-							}
-
-							showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
-						}
-
-						console.log(`✅ RISPOSTA CORRETTA Giorno ${index + 1}:`, {
-							tentativi_totali: entry.attempts,
-							punteggio_finale: entry.score
-						});
-
-						// 🆕 NUOVO: Controlla se è il giorno 5
-						if (index === 4) {  // Giorno 5 (0-indexed)
-							console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
-
-							// Aggiungi il messaggio periodico
-							setPeriodicMessages(prev => {
-								const updated = { ...prev, day5_milestone: true };
-								localStorage.setItem('periodicMessages', JSON.stringify(updated));
-								return updated;
-							});
-
-							// Attiva la notifica
-							setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
-
-							// Mostra toast di congratulazioni
-							showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
-						}
-
-				  
-						setFeedback("✅ Corretto! Ottimo lavoro!");
-				  
-						// BUG FIX #2: Pulisci risposte sbagliate per questo giorno
-						setWrongAnswers(prev => ({ ...prev, [index]: [] }));
-				  
-						const scoreText = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
-						showToast(`🎆 Giorno ${index + 1} completato! ${scoreText} punti`, 'success');
-				  
-					} else {
-						// Risposta sbagliata
-						entry.score = entry.score - 1;
-				  
-						// BUG FIX #2: Aggiungi alla lista delle risposte sbagliate
-						setWrongAnswers(prev => ({
-							...prev,
-							[index]: [...(prev[index] || []), choice]
-						}));
+					// 🎉 ATTIVA MESSAGGIO PERIODICO PER GIORNO 5
+					if (index === 4 && choice === correct) {  // Giorno 5 (0-indexed) E RISPOSTA CORRETTA!
+					  console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
 					  
-						console.log(`❌ RISPOSTA SBAGLIATA Giorno ${index + 1}:`, {
-							risposta_data: choice,
-							risposta_corretta: correct,
-							punti_rimasti: entry.score,
-							tentativi_attuali: (totalAttempts[index] || 0) + 1
-						});
+					  // Salva nel localStorage
+					  localStorage.setItem('periodic_day5_milestone_triggered', 'true');
+					  localStorage.setItem('day5_message_available', 'true');
 					  
-						const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
-						setFeedback(`❌ Risposta sbagliata! Punti rimasti: ${scoreDisplay}`);
+					  // Mostra il pulsante di notifica
+					  const periodicNotif = document.getElementById('periodicNotification');
+					  if (periodicNotif) {
+					    console.log('✅ Notifica periodica impostata su VISIBILE');
+					    periodicNotif.style.display = 'flex !important';  // Forza il display
+					    periodicNotif.style.animation = 'bounce-gift 0.8s infinite';
+					  } else {
+					    console.warn('⚠️ Elemento periodicNotification non trovato nel DOM!');
+					  }
+					  
+					  showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
 					}
+
+
+				  
+				  console.log(`✅ RISPOSTA CORRETTA Giorno ${index + 1}:`, {
+					tentativi_totali: entry.attempts,
+					punteggio_finale: entry.score
+				  });
+
+				// 🆕 NUOVO: Controlla se è il giorno 5
+				  if (index === 4) {  // Giorno 5 (0-indexed)
+				    console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
+				    
+				    // Aggiungi il messaggio periodico
+				    setPeriodicMessages(prev => {
+				      const updated = { ...prev, day5_milestone: true };
+				      localStorage.setItem('periodicMessages', JSON.stringify(updated));
+				      return updated;
+				    });
+				    
+				    // Attiva la notifica
+				    setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+				    
+				    // Mostra toast di congratulazioni
+				    showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
+				  }
+
+				  
+				  setFeedback("✅ Corretto! Ottimo lavoro!");
+				  
+				  // BUG FIX #2: Pulisci risposte sbagliate per questo giorno
+				  setWrongAnswers(prev => ({ ...prev, [index]: [] }));
+				  
+				  const scoreText = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				  showToast(`🎆 Giorno ${index + 1} completato! ${scoreText} punti`, 'success');
+				  
+				} else {
+				  // Risposta sbagliata
+				  entry.score = entry.score - 1;
+				  
+				  // BUG FIX #2: Aggiungi alla lista delle risposte sbagliate
+				  setWrongAnswers(prev => ({
+					...prev,
+					[index]: [...(prev[index] || []), choice]
+				  }));
+				  
+				  console.log(`❌ RISPOSTA SBAGLIATA Giorno ${index + 1}:`, {
+					risposta_data: choice,
+					risposta_corretta: correct,
+					punti_rimasti: entry.score,
+					tentativi_attuali: (totalAttempts[index] || 0) + 1
+				  });
+				  
+				  const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				  setFeedback(`❌ Risposta sbagliata! Punti rimasti: ${scoreDisplay}`);
+				}
 				
-					return { ...prev, [index]: entry };
-				});
+				return { ...prev, [index]: entry };
+			  });
 			}
 	  
 			// LOGICA INDIZI SEMPLIFICATA
 			function useHint(index) {
-				setProgress(prev => {
-					const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-					if (entry.solved || entry.usedHints >= 3) return prev;
-
-					entry.score = entry.score - 1;
-					entry.usedHints += 1;
-
-					const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
-					const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
-
-					// Aggiungi l'indizio alla lista di indizi mostrati
-					setUsedHintsDisplay(prev => ({
-						...prev,
-						[index]: [...(prev[index] || []), hint]
-					}));
-
-					setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
-
-					return { ...prev, [index]: entry };
-				});
+			  setProgress(prev => {
+			    const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+			    if (entry.solved || entry.usedHints >= 3) return prev;
+			    
+			    entry.score = entry.score - 1;
+			    entry.usedHints += 1;
+			    
+			    const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
+			    const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+			    
+			    // Aggiungi l'indizio alla lista di indizi mostrati
+			    setUsedHintsDisplay(prev => ({
+			      ...prev,
+			      [index]: [...(prev[index] || []), hint]
+			    }));
+			    
+			    setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
+			    
+			    return { ...prev, [index]: entry };
+			  });
 			}
 	  
 			// Loading screen semplificato
 			if (!initialized) {   
-				return React.createElement('div', { className: 'text-center py-20' }, 
-					React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
-					React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
-				);
+			  return React.createElement('div', { className: 'text-center py-20' }, 
+				React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
+				React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
+			  );
 			}
 			
 			console.log('✅ App completamente caricata, rendering calendario con maxDay:', maxDay);
 	  
 			return React.createElement(
-				React.Fragment,
-				null,
+			  React.Fragment,
+			  null,
 			  
-				// Banner informativo semplificato
-				React.createElement(
-					"div",
-					{ className: "info-banner mb-4 p-4 bg-gradient-to-r from-blue-900 to-green-900 bg-opacity-70 rounded-xl border-2 border-blue-400 border-opacity-50" },
-					React.createElement("div", { className: "flex items-center gap-3 text-blue-100" },
-						React.createElement("span", { className: "text-2xl" }, "💡"),
-						React.createElement("div", { className: "flex-1" },
-							React.createElement("p", { className: "text-base font-semibold mb-1" }, 
-							"I tuoi progressi vengono salvati automaticamente in questa sessione."
-							),
-							React.createElement("p", { className: "text-sm opacity-90" }, 
-								"I progressi sono salvati in memoria durante questa sessione. Sistema semplificato senza login."
-							)
-						)
+			  // Banner informativo semplificato
+			  React.createElement(
+				"div",
+				{ className: "info-banner mb-4 p-4 bg-gradient-to-r from-blue-900 to-green-900 bg-opacity-70 rounded-xl border-2 border-blue-400 border-opacity-50" },
+				React.createElement("div", { className: "flex items-center gap-3 text-blue-100" },
+				  React.createElement("span", { className: "text-2xl" }, "💡"),
+				  React.createElement("div", { className: "flex-1" },
+					React.createElement("p", { className: "text-base font-semibold mb-1" }, 
+					  "I tuoi progressi vengono salvati automaticamente in questa sessione."
+					),
+					React.createElement("p", { className: "text-sm opacity-90" }, 
+					  "I progressi sono salvati in memoria durante questa sessione. Sistema semplificato senza login."
 					)
-				),
+				  )
+				)
+			  ),
 			  
-				// Messaggio di stato del calendario
-				React.createElement(
-					"div",
-					{ className: "mb-6 p-4 bg-blue-900 bg-opacity-50 rounded-xl border border-blue-400" },
-					React.createElement("h3", { className: "text-lg font-bold text-blue-200 mb-2" }, "🏆 Stato del Calendario"),
-					React.createElement("p", { className: "text-blue-100" }, 
-					maxDay > 0 
+			  // Messaggio di stato del calendario
+			  React.createElement(
+				"div",
+				{ className: "mb-6 p-4 bg-blue-900 bg-opacity-50 rounded-xl border border-blue-400" },
+				React.createElement("h3", { className: "text-lg font-bold text-blue-200 mb-2" }, "🏆 Stato del Calendario"),
+				React.createElement("p", { className: "text-blue-100" }, 
+				  maxDay > 0 
 					? `✨ Hai accesso ai primi ${maxDay} giorni! Clicca su un giorno per iniziare la sfida.`
 					: "🔒 Tutti i giorni sono ancora bloccati. Torna a dicembre per iniziare!"
-					),
-					React.createElement("p", { className: "text-blue-200 text-sm mt-1" }, 
-						`📅 Data corrente: ${today.toLocaleDateString('it-IT')} | Modalità: ${currentMonth < 11 ? 'Testing Pre-Dicembre' : currentMonth === 11 ? 'Dicembre Ufficiale' : 'Post-Dicembre'}`
-					)
 				),
+				React.createElement("p", { className: "text-blue-200 text-sm mt-1" }, 
+				  `📅 Data corrente: ${today.toLocaleDateString('it-IT')} | Modalità: ${currentMonth < 11 ? 'Testing Pre-Dicembre' : currentMonth === 11 ? 'Dicembre Ufficiale' : 'Post-Dicembre'}`
+				)
+			  ),
 			  
-				// Griglia giorni con layout migliorato
-				React.createElement(
-					"div",
-					{ 
-						id: "calendarGrid",
-						className: "w-full"
-					},
+			  // Griglia giorni con layout migliorato
+			  React.createElement(
+				"div",
+				{ 
+				  id: "calendarGrid",
+				  className: "w-full"
+				},
  
-					FULL_CONSTELLATIONS.map((c, i) => {
-						const index = i + 1;
-						const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
-						// Controllo se il giorno è bloccato:
-						// 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
-						// 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)   																		   
-						const dayNotYetAvailable = index > maxDay;
-						const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
-						const locked = dayNotYetAvailable || previousDayNotCompleted;
+				FULL_CONSTELLATIONS.map((c, i) => {
+				  const index = i + 1;
+				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				  // Controllo se il giorno è bloccato:
+				  // 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
+				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)   																		   
+				  const dayNotYetAvailable = index > maxDay;
+				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				  const locked = dayNotYetAvailable || previousDayNotCompleted;
 	
-						// Debug per ogni giorno
-						if (i < 10) { // Solo primi 10 giorni per evitare spam
-							console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
-						}
+				  // Debug per ogni giorno
+				  if (i < 10) { // Solo primi 10 giorni per evitare spam
+					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
+				  }
 	  
-						function openModal() {
-							if (!locked) {
-								setActiveModal(i);
-								setFeedback("");
-
-								// BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
-								if (!shuffledOptions[i]) {
-									const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
-									setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
-									console.log(`🎲 Opzioni mescolate per giorno ${i + 1}:`, mixed);
-								}
-							}
-						}
+				  function openModal() {
+					if (!locked) {
+					  setActiveModal(i);
+					  setFeedback("");
+					  
+					  // BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
+					  if (!shuffledOptions[i]) {
+						const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
+						setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
+						console.log(`🎲 Opzioni mescolate per giorno ${i + 1}:`, mixed);
+					  }
+					}
+				  }
 	  
-						return React.createElement(
-							"div",
-							{
-								key: i,
-								className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`,
-								onClick: openModal,
-								'data-day': index
-							},
-							React.createElement("h2", null, `Giorno ${index}`),
-							React.createElement("div", { className: "day-icon" }, 
-								locked ? "🔒" : entry.solved ? "🎆" : "✨"
-							),
-							React.createElement("div", { className: "day-status" },
-								locked 
-								? `Bloccato fino al ${index} dicembre`
-								: entry.solved 
-								? (() => {
-									const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
-									const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`;
-									return `Completato! ⭐ ${displayScore}`;
-								})()
-								: "🔹 Clicca per iniziare!"
-							)
-						);
-					})		  
-				),
+				  return React.createElement(
+					"div",
+					{
+					  key: i,
+					  className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`,
+					  onClick: openModal,
+					  'data-day': index
+					},
+					React.createElement("h2", null, `Giorno ${index}`),
+					React.createElement("div", { className: "day-icon" }, 
+					  locked ? "🔒" : entry.solved ? "🎆" : "✨"
+					),
+					React.createElement("div", { className: "day-status" },
+					  locked 
+						? `Bloccato fino al ${index} dicembre`
+						: entry.solved 
+						  ? (() => {
+							  const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
+							  const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`;
+							  return `Completato! ⭐ ${displayScore}`;
+							})()
+						  : "🔹 Clicca per iniziare!"
+					)
+				  );
+				})		  
+			  ),
 
 			  // ========================================
 			  // RENDERING TEST PERIODICI
