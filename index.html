@@ -1114,9 +1114,14 @@ function updateNotificationVisibility() {
 updateNotificationVisibility();
 
 
+// 🆕 NUOVO: Controlla la notifica quando la pagina carica
+console.log('✅ Esecuzione init: updateNotificationVisibility()');
+updateNotificationVisibility();
+
 // ===== EVENTO: Click sul gufo =====
 owlButton.addEventListener('click', function() {
   console.log('🦉 Click gufo - Aprendo la casella di posta');
+
   
   // Verifica che PERIODIC_MESSAGES esista
   console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
