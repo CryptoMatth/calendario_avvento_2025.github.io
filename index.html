@@ -1110,6 +1110,10 @@ owlButton.addEventListener('click', function() {
   }
   
   const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+	// Controlla quanti messaggi rimangono non letti
+const totalMessages = messages.length;
+const unreadMessages = messages.filter(msg => !readMessages.includes(msg.id)).length;
+
   const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
   
   const messages = [];
@@ -1476,11 +1480,27 @@ img.addEventListener('click', function(e) {
   container.appendChild(messagesList);
   mailboxModal.appendChild(container);
   
-  mailboxModal.onclick = (e) => {
-    if (e.target === mailboxModal) {
-      mailboxModal.remove();
+mailboxModal.onclick = (e) => {
+  if (e.target === mailboxModal) {
+    // Controlla quanti messaggi rimangono non letti
+    const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+    const totalMessages = messages.length;
+    const unreadMessages = messages.filter(msg => !readMessages.includes(msg.id)).length;
+    
+    const owlNotification = document.getElementById('owlNotification');
+    
+    // Se non ci sono più messaggi non letti, nascondi la notifica
+    if (unreadMessages === 0 && owlNotification) {
+      owlNotification.classList.add('hidden');
+    } else if (unreadMessages > 0 && owlNotification) {
+      // Se rimangono messaggi, mantieni la notifica visibile
+      owlNotification.classList.remove('hidden');
     }
-  };
+    
+    mailboxModal.remove();
+  }
+}
+
   
   const handleEsc = (e) => {
     if (e.key === 'Escape') {
@@ -1974,14 +1994,28 @@ img.addEventListener('click', function(e) {
 			    function hasBeenRead() {
 			        return localStorage.getItem(ENVELOPE_VIEWED_KEY) === 'true';
 			    }
+
+								// NUOVA FUNZIONE - Controlla i messaggi non letti
+function checkUnreadMessages() {
+    const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+    const totalMessages = 3; // Numero totale messaggi (Benvenuto + milestone)
+    const unreadCount = totalMessages - readMessages.length;
+    
+    const owlNotification = document.getElementById('owlNotification');
+    
+    if (unreadCount > 0 && owlNotification) {
+        owlNotification.classList.remove('hidden');
+    } else if (owlNotification) {
+        owlNotification.classList.add('hidden');
+    }
+}
 			    
-			    // Al caricamento: se già letto, nascondi notifica
-			    if (hasBeenRead()) {
-			        const owlNotification = document.getElementById('owlNotification');
-			        if (owlNotification) {
-			            owlNotification.classList.add('hidden');
-			        }
-			    }
+// Al caricamento: controlla se ci sono messaggi non letti
+checkUnreadMessages();
+
+
+
+
 			    
 			    // Questo è tutto. Il resto è gestito dalla nuova logica della busta
 			    // nel primo click del gufo che crea la envelope-modal
