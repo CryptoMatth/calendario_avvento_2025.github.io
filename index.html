@@ -721,7 +721,7 @@
 				<h2 class="modal-title">Benvenuto al Calendario dell'Avvento</h2>
 				
 				<!-- Immagine di Sherlock -->
-				<img id="owlModalImage" src="/foto/Sherlock_natalizio.png" alt="Calendario dell'Avvento" class="modal-image" style="cursor: pointer;">
+				<img id="owlModalImage" src="foto/Sherlock_natalizio.png" alt="Calendario dell'Avvento" class="modal-image" style="cursor: pointer;">
 				
 				<!-- Testo messaggio -->
 				<div class="modal-text">
@@ -956,14 +956,14 @@
 			    title: '🎉 Mezzo Cammino!',
 			    subtitle: 'Fantastico! Hai completato il primo quinto del calendario!',
 			    description: 'Fantastico! Hai completato il primo quinto del calendario!\n\nHai scoperto 5 costellazioni e risponduto correttamente a tutte le domande!\n\nContinua così! Il prossimo traguardo è il giorno 10!\n\nBuon divertimento! 🌟',
-			    image: '/foto/Sherlock_natalizio.png'
+			    image: 'foto/Sherlock_natalizio.png'
 			  },
 			  day10_milestone: {
 			    id: 'day10_milestone',
 			    title: '🏆 Primo Test Completato!',
 			    subtitle: 'Complimenti! Hai superato il primo test!',
 			    description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
-			    image: '/foto/Sherlock_natalizio.png'
+			    image: 'foto/Sherlock_natalizio.png'
 			  }
 			};
 
@@ -1121,7 +1121,7 @@ owlButton.addEventListener('click', function() {
     icon: '📬',
     subject: 'Benvenuto al Calendario',
     content: 'Benvenuto al Calendario dell\'Avvento!',
-    image: '/foto/Sherlock_natalizio.png',
+    image: 'fotoSherlocknatalizio.png',
     fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
   };
   
@@ -1136,7 +1136,7 @@ owlButton.addEventListener('click', function() {
       icon: '📬',
       subject: PERIODIC_MESSAGES.day5milestone.title || 'Mezzo Cammino!',
       content: PERIODIC_MESSAGES.day5milestone.subtitle || 'Fantastico!',
-      image: PERIODIC_MESSAGES.day5milestone.image || '/foto/Sherlock_natalizio.png',
+      image: PERIODIC_MESSAGES.day5milestone.image || 'fotoSherlocknatalizio.png',
       fullDescription: PERIODIC_MESSAGES.day5milestone.description || 'Messaggio'
     });
     console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5milestone.title);
@@ -1152,7 +1152,7 @@ owlButton.addEventListener('click', function() {
       icon: '📬',
       subject: PERIODIC_MESSAGES.day10milestone.title || 'Primo Test Completato!',
       content: PERIODIC_MESSAGES.day10milestone.subtitle || 'Complimenti!',
-      image: PERIODIC_MESSAGES.day10milestone.image || '/foto/Sherlock_natalizio.png',
+      image: PERIODIC_MESSAGES.day10milestone.image || 'fotoSherlocknatalizio.png',
       fullDescription: PERIODIC_MESSAGES.day10milestone.description || 'Messaggio'
     });
     console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10milestone.title);
@@ -1307,80 +1307,75 @@ owlButton.addEventListener('click', function() {
       msgTitle.innerHTML = msg.subject;
       messageContent.appendChild(msgTitle);
       
-// IMMAGINE - IMPORTANTISSIMO
-if (msg.image) {
-  console.log('🖼️ Tentando di caricare immagine:', msg.image);
-  
-  const img = document.createElement('img');
-  img.src = msg.image;
-  img.alt = msg.subject;
-  img.style.width = '100%';
-  img.style.maxHeight = '400px';
-  img.style.objectFit = 'cover';
-  img.style.borderRadius = '10px';
-  img.style.marginBottom = '20px';
-  img.style.border = '2px solid #FFD700';
-  img.style.cursor = 'pointer';
-  
-  img.onerror = () => {
-    console.error('❌ ERRORE: Immagine non trovata:', msg.image);
-    img.style.display = 'none';
-  };
-  
-  img.onload = () => {
-    console.log('✅ SUCCESSO: Immagine caricata correttamente:', msg.image);
-  };
-  
-  img.onclick = (e) => {
-    e.stopPropagation();
-    
-    const fullscreenImg = document.createElement('div');
-    fullscreenImg.style.position = 'fixed';
-    fullscreenImg.style.top = '0';
-    fullscreenImg.style.left = '0';
-    fullscreenImg.style.width = '100%';
-    fullscreenImg.style.height = '100%';
-    fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
-    fullscreenImg.style.display = 'flex';
-    fullscreenImg.style.alignItems = 'center';
-    fullscreenImg.style.justifyContent = 'center';
-    fullscreenImg.style.zIndex = '9999';
-    
-    const largeImg = document.createElement('img');
-    largeImg.src = msg.image;
-    largeImg.alt = msg.subject;
-    largeImg.style.maxWidth = '90vw';
-    largeImg.style.maxHeight = '90vh';
-    largeImg.style.objectFit = 'contain';
-    
-    const closeLargeImg = document.createElement('button');
-    closeLargeImg.innerHTML = '×';
-    closeLargeImg.style.position = 'absolute';
-    closeLargeImg.style.top = '20px';
-    closeLargeImg.style.right = '20px';
-    closeLargeImg.style.fontSize = '2.5rem';
-    closeLargeImg.style.color = 'white';
-    closeLargeImg.style.background = 'none';
-    closeLargeImg.style.border = 'none';
-    closeLargeImg.style.cursor = 'pointer';
-    
-    closeLargeImg.onclick = () => fullscreenImg.remove();
-    fullscreenImg.onclick = () => fullscreenImg.remove();
-    
-    fullscreenImg.appendChild(closeLargeImg);
-    fullscreenImg.appendChild(largeImg);
-    document.body.appendChild(fullscreenImg);
-  };
-  
-  // ✅✅✅ QUESTA RIGA È FONDAMENTALE - AGGIUNGE L'IMMAGINE AL DOM ✅✅✅
-  messageContent.appendChild(img);
-  console.log('✅ Immagine aggiunta al DOM');
-} else {
-  console.warn('⚠️ ATTENZIONE: msg.image è vuoto o undefined per il messaggio:', msg.id);
-}
-
-
-
+      // IMMAGINE - IMPORTANTE
+      if (msg.image) {
+        console.log('🖼️ Caricamento immagine:', msg.image);
+        
+        const img = document.createElement('img');
+        img.src = msg.image;
+        img.alt = msg.subject;
+        img.style.width = '100%';
+        img.style.maxHeight = '400px';
+        img.style.objectFit = 'cover';
+        img.style.borderRadius = '10px';
+        img.style.marginBottom = '20px';
+        img.style.border = '2px solid #FFD700';
+        img.style.cursor = 'pointer';
+        
+        img.onerror = () => {
+          console.error('❌ Immagine non trovata:', msg.image);
+          img.style.display = 'none';
+        };
+        
+        img.onload = () => {
+          console.log('✅ Immagine caricata:', msg.image);
+        };
+        
+        img.onclick = (e) => {
+          e.stopPropagation();
+          
+          const fullscreenImg = document.createElement('div');
+          fullscreenImg.style.position = 'fixed';
+          fullscreenImg.style.top = '0';
+          fullscreenImg.style.left = '0';
+          fullscreenImg.style.width = '100%';
+          fullscreenImg.style.height = '100%';
+          fullscreenImg.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+          fullscreenImg.style.display = 'flex';
+          fullscreenImg.style.alignItems = 'center';
+          fullscreenImg.style.justifyContent = 'center';
+          fullscreenImg.style.zIndex = '9999';
+          
+          const largeImg = document.createElement('img');
+          largeImg.src = msg.image;
+          largeImg.alt = msg.subject;
+          largeImg.style.maxWidth = '90vw';
+          largeImg.style.maxHeight = '90vh';
+          largeImg.style.objectFit = 'contain';
+          
+          const closeLargeImg = document.createElement('button');
+          closeLargeImg.innerHTML = '×';
+          closeLargeImg.style.position = 'absolute';
+          closeLargeImg.style.top = '20px';
+          closeLargeImg.style.right = '20px';
+          closeLargeImg.style.fontSize = '2.5rem';
+          closeLargeImg.style.color = 'white';
+          closeLargeImg.style.background = 'none';
+          closeLargeImg.style.border = 'none';
+          closeLargeImg.style.cursor = 'pointer';
+          
+          closeLargeImg.onclick = () => fullscreenImg.remove();
+          fullscreenImg.onclick = () => fullscreenImg.remove();
+          
+          fullscreenImg.appendChild(closeLargeImg);
+          fullscreenImg.appendChild(largeImg);
+          document.body.appendChild(fullscreenImg);
+        };
+        
+        messageContent.appendChild(img);
+      } else {
+        console.warn('⚠️ Nessuna immagine per:', msg.id);
+      }
       
       // TESTO
       const msgText = document.createElement('div');
