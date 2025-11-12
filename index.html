@@ -124,27 +124,6 @@
 				const closeModal = document.getElementById('closeModal');
 				const owlNotification = document.getElementById('owlNotification');
 			
-			  // 🆕 NUOVO: Funzione per mostrare il contenuto del messaggio periodico
-			  function showPeriodicMessageContent(messageData) {
-			    // Usa il modal principale ma modifica il contenuto
-			    const modal = document.getElementById('gameModal');
-			    const content = modal.querySelector('.modal-content');
-			    
-			    // Modifica il contenuto
-			    const title = content.querySelector('.modal-title');
-			    const image = content.querySelector('.modal-image');
-			    const text = content.querySelector('.modal-text');
-			    
-			    title.innerHTML = messageData.title;
-			    image.src = messageData.image;
-			    text.innerHTML = `<p style="white-space: pre-line; line-height: 1.8;">${messageData.description}</p>`;
-			    
-			    // Apri il modal
-			    modal.style.display = 'flex';
-			    document.body.style.overflow = 'hidden';
-			  }
-
-			
 			  // Chiave localStorage per tracciare se il messaggio è stato letto
 			  const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
 			
