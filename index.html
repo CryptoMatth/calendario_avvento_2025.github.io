@@ -973,15 +973,18 @@
 			
 											 
 			function createTestQuestions(dayRange, constellations) {
+			  return constellations.map((constellation, index) => {
 				const shuffledOptions = shuffleArray(constellation.options);
-				return constellations.map((constellation, index) => ({
-					dayNumber: dayRange[index],
-					constellation: constellation,
-					name: constellation.name,
-					options: shuffledOptions,
-					correctAnswer: constellation.name
-				}));
+				return {
+				  dayNumber: dayRange[index],
+				  constellation: constellation,
+				  name: constellation.name,
+				  options: shuffledOptions,
+				  correctAnswer: constellation.name
+				};
+			  });
 			}
+
 			
 								  
 			const PERIODIC_TESTS = [
