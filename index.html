@@ -104,14 +104,14 @@
 				},
 				day30_milestone: {
 					id: 'day30_milestone',
-					title: '🏆 Primo Test Completato!',
-					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					title: 'Ci siamo quasi!',
+					description: 'C',
 					image: 'foto/Sherlock_natalizio.png'
 				},
 				day31_milestone: {
 					id: 'day31_milestone',
 					title: '🏆 Primo Test Completato!',
-					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					description: '',
 					image: 'foto/Sherlock_natalizio.png'
 				},
 			};
@@ -1583,10 +1583,15 @@
 				  const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
 				  // Controllo se il giorno è bloccato:
 				  // 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
-				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)   																		   
+				  // 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)
+					const testDays = [5, 10, 15, 20, 25, 30];				  
 				  const dayNotYetAvailable = index > maxDay;
 				  const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
-				  const locked = dayNotYetAvailable || previousDayNotCompleted;
+				  // Controllo specifico per i giorni successivi ai test
+					const isBlockedByTest = testDays.some(testDay => {
+					  return index === testDay + 1 && !progress[testDay - 1]?.solved;
+					});
+				  const locked = dayNotYetAvailable || previousDayNotCompleted || isBlockedByTest;
 	
 				  // Debug per ogni giorno
 				  if (i < 10) { // Solo primi 10 giorni per evitare spam
