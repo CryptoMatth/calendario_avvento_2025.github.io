@@ -46,6 +46,8 @@
 	  
 		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+		<script src="functions.js"></script>
+
 		
 		<script>
 			// Stelle scintillanti
@@ -71,106 +73,56 @@
 
 			// ===== DATI DEI MESSAGGI PERIODICI =====
 			const PERIODIC_MESSAGES = {
-			  day5_milestone: {
-			    id: 'day5_milestone',
-			    title: '🎉 Mezzo Cammino!',
-			    subtitle: 'Fantastico! Hai completato il primo quinto del calendario!',
-			    description: 'Fantastico! Hai completato il primo quinto del calendario!\n\nHai scoperto 5 costellazioni e risponduto correttamente a tutte le domande!\n\nContinua così! Il prossimo traguardo è il giorno 10!\n\nBuon divertimento! 🌟',
-			    image: 'foto/Sherlock_natalizio.png'
-			  },
-			  day10_milestone: {
-			    id: 'day10_milestone',
-			    title: '🏆 Primo Test Completato!',
-			    subtitle: 'Complimenti! Hai superato il primo test!',
-			    description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
-			    image: 'foto/Sherlock_natalizio.png'
-			  }
+				day5_milestone: {
+					id: 'day5_milestone',
+					title: '🎉 Mezzo Cammino!',
+					description: 'Fantastico! Hai completato il primo quinto del calendario!\n\nHai scoperto 5 costellazioni e risponduto correttamente a tutte le domande!\n\nContinua così! Il prossimo traguardo è il giorno 10!\n\nBuon divertimento! 🌟',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day10_milestone: {
+					id: 'day10_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day15_milestone: {
+					id: 'day15_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day20_milestone: {
+					id: 'day20_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day25_milestone: {
+					id: 'day25_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day30_milestone: {
+					id: 'day30_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
+				day31_milestone: {
+					id: 'day31_milestone',
+					title: '🏆 Primo Test Completato!',
+					description: 'Complimenti! Hai superato il primo test!\n\nStai diventando un vero esperto di costellazioni.\n\nContinua a scoprire nuove stelle e nuovi misteri del cielo notturno!\n\nMancano solo 15 giorni al Natale! 🎄',
+					image: 'foto/Sherlock_natalizio.png'
+				},
 			};
 
 			// ===== GESTIONE MODAL GUFO CON BOX BUSTA INTERMEDIA =====
 			(function() {
-			  const owlButton = document.getElementById('owlButton');
-			  const gameModal = document.getElementById('gameModal');
-			  const closeModal = document.getElementById('closeModal');
-			  const owlNotification = document.getElementById('owlNotification');
-
-				  // 🆕 NUOVO: Funzione per mostrare messaggi periodici
-			  function showPeriodicMessage(messageData, messageId) {
-			    const isRead = localStorage.getItem(`periodic_${messageId}`) === 'true';
-			    
-			    // Crea il modal della busta
-			    const envelopeModal = document.createElement('div');
-			    envelopeModal.className = 'envelope-modal';
-			    envelopeModal.id = 'periodicEnvelopeModal';
-			    
-			    const envelopeBox = document.createElement('div');
-			    envelopeBox.className = 'envelope-box';
-			    
-			    // Pulsante chiudi
-			    const closeBtn = document.createElement('div');
-			    closeBtn.className = 'envelope-close';
-			    closeBtn.innerHTML = '×';
-			    closeBtn.onclick = (e) => {
-			      e.stopPropagation();
-			      envelopeModal.remove();
-			    };
-			    
-			    // Icona busta
-			    const envelopeIcon = document.createElement('div');
-			    envelopeIcon.className = 'envelope-icon';
-			    envelopeIcon.innerHTML = isRead ? '📭' : '📬';
-			    
-			    // Titolo
-			    const envelopeTitle = document.createElement('div');
-			    envelopeTitle.className = 'envelope-text';
-			    envelopeTitle.innerHTML = messageData.title;
-			    
-			    // Sottotitolo
-			    const envelopeSubtitle = document.createElement('div');
-			    envelopeSubtitle.style.color = '#aaa';
-			    envelopeSubtitle.style.fontSize = '0.9rem';
-			    envelopeSubtitle.innerHTML = messageData.subtitle;
-			    
-			    // Pulsante
-			    const button = document.createElement('button');
-			    button.className = 'envelope-button';
-			    button.innerHTML = 'Leggi il Messaggio';
-			    button.onclick = (e) => {
-			      e.stopPropagation();
-			      localStorage.setItem(`periodic_${messageId}`, 'true');
-			      envelopeModal.remove();
-			      
-			      // Mostra il modal principale con il messaggio
-			      showPeriodicMessageContent(messageData);
-			    };
-			    
-			    // Assembla
-			    envelopeBox.appendChild(closeBtn);
-			    envelopeBox.appendChild(envelopeIcon);
-			    envelopeBox.appendChild(envelopeTitle);
-			    envelopeBox.appendChild(envelopeSubtitle);
-			    envelopeBox.appendChild(button);
-			    
-			    envelopeModal.appendChild(envelopeBox);
-			    
-			    // Chiudi cliccando fuori
-			    envelopeModal.onclick = (e) => {
-			      if (e.target === envelopeModal) {
-			        envelopeModal.remove();
-			      }
-			    };
-			    
-			    // Chiudi con ESC
-			    const handleEsc = (e) => {
-			      if (e.key === 'Escape') {
-			        envelopeModal.remove();
-			        document.removeEventListener('keydown', handleEsc);
-			      }
-			    };
-			    document.addEventListener('keydown', handleEsc);
-			    
-			    document.body.appendChild(envelopeModal);
-			  }
+				const owlButton = document.getElementById('owlButton');
+				const gameModal = document.getElementById('gameModal');
+				const closeModal = document.getElementById('closeModal');
+				const owlNotification = document.getElementById('owlNotification');
 			
 			  // 🆕 NUOVO: Funzione per mostrare il contenuto del messaggio periodico
 			  function showPeriodicMessageContent(messageData) {
