@@ -984,6 +984,27 @@
 				};
 			  });
 			}
+			
+			function createDetailedTestQuestions(dayRange, constellations) {
+			  return constellations.map((constellation, index) => {
+				// Esempio di domanda più particolare usando descrizione o hint
+				const questionText = `Quale costellazione corrisponde a questa descrizione: "${constellation.description}"?`;
+
+				// Opzioni mescolate
+				const shuffledOptions = shuffleArray(constellation.options);
+
+				return {
+				  dayNumber: dayRange[index],
+				  constellation,
+				  name: constellation.name,
+				  questionText: questionText,
+				  options: shuffledOptions,
+				  correctAnswer: constellation.name,
+				  hints: constellation.hints // opzionale, può servire per suggerimenti
+				};
+			  });
+			}
+
 
 			
 								  
@@ -992,7 +1013,7 @@
 					testNumber: 1,
 					dayRange: [1, 2, 3, 4, 5],
 					daysBetween: "Tra il 5 e il 6 dicembre",
-					questions: createTestQuestions([1, 2, 3, 4, 5], FULL_CONSTELLATIONS.slice(0, 5))
+					questions: createDetailedTestQuestions([1, 2, 3, 4, 5], FULL_CONSTELLATIONS.slice(0, 5))
 				},
 				{
 					testNumber: 2,
