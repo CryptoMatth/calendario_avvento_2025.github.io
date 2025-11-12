@@ -168,6 +168,21 @@
 					if (savedProgress[9]?.solved) {
 						potentialMessages.push('day10_milestone');  // Giorno 10 completato
 					}
+					if (savedProgress[14]?.solved) {
+						potentialMessages.push('day15_milestone');  // Giorno 10 completato
+					}
+					if (savedProgress[19]?.solved) {
+						potentialMessages.push('day20_milestone');  // Giorno 10 completato
+					}
+					if (savedProgress[24]?.solved) {
+						potentialMessages.push('day25_milestone');  // Giorno 10 completato
+					}
+					if (savedProgress[29]?.solved) {
+						potentialMessages.push('day30_milestone');  // Giorno 10 completato
+					}
+					if (savedProgress[30]?.solved) {
+						potentialMessages.push('day31_milestone');  // Giorno 10 completato
+					}
 				  
 					// Ora filtra solo i messaggi che REALMENTE ESISTONO
 					const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
@@ -190,122 +205,113 @@
 				}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
 
 
-// ===== EVENTO: Click sul gufo =====
-owlButton.addEventListener('click', function() {
-  console.log('🦉 Click gufo - Aprendo la casella di posta');
+				// ===== EVENTO: Click sul gufo =====
+				owlButton.addEventListener('click', function() {
+					console.log('🦉 Click gufo - Aprendo la casella di posta');
 
+					// Verifica che PERIODIC_MESSAGES esista
+					if (typeof PERIODIC_MESSAGES === 'undefined') {
+						console.error('❌ PERIODIC_MESSAGES non è definito!');
+						return;
+					}
+  
+					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+					const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+  
+					const messages = [];
+  
+					// MESSAGGIO BENVENUTO - SEMPLICE
+					const welcomeMsg = {
+						id: 'welcome',
+						triggerDay: null,
+						icon: '📬',
+						subject: 'Benvenuto al Calendario',
+						content: 'Benvenuto al Calendario dell\'Avvento!',
+						image: 'foto/Sherlock_natalizio.png',
+						fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
+					};
+  
+					// MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
+					const milestoneMessages = [];
+  
+					// DAY 5
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5_milestone) {  // ← CAMBIA a day5_MILESTONE
+						milestoneMessages.push({
+							id: 'day5_milestone',
+							triggerDay: 5,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day5_milestone.title || 'Mezzo Cammino!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day5_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day5_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();
+  
+					// DAY 10
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a day10_MILESTONE
+						milestoneMessages.push({
+							id: 'day10_milestone',
+							triggerDay: 10,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day10_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day10_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day10_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day10_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();
+  
+					// Aggiungi sempre il benvenuto
+					messages.push({
+						...welcomeMsg,
+						isOpen: readMessages.includes('welcome'),
+						icon: readMessages.includes('welcome') ? '📭' : '📬'
+					});
+  
+					// Aggiungi milestone se il giorno è completato
+					milestoneMessages.forEach(msg => {
+						const dayEntry = savedProgress[msg.triggerDay - 1];
+						if (dayEntry && dayEntry.solved) {
+							messages.unshift({
+								...msg,
+								isOpen: readMessages.includes(msg.id),
+								icon: readMessages.includes(msg.id) ? '📭' : '📬'
+							});
+							console.log('✅ Messaggio milestone aggiunto:', msg.subject);
+						}
+					});
 
-  
-  // Verifica che PERIODIC_MESSAGES esista
-  console.log('📬 PERIODIC_MESSAGES disponibile:', typeof PERIODIC_MESSAGES);
-  if (typeof PERIODIC_MESSAGES === 'undefined') {
-    console.error('❌ PERIODIC_MESSAGES non è definito!');
-    return;
-  }
-  
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
-  
-  const messages = [];
-  
-  // MESSAGGIO BENVENUTO - SEMPLICE
-  const welcomeMsg = {
-    id: 'welcome',
-    triggerDay: null,
-    icon: '📬',
-    subject: 'Benvenuto al Calendario',
-    content: 'Benvenuto al Calendario dell\'Avvento!',
-    image: 'foto/Sherlock_natalizio.png',
-    fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
-  };
-  
-  // MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
-  const milestoneMessages = [];
-  
-// DAY 5
-if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day5_milestone) {  // ← CAMBIA a day5_MILESTONE
-  milestoneMessages.push({
-    id: 'day5_milestone',
-    triggerDay: 5,
-    icon: '📬',
-    subject: PERIODIC_MESSAGES.day5_milestone.title || 'Mezzo Cammino!',  // ← CAMBIA
-    content: PERIODIC_MESSAGES.day5_milestone.subtitle || 'Fantastico!',  // ← CAMBIA
-    image: PERIODIC_MESSAGES.day5_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
-    fullDescription: PERIODIC_MESSAGES.day5_milestone.description || 'Messaggio'  // ← CAMBIA
-  });
-  console.log('✅ DAY5 caricato:', PERIODIC_MESSAGES.day5_milestone.title);  // ← CAMBIA
-} else {
-  console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
-}
-	updateNotificationVisibility();
+					updateNotificationVisibility();
 
+					console.log('📋 Messaggi totali:', messages.length, messages);
+  
+					// ===== CREA MODAL CASELLA =====
+					const mailboxModal = document.createElement('div');
+					mailboxModal.className = 'mailbox-modal';
 
-  
-// DAY 10
-if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a day10_MILESTONE
-  milestoneMessages.push({
-    id: 'day10_milestone',
-    triggerDay: 10,
-    icon: '📬',
-    subject: PERIODIC_MESSAGES.day10_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
-    content: PERIODIC_MESSAGES.day10_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
-    image: PERIODIC_MESSAGES.day10_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
-    fullDescription: PERIODIC_MESSAGES.day10_milestone.description || 'Messaggio'  // ← CAMBIA
-  });
-  console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day10_milestone.title);  // ← CAMBIA
-} else {
-  console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
-}
-	updateNotificationVisibility();
+					const container = document.createElement('div');
+					container.className = 'mailbox-container';
 
+					const closeBtn = document.createElement('button');
+					closeBtn.className = 'mailbox-close-btn';
+					closeBtn.innerHTML = '×';
+					closeBtn.onclick = (e) => {
+						e.stopPropagation();
+						mailboxModal.remove();
+					};
 
-  
-  // Aggiungi sempre il benvenuto
-  messages.push({
-    ...welcomeMsg,
-    isOpen: readMessages.includes('welcome'),
-    icon: readMessages.includes('welcome') ? '📭' : '📬'
-  });
-  
-  // Aggiungi milestone se il giorno è completato
-  milestoneMessages.forEach(msg => {
-    const dayEntry = savedProgress[msg.triggerDay - 1];
-    if (dayEntry && dayEntry.solved) {
-      messages.unshift({
-        ...msg,
-        isOpen: readMessages.includes(msg.id),
-        icon: readMessages.includes(msg.id) ? '📭' : '📬'
-      });
-      console.log('✅ Messaggio milestone aggiunto:', msg.subject);
-    }
-  });
+					const title = document.createElement('h2');
+					title.className = 'mailbox-title';
+					title.innerHTML = '📬 Casella di Posta';
 
-	updateNotificationVisibility();
-
-  
-  console.log('📋 Messaggi totali:', messages.length, messages);
-  
-  // ===== CREA MODAL CASELLA =====
-  const mailboxModal = document.createElement('div');
-  mailboxModal.className = 'mailbox-modal';
-  
-  const container = document.createElement('div');
-  container.className = 'mailbox-container';
-  
-  const closeBtn = document.createElement('button');
-  closeBtn.className = 'mailbox-close-btn';
-  closeBtn.innerHTML = '×';
-  closeBtn.onclick = (e) => {
-    e.stopPropagation();
-    mailboxModal.remove();
-  };
-  
-  const title = document.createElement('h2');
-  title.className = 'mailbox-title';
-  title.innerHTML = '📬 Casella di Posta';
-  
-  const messagesList = document.createElement('div');
-  messagesList.className = 'messages-list';
+					const messagesList = document.createElement('div');
+					messagesList.className = 'messages-list';
   
   messages.forEach((msg) => {
     const item = document.createElement('div');
