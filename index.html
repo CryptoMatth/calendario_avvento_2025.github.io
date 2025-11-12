@@ -105,7 +105,7 @@
 				day30_milestone: {
 					id: 'day30_milestone',
 					title: 'Ci siamo quasi!',
-					description: 'C',
+					description: 'Conoscendoti ',
 					image: 'foto/Sherlock_natalizio.png'
 				},
 				day31_milestone: {
@@ -973,11 +973,12 @@
 			
 											 
 			function createTestQuestions(dayRange, constellations) {
+				const shuffledOptions = shuffleArray(constellation.options);
 				return constellations.map((constellation, index) => ({
 					dayNumber: dayRange[index],
 					constellation: constellation,
 					name: constellation.name,
-					options: constellation.options,
+					options: shuffledOptions,
 					correctAnswer: constellation.name
 				}));
 			}
