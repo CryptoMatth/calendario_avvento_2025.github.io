@@ -265,7 +265,93 @@
 						console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
 					updateNotificationVisibility();
-  
+					
+					// DAY 15
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day15_milestone) {  // ← CAMBIA a day15_milestone
+						milestoneMessages.push({
+							id: 'day15_milestone',
+							triggerDay: 15,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day15_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day15_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day15_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day15_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day15_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day15_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();
+					
+					// DAY 20
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day20_milestone) {  // ← CAMBIA a day20_milestone
+						milestoneMessages.push({
+							id: 'day20_milestone',
+							triggerDay: 20,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day20_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day20_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day20_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day20_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day20_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day20_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();		
+
+					// DAY 25
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day25_milestone) {  // ← CAMBIA a day25_milestone
+						milestoneMessages.push({
+							id: 'day25_milestone',
+							triggerDay: 25,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day25_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day25_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day25_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day25_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day25_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day25_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();
+
+					// DAY 30
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day30_milestone) {  // ← CAMBIA a day30_milestone
+						milestoneMessages.push({
+							id: 'day30_milestone',
+							triggerDay: 30,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day30_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day30_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day30_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day30_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day30_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day30_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();
+
+					// DAY 31
+					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day31_milestone) {  // ← CAMBIA a day31_milestone
+						milestoneMessages.push({
+							id: 'day31_milestone',
+							triggerDay: 31,
+							icon: '📬',
+							subject: PERIODIC_MESSAGES.day31_milestone.title || 'Primo Test Completato!',  // ← CAMBIA
+							content: PERIODIC_MESSAGES.day31_milestone.subtitle || 'Complimenti!',  // ← CAMBIA
+							image: PERIODIC_MESSAGES.day31_milestone.image || 'foto/Sherlock_natalizio.png',  // ← CAMBIA
+							fullDescription: PERIODIC_MESSAGES.day31_milestone.description || 'Messaggio'  // ← CAMBIA
+						});
+						console.log('✅ DAY10 caricato:', PERIODIC_MESSAGES.day31_milestone.title);  // ← CAMBIA
+					} else {
+						console.warn('⚠️ day31_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
+					}
+					updateNotificationVisibility();					
+
+					
 					// Aggiungi sempre il benvenuto
 					messages.push({
 						...welcomeMsg,
