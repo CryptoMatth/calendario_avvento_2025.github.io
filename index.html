@@ -46,7 +46,6 @@
 	  
 		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-		<script src="functions.js"></script>
 
 		
 		<script>
@@ -228,7 +227,7 @@
 						subject: 'Benvenuto al Calendario',
 						content: 'Benvenuto al Calendario dell\'Avvento!',
 						image: 'foto/Sherlock_natalizio.png',
-						fullDescription: '<p style="margin-bottom: 15px;"><strong>Come si gioca</strong><br>Ogni giorno di dicembre fino a Natale, potrai aprire una nuova casella del calendario! Dietro ogni casella si nasconde una costellazione misteriosa da scoprire.</p>'
+						fullDescription: '<p style="margin-bottom: 15px;"><strong>Crocchette</strong><br>Ehilà, sono io! Ti mando anche una foto per mostrarti come sto.<br>Ho saputo che quello sciagurato del tuo ragazzo l\'anno scorso ha provato a farti un calendario dell\'avvento a tema costellazioni ma ha fallito miseramente. Ci penso io, dai.<br>Non cercare troppi bug per favore, non è semplice programmare con queste zampine al Polo Nord.<br>Buon divertimento, e buon calendario dell\'avvento!</p>'
 					};
   
 					// MESSAGGI MILESTONE - PRESI DIRETTAMENTE DA PERIODIC_MESSAGES
@@ -599,9 +598,7 @@
 					console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 				});
 			})();
-
-
-	  
+  
 			const { useState, useEffect } = React;
 	  
 			// ========================================
@@ -636,7 +633,6 @@
 	  
 			let totalGameScore = 0; // Punteggio totale in memoria
 			
-	  
 			// ========================================
 			// SALVATAGGIO SEMPLIFICATO - MEMORIA JAVASCRIPT
 			// ========================================
@@ -959,7 +955,7 @@
 			
 			function App() {
 			
-				const [initialized, setInitialized] = useState(false);
+			const [initialized, setInitialized] = useState(false);
 			// State per i test periodici
 			const [activeTest, setActiveTest] = useState(null);
 			const [testAnswers, setTestAnswers] = useState({});
