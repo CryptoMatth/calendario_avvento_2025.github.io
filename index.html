@@ -824,33 +824,6 @@ img.addEventListener('click', function(e) {
   console.log('📬 Casella di posta aperta con', messages.length, 'messaggi');
 });
 
-
-
-
-
-
-			
-			  // ===== CHIUSURA MODAL PRINCIPALE =====
-			  closeModal.addEventListener('click', function() {
-			    gameModal.style.display = 'none';
-			    document.body.style.overflow = 'auto';
-			  });
-			
-			  // Chiudi cliccando fuori
-			  gameModal.addEventListener('click', function(e) {
-			    if (e.target === gameModal) {
-			      gameModal.style.display = 'none';
-			      document.body.style.overflow = 'auto';
-			    }
-			  });
-			
-			  // Chiudi con ESC
-			  document.addEventListener('keydown', function(e) {
-			    if (e.key === 'Escape' && gameModal.style.display === 'flex') {
-			      gameModal.style.display = 'none';
-			      document.body.style.overflow = 'auto';
-			    }
-			  });
 			})();
 
 
