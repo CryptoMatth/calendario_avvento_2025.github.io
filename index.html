@@ -124,25 +124,14 @@
 				const closeModal = document.getElementById('closeModal');
 				const owlNotification = document.getElementById('owlNotification');
 			
-			  // Chiave localStorage per tracciare se il messaggio è stato letto
-			  const ENVELOPE_READ_KEY = 'owlEnvelopeRead';
-			
-			  // Funzione: Controlla se la busta è stata letta
-			  function isEnvelopeRead() {
-			    return localStorage.getItem(ENVELOPE_READ_KEY) === 'true';
-			  }
-			
-			  // Funzione: Segna busta come letta
-			  function markEnvelopeAsRead() {
-			    localStorage.setItem(ENVELOPE_READ_KEY, 'true');
-			  }
-			
-			  // Funzione: Nascondi notifica
-			  function hideNotification() {
-			    if (owlNotification) {
-			      owlNotification.classList.add('hidden');
-			    }
-			  }
+			/*
+				// Funzione: Nascondi notifica
+				function hideNotification() {
+					if (owlNotification) {
+						owlNotification.classList.add('hidden');
+					}
+				}
+				*/
 			
 // Controlla se ci sono messaggi non letti nella casella di posta
 function updateNotificationVisibility() {
