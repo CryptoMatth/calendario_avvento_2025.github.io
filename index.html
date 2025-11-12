@@ -124,76 +124,70 @@
 				const closeModal = document.getElementById('closeModal');
 				const owlNotification = document.getElementById('owlNotification');
 			
-			/*
 				// Funzione: Nascondi notifica
 				function hideNotification() {
 					if (owlNotification) {
 						owlNotification.classList.add('hidden');
 					}
 				}
-				*/
 			
-// Controlla se ci sono messaggi non letti nella casella di posta
-function updateNotificationVisibility() {
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const allMessages = ['welcome', 'day5_milestone', 'day10_milestone']; // Tutti i messaggi possibili
-  const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
-  
-  if (unreadMessages.length > 0) {
-    // Se ci sono messaggi non letti, mostra la notifica
-    if (owlNotification) {
-      owlNotification.classList.remove('hidden');
-    }
-  } else {
-    // Se tutti i messaggi sono stati letti, nascondi la notifica
-    hideNotification();
-  }
-}
+				// Controlla se ci sono messaggi non letti nella casella di posta
+				function updateNotificationVisibility() {
+					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+					const allMessages = ['welcome', 'day5_milestone', 'day10_milestone']; // Tutti i messaggi possibili
+					const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
 
-// Al caricamento pagina
-updateNotificationVisibility();
+					if (unreadMessages.length > 0) {
+						// Se ci sono messaggi non letti, mostra la notifica
+						if (owlNotification) {
+							owlNotification.classList.remove('hidden');
+						}
+					} else {
+						// Se tutti i messaggi sono stati letti, nascondi la notifica
+						hideNotification();
+					}
+				}
 
+				// Al caricamento pagina
+				updateNotificationVisibility();
 
-setInterval(function() {
-  console.log('🔍 Controllo periodico messaggi non letti...');
-  
-  const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-  const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
-  
-  // Messaggi che devono essere veramente presenti
-  const potentialMessages = ['welcome'];  // Welcome è sempre presente
-  
-  // Aggiungi milestone solo se il giorno relativo è stato completato
-  if (savedProgress[4]?.solved) {
-    potentialMessages.push('day5_milestone');  // Giorno 5 completato
-  }
-  if (savedProgress[9]?.solved) {
-    potentialMessages.push('day10_milestone');  // Giorno 10 completato
-  }
-  
-  // Ora filtra solo i messaggi che REALMENTE ESISTONO
-  const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
-  
-  console.log('📬 Messaggi esistenti:', potentialMessages);
-  console.log('📬 Messaggi non letti:', unreadMessages.length, unreadMessages);
+				//CONTROLLO PERIODICO MESSAGGI NON LETTI
+				setInterval(function() {
+					console.log('🔍 Controllo periodico messaggi non letti...');
+				  
+					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
+					const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
+				  
+					// Messaggi che devono essere veramente presenti
+					const potentialMessages = ['welcome'];  // Welcome è sempre presente
+				  
+					// Aggiungi milestone solo se il giorno relativo è stato completato
+					if (savedProgress[4]?.solved) {
+						potentialMessages.push('day5_milestone');  // Giorno 5 completato
+					}
+					if (savedProgress[9]?.solved) {
+						potentialMessages.push('day10_milestone');  // Giorno 10 completato
+					}
+				  
+					// Ora filtra solo i messaggi che REALMENTE ESISTONO
+					const unreadMessages = potentialMessages.filter(msg => !readMessages.includes(msg));
 
-  
-  if (unreadMessages.length > 0) {
-    // Ci sono messaggi non letti: MOSTRA la notifica
-    const owlNotification = document.getElementById('owlNotification');
-    if (owlNotification) {
-      owlNotification.classList.remove('hidden');
-      console.log('✅ Notifica MOSTRA (messaggi non letti trovati)');
-    }
-  } else {
-    // Nessun messaggio non letto: NASCONDI la notifica
-    const owlNotification = document.getElementById('owlNotification');
-    if (owlNotification) {
-      owlNotification.classList.add('hidden');
-      console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
-    }
-  }
-}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
+					if (unreadMessages.length > 0) {
+						// Ci sono messaggi non letti: MOSTRA la notifica
+						const owlNotification = document.getElementById('owlNotification');
+						if (owlNotification) {
+							owlNotification.classList.remove('hidden');
+							console.log('✅ Notifica MOSTRA (messaggi non letti trovati)');
+						}
+					} else {
+						// Nessun messaggio non letto: NASCONDI la notifica
+						const owlNotification = document.getElementById('owlNotification');
+						if (owlNotification) {
+							owlNotification.classList.add('hidden');
+							console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
+						}
+					}
+				}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
 
 
 // ===== EVENTO: Click sul gufo =====
