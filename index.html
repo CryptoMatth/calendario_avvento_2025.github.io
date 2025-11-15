@@ -75,7 +75,7 @@
 				day5_milestone: {
 					id: 'day5_milestone',
 					title: 'Dove sono le mie crocchette?',
-					description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Li avevo creati ma non ero sicuro di farteli fare, ma ora sono arrabbiato e quindi dovrai eseguire tutti i test!<br>Scendi in fondo alla pagina e inizia.<br>A più tardi, e spero con delle crocchette',
+					description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Li avevo creati ma non ero sicuro di farteli fare, ma ora sono arrabbiato e quindi dovrai eseguire tutti i test!<br>Scendi in fondo alla pagina e inizia.<br>Però sono gentile: dl test puoi prendere un massimo di 3 stelle: se arrivi a un minimo di 10 punti totali, otterrai un regalino!<br>A più tardi, e spero con delle crocchette',
 					image: 'foto/Sherlock_babbo_natale.png'
 				},
 				day10_milestone: {
@@ -87,7 +87,7 @@
 				day15_milestone: {
 					id: 'day15_milestone',
 					title: 'Ancora Oké',
-					description: 'Ti scrivo velocemente, sono preso con tutti questi regali da confezionare. Chissà se fra questi c\'è anche il tuo?<br>Comunque non ho ancora avuto il tempo di dare le crocchette a Cicci, prometto che gliele darò appena possibile. Lui è un pezzo grosso ormai (guardia del corpo della famiglia di Babbo Natale).<br>Buon test!',
+					description: 'Ti scrivo velocemente, sono preso con tutti questi regali da confezionare. Chissà se fra questi c\'è anche il tuo?<br>Comunque non ho ancora avuto il tempo di dare le crocchette a Cicci, prometto che gliele darò appena possibile. Lui è un pezzo grosso ormai (guardia del corpo della famiglia di Babbo Natale).<br>Ricorda: se ottieni un minimo di 30 punti totali, otterrai un altro regalino!<br>Buon test!',
 					image: 'foto/oke_regali.png'
 				},
 				day20_milestone: {
@@ -99,7 +99,7 @@
 				day25_milestone: {
 					id: 'day25_milestone',
 					title: 'NATALEEEEEEEE',
-					description: 'E\' NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!',
+					description: 'E\' NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!<br>E mi raccomando: se vuoi l\'ultimo dei tre regalini natalizi, devi ottenere un minimo di 50 punti totali!',
 					image: 'foto/sherlock_oke_natalizio.png'
 				},
 				day30_milestone: {
@@ -801,7 +801,7 @@
 					name: "Idra",
 					image: "foto/Idra.jpg",
 					options: ["Idra", "Giraffa", "Ercole", "Andromeda"],
-					description: "Visibile da marzo a maggio. È la più grande di tutte le costellazioni e contiene Alphard, una stella poco luminosa ma che risalta perché si trova in una zona povera di stelle (in arabo infatti significa \"la solitaria\".",
+					description: "Visibile da marzo a maggio. È la più grande di tutte le costellazioni e contiene Alphard, una stella poco luminosa ma che risalta perché si trova in una zona povera di stelle (in arabo infatti significa \"la solitaria\").",
 					hints: [
 						"Contiene Alphard, una stella poco luminosa ma che risalta perché si trova in una zona povera di stelle",
 						"È un animale",
@@ -1678,7 +1678,7 @@
 				return React.createElement(
 					React.Fragment,
 					null,
-				  
+				  /*
 					// Banner informativo semplificato
 					React.createElement(
 						"div",
@@ -1695,6 +1695,7 @@
 							)
 						)
 					),
+					
 				  
 					// Messaggio di stato del calendario
 					React.createElement(
@@ -1710,6 +1711,7 @@
 							`📅 Data corrente: ${today.toLocaleDateString('it-IT')} | Modalità: ${currentMonth < 11 ? 'Testing Pre-Dicembre' : currentMonth === 11 ? 'Dicembre Ufficiale' : 'Post-Dicembre'}`
 						)
 					),
+					*/
 				  
 					// Griglia giorni con layout migliorato
 					React.createElement(
