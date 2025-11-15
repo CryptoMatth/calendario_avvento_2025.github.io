@@ -754,6 +754,17 @@
 			// ========================================
 			const CONSTELLATIONS = [
 				{
+					name: "Cane maggiore",
+					image: "foto/Cane_maggiore.jpg",
+					options: ["Cane maggiore", "Triangolo", "Giraffa", "Cane minore"],
+					description: "Visibile tra gennaio e febbraio. Rappresenta il più grande tra i due di Orione. Contiene Sirio, la stella pùiù brillante del cielo notturno. Sirio veniva chiamata dai romani\"stella canicula\", da cui \"canicola\", il periodo piùcaldo dell'estate.",
+					hints: [
+						"Contiene Sirio, la stella pùiù brillante del cielo notturno",
+						"È un animale",
+						"Rappresenta il più grande tra i due di Orione"
+					]
+				},
+				{
 					name: "Giraffa",
 					image: "foto/Giraffa.jpg",
 					options: ["Giraffa", "Cane maggiore", "Vergine", "Pegaso"],
@@ -762,6 +773,28 @@
 						"È una costellazione moderna, introdottanel XVII secolo e molto poco appariscente",
 						"È un animale",
 						"Ha un lungo collo"
+					]
+				},
+				{
+					name: "Gemelli",
+					image: "foto/Gemelli.jpg",
+					options: ["Gemelli", "Idra", "Pegaso", "Scorpione"],
+					description: "Visibile da gennaio a marzo. Ricorda Castore e Polluce, i due Dioscuri della mitologia greca. In realtà le due stelle Castore e Polluce sono molto diverse tra loro: per esepio la prima è singola, las econda è sestupla.",
+					hints: [
+						"Castore e Polluce sono due stelle molto diverse tra loro",
+						"È una costellazione zodiacale",
+						"Castore e Polluce erano fratelli"
+					]
+				},
+				{
+					name: "Cane minore",
+					image: "foto/Cane_minore.jpg",
+					options: ["Cane minore", "Cane maggiore", "Ercole", "Boote"],
+					description: "Visibile da gennaio a marzo. Rappresenta il più piccolo tra i due di Orione. Contiene Procione, l'ottava stella più brillante del cielo. Il nome procione non è legato all'animale ma deriva dal greco \"prima del cane\" perché sorge prima.",
+					hints: [
+						"Contiene Procione, l'ottava stella più brillante del cielo",
+						"È un animale",
+						"Rappresenta il più piccolo tra i due di Orione"
 					]
 				},
 				{
@@ -864,14 +897,101 @@
 					]
 				},
 				{
+					name: "Acquario",
+					image: "foto/Acquario.jpg",
+					options: ["Acquario", "Pegaso", "Scorpione", "Gemelli"],
+					description: "Visibilie tra settembre e ottobre. La somiglianza con il personaggio rappresentato è sostanzialmente nulla. Il personaggio mitologico è Ganimede, coppiere degli dei, il \"portatore d'acqua\".",
+					hints: [
+						"È un segno zodiacale",
+						"Il personaggio mitologico è Ganimede, coppiere degli dei",
+						"È il segno zodiacale dello scemo"
+					]
+				},
+				{
+					name: "Ofiuco",
+					image: "foto/Ofiuco.jpg",
+					options: ["Ofiuco", "Serpente", "Ercole", "Acquario"],
+					description: "Visibile da giugno ad agosto. Rappresenta un uomo che tiene in mano la contigua costellazione del Serpente. Nella cultura greca è Ascepio, figlio di Apollo e dio della medicina.",
+					hints: [
+						"Nella cultura greca è figlio di Apollo e dio della medicina.",
+						"Rappresenta un uomo che tiene in mano la contigua costellazione del Serpente",
+						"E' anche detto Serpentario"
+					]
+				},
+				{
+					name: "Serpente",
+					image: "foto/Serpente.jpg",
+					options: ["Serpente", "Cassiopea", "Ofiuco", "Gemelli"],
+					description: "Visibileda giugno ad agosto. È l'unica costellazione divisa in due parti separate: la Testa dalla Coda, con l'Ofiuco in mezzo. È il simbolo della guarigione.",
+					hints: [
+						"È il simbolo della guarigione",
+						"È l'unica costellazione divisa in due parti separate",
+						"È un animale"
+					]
+				},
+				{
+					name: "Scorpione",
+					image: "foto/Scorpione.jpg",
+					options: ["Scorpione", "Boote", "Sagittario", "Vergine"],
+					description: "Visibile d giugno ad agosto. Il nome della sua stella più luminosa, Antares, deriva dal greco Anti-Ares (rivale di Marte), per il colore rosso comune ai due corpi celesti. Secondo la mitologia fu l'animale che punse a morte Orione; ecco perché Zeus li collocò in cielo entrmbi.",
+					hints: [
+						"Il nome della sua stella più luminosa, Antares, deriva dal greco Anti-Ares",
+						"È un animale",
+						"Secondo la mitologia fu l'animale che punse a morte Orione"
+					]
+				},
+				{
+					name: "Lira",
+					image: "foto/Lira.jpg",
+					options: ["Lira", "Aquila", "Cigno", "Perseo"],
+					description: "Visibile da giugno a settembre. Contiene la stella Vega (\"l'aquila che plana\") che, insieme alle stelle Altair dell'Aquila e Deneb del cigno, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo. Secondo la mitologia, rappresenta lo strumento suonato da Orfeo, cantore che tentò di recuperare l'amata Euridice dagli Inferi.",
+					hints: [
+						"La stella Vega significa \"l'aquila che plana\"",
+						"Vega, insieme alle stelle Altair dell'Aquila e Deneb del cigno, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo",
+						"Rappresenta lo strumento suonato da Orfeo"
+					]
+				},
+				{
+					name: "Ercole",
+					image: "foto/Ercole.jpg",
+					options: ["Ercole", "Dragone", "Bilancia", "Capricorno"],
+					description: "Visibile da giugno a settembre. Si mostra capovolto e inginocchiato, con un piede che poggia sulla testa della costellazione del Dragone. ",
+					hints: [
+						"È contigua alla costellazione del Dragone",
+						"Non rappresenta un animale",
+						"È l'eroe più famoso della mitologia greca"
+					]
+				},
+				{
 					name: "Aquila",
 					image: "foto/Aquila.jpg",
-					options: ["Aquila", "Triangolo", "Boote", "Ariete"],
-					description: "Visibile da luglio a settembre. La stella Altair, insieme alle stelle Vega della Lira e Deneb del cigno, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo. Nella mitologia greca è il simbolo di Zeus",
+					options: ["Aquila", "Triangolo", "Cigno", "Lira"],
+					description: "Visibile da luglio a settembre. La stella Altair, insieme alle stelle Vega della Lira e Deneb del Cigno, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo. Nella mitologia greca è il simbolo di Zeus",
 					hints: [
 						"La stella Altair, insieme alle stelle Vega della Lira e Deneb del cigno, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo",
 						"Nella mitologia greca è il simbolo di Zeus",
 						"La stella Altair significa \"aquila volante\"",
+					]
+				},
+				{
+					name: "Sagittario",
+					options: ["Sagittario", "Orione", "Scorpione", "Perseo"],
+					description: "Visibile da luglio a settembre. Osservando questa costellazione si guarda verso le regioni centrali della Via Lattea. Rappresenta un centauro in atto di scagliare una freccia.",
+					hints: [
+						"Osservando questa costellazione si guarda verso le regioni centrali della Via Lattea",
+						"Rappresenta un centauro in atto di scagliare una freccia",
+						"È una costellazione dello zodiaco"
+					]
+				},
+				{
+					name: "Cigno",
+					image: "foto/Cigno.jpg",
+					options: ["Cigno", "Giraffa", "Lira", "Aquila"],
+					description: "Visibile da luglio a settembre. Deneb, insieme alle stelle Vega della Lira e Altair dell'Aquila, costituisce uno dei tre vertici dell'asterisma Triangolo Estivo. Prende anche il nome di Croce del Nord.",
+					hints: [
+						"Prende anche il nome di Croce del Nord",
+						"È un animale volante",
+						"Zeus si trasformò in questo animale per sedurre Leda"
 					]
 				},
 				{
@@ -886,6 +1006,17 @@
 					]
 				},
 				{
+					name: "Pegaso",
+					image: "foto/Pegaso.jpg",
+					options: ["Pegaso", "Andromeda", "Capricorno", "Idra"],
+					description: "Visibile tra settembre e ottobre. La parte meglio riconoscibile è costituita da un gruppo di stelle che è chiamato Grande Quadrato. Appare capovolto, con la testa in basso e le zampe in alto.",
+					hints: [
+						"La parte meglio riconoscibile è costituita da un gruppo di stelle che è chiamato Grande Quadrato",
+						"Non fa parte delle costellazioni dello zodiaco",
+						"È un animale alato"
+					]
+				},
+				{
 					name: "Cassiopea",
 					image: "foto/Cassiopea.jpg",
 					options: ["Cassiopea", "Cigno", "Triangolo", "Giraffa"],
@@ -897,163 +1028,47 @@
 					]
 				},
 				{
-					name: "Lira",
-					options: ["Lira", "Vergine", "Lepre", "Perseo"],
-					description: "La costellazione del cacciatore, una delle più spettacolari del cielo invernale, con la famosa Nebulosa di Orione.",
-					hints: [
-						"È la costellazione del cacciatore nella mitologia",
-						"Contiene la famosa cintura di tre stelle",
-						"È visibile principalmente in inverno"
-					]
-				},
-				{
-					name: "Cigno",
-					options: ["Cigno", "Giraffa", "Orsa maggiore", "Ercole"],
-					description: "Costellazione che contiene la famosa Galassia di Andromeda, visibile a occhio nudo in cieli bui.",
-					hints: [
-						"Contiene la galassia più vicina alla Via Lattea",
-						"È collegata al mito di Perseo e della principessa",
-						"La sua galassia è visibile a occhio nudo"
-					]
-				},
-				{
-					name: "Ercole",
-					options: ["Ercole", "Dragone", "Bilancia", "Capricorno"],
-					description: "Costellazione che rappresenta l'eroe della mitologia greca che salvò Andromeda.",
-					hints: [
-						"È l'eroe che salvò Andromeda nella mitologia",
-						"Contiene l'ammasso stellare delle Pleiadi nelle vicinanze",
-						"È visibile in autunno e inverno"
-					]
-				},
-				{
-					name: "Ofiuco",
-					options: ["Ofiuco", "Chioma di Berenice", "Cane maggiore", "Acquario"],
-					description: "Una grande costellazione estiva, facilmente riconoscibile per la sua forma a croce.",
-					hints: [
-						"Ha la forma di una grande croce nel cielo",
-						"È una delle costellazioni più grandi",
-						"Contiene la stella Deneb, una delle più luminose"
-					]
-				},
-				{
-					name: "Serpente",
-					options: ["Serpente", "Cassiopea", "Ofiuco", "Gemelli"],
-					description: "Costellazione che rappresenta l'aquila di Zeus nella mitologia greca.",
-					hints: [
-						"Rappresenta l'aquila di Zeus",
-						"Contiene la stella brillante Altair",
-						"È parte del triangolo estivo"
-					]
-				},
-				{
-					name: "Scorpione",
-					options: ["Scorpione", "Boote", "Sagittario", "Vergine"],
-					description: "Piccola costellazione che contiene Vega, una delle stelle più brillanti del cielo.",
-					hints: [
-						"Contiene Vega, stella molto brillante",
-						"Rappresenta lo strumento musicale di Orfeo",
-						"È piccola ma molto riconoscibile"
-					]
-				},
-				{
-					name: "Sagittario",
-					options: ["Sagittario", "Orione", "Scorpione", "Perseo"],
-					description: "Una grande costellazione circumpolare che si avvolge attorno al polo nord celeste.",
-					hints: [
-						"Si avvolge attorno al polo nord celeste",
-						"È una costellazione molto estesa",
-						"È sempre visibile alle nostre latitudini"
-					]
-				},
-				{
-					name: "Pegaso",
-					options: ["Pegaso", "Andromeda", "Lira", "Idra"],
-					description: "Costellazione primaverile che contiene Arturo, una delle stelle più brillanti.",
-					hints: [
-						"Contiene Arturo, stella molto brillante",
-						"È chiamato anche il Pastore",
-						"È ben visibile in primavera"
-					]
-				},
-				{
 					name: "Triangolo",
+					image: "foto/Triangolo.jpg",
 					options: ["Triangolo", "Cigno", "Capricorno", "Lepre"],
-					description: "Costellazione primaverile che contiene Arturo, una delle stelle più brillanti.",
+					description: "Visibile da ottobre a dicembre. Si trova tra Andromeda, Perseo e l'Ariete. Ha banalmente la forma di un triangolo.",
 					hints: [
-						"Contiene Arturo, stella molto brillante",
-						"È chiamato anche il Pastore",
-						"È ben visibile in primavera"
+						"È composta da tre stelle",
+						"Si trova tra Andromeda, Perseo e l'Ariete",
+						"È una forma geometrica"
 					]
 				},
 				{
 					name: "Orione",
+					image: "foto/Orione.jpg",
 					options: ["Orione", "Cane minore", "Ofiuco", "Cassiopea"],
-					description: "Una grande costellazione estiva, facilmente riconoscibile per la sua forma a croce.",
+					description: "Visibile da dicembre a febbraio. Facilmente riconosibile dalla cintura (composta da tre stelle), sembra più che altro una caffettiera. Secondo la mitologia, era un gigantesco cacciatore che, con i suoi cani, cacciava le lepri.",
 					hints: [
-						"Ha la forma di una grande croce nel cielo",
-						"È una delle costellazioni più grandi",
-						"Contiene la stella Deneb, una delle più luminose"
-					]
-				},
-				{
-					name: "Cane maggiore",
-					options: ["Cane maggiore", "Triangolo", "Giraffa", "Cane minore"],
-					description: "Costellazione che rappresenta l'aquila di Zeus nella mitologia greca.",
-					hints: [
-						"Rappresenta l'aquila di Zeus",
-						"Contiene la stella brillante Altair",
-						"È parte del triangolo estivo"
-					]
-				},
-				{
-					name: "Cane minore",
-					options: ["Cane minore", "Cane maggiore", "Ercole", "Boote"],
-					description: "Piccola costellazione che contiene Vega, una delle stelle più brillanti del cielo.",
-					hints: [
-						"Contiene Vega, stella molto brillante",
-						"Rappresenta lo strumento musicale di Orfeo",
-						"È piccola ma molto riconoscibile"
+						"Secondo la mitologia, era un gigantesco cacciatore che, con i suoi cani, cacciava le lepri",
+						"Facilmente riconosibile dalla cintura (composta da tre stelle), sembra più che altro una caffettiera",
+						"È accompagnato dai suoi due cani"
 					]
 				},
 				{
 					name: "Lepre",
+					image: "foto/Lepre.jpg",
 					options: ["Lepre", "Orsa Minore", "Cefeo", "Giraffa"],
-					description: "Una grande costellazione circumpolare che si avvolge attorno al polo nord celeste.",
+					description: "Visibile da dicembre a febbraio. Rappresenta la preda che Orione cacciava con i suoi cani. Arneb è il nome arabo che ha come signficiato il nome della costellazione.",
 					hints: [
-						"Si avvolge attorno al polo nord celeste",
-						"È una costellazione molto estesa",
-						"È sempre visibile alle nostre latitudini"
-					]
-				},
-				{
-					name: "Gemelli",
-					options: ["Gemelli", "Idra", "Pegaso", "Scorpione"],
-					description: "Costellazione primaverile che contiene Arturo, una delle stelle più brillanti.",
-					hints: [
-						"Contiene Arturo, stella molto brillante",
-						"È chiamato anche il Pastore",
-						"È ben visibile in primavera"
-					]
-				},
-				{
-					name: "Acquario",
-					options: ["Acquario", "Pegaso", "Scorpione", "Gemelli"],
-					description: "Riconoscibile per la sua forma a 'W' o 'M', è una costellazione circumpolare facilmente visibile tutto l'anno.",
-					hints: [
-						"Ha la forma di una 'W' o di una 'M'",
-						"È circumpolare, sempre visibile alle nostre latitudini",
-						"Prende il nome da una regina della mitologia greca"
+						"Arneb è il nome arabo che ha come signficiato il nome della costellazione",
+						"È unanimale",
+						"Rappresenta la preda che Orione cacciava con i suoi cani"
 					]
 				},
 				{
 					name: "Capricorno",
+					image: "foto/Capricorno.jpg",
 					options: ["Capricorno", "Ofiuco", "Acquario", "Vergine"],
-					description: "Costellazione primaverile che contiene Arturo, una delle stelle più brillanti.",
+					description: "Visibile tra agosto e settembre. Rappresenta una capra marina, con testa di capra e coda di pesce. Risale almeno al III millennio a.C. È ritenuta la costellazione fortunata perché, 2-3000 anni fa, quando si trovava davanti al Capricorno, il Sole iniziava il suo cammino verso Nord allungando le giornate.",
 					hints: [
-						"Contiene Arturo, stella molto brillante",
-						"È chiamato anche il Pastore",
-						"È ben visibile in primavera"
+						"È un segno zodiacale",
+						"È un animale",
+						"È il tuo segno zodiacale"
 					]
 				}
 			];
