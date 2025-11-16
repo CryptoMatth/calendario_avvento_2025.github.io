@@ -88,7 +88,7 @@ function initializeOwl() {
 				console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
 			}
 		}
-	}, 3000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
+	}, 1000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
 
 
 	// ===== EVENTO: Click sul gufo =====
