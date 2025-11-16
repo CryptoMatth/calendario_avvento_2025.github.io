@@ -415,6 +415,11 @@
 			display: none;
 		  }
 
+			.hidden {
+			  display: none !important;
+			}
+			
+
 
 		  /* ===== STILI PER IL MODAL ===== */
 		  .modal-overlay {
