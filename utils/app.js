@@ -69,7 +69,7 @@ function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, tes
 					React.createElement("div", { key: qi, style: { marginBottom: "2rem", padding: "1.5rem", backgroundColor: "#111", borderRadius: "0.5rem", borderLeft: `4px solid ${testAnswers[qi] ? "#4ade80" : "#666"}` } },
 						React.createElement("div", { style: { marginBottom: "1rem" } },
 							React.createElement("span", { style: { color: "#fff", marginRight: "0.5rem" } }, `${qi + 1}.`),
-							React.createElement("img", { src: q.image, alt: q.name, style: { maxWidth: "200px", height: "auto", verticalAlign: "middle" } })
+							React.createElement("img", { src: q.image, alt: q.name, className: "test-image" })
 						),
 						React.createElement("p", { style: { marginBottom: "1rem", color: "#ccc", fontSize: "0.9rem" } }, q.constellation.description),
 						React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" } },
