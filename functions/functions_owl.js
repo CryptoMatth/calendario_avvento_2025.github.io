@@ -39,7 +39,7 @@ function initializeOwl() {
 
 	//CONTROLLO PERIODICO MESSAGGI NON LETTI
 	setInterval(function() {
-		console.log('🔍 Controllo periodico messaggi non letti...');
+		//console.log('🔍 Controllo periodico messaggi non letti...');
 	  
 		const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
 		const savedProgress = JSON.parse(localStorage.getItem('calendarioAvventoProgress') || '{}');
@@ -85,7 +85,7 @@ function initializeOwl() {
 			const owlNotification = document.getElementById('owlNotification');
 			if (owlNotification) {
 				owlNotification.classList.add('hidden');
-				console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
+				//console.log('✅ Notifica NASCOSTA (tutti i messaggi letti)');
 			}
 		}
 	}, 1000);  // ← CAMBIA da 1000 a 3000 (3 secondi)
