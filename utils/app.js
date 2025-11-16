@@ -1,0 +1,864 @@
+// ========================================
+// COMPONENTE REACT: TEST A CROCETTE (FUORI da App)
+// ========================================
+
+function TestModalComponent({ test, testNumber, testAnswers, setTestAnswers, testSubmitted, setTestSubmitted, testResults, setTestResults, progress, handleTestAnswerChange, handleTestSubmit, PERIODIC_TESTS }) {
+	if (!test) return null;
+	
+	const isSubmitted = testSubmitted[testNumber] || false;
+	const results = testResults[testNumber];
+	const allPreviousDaysCompleted = test.dayRange.every(day => progress[day - 1]?.solved);
+	const isLocked = !allPreviousDaysCompleted;
+	
+	if (isLocked) {
+		return React.createElement("div", { className: "full-screen-modal" },
+			React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+			React.createElement("h1", null, `Test ${testNumber}`),
+			React.createElement("p", { style: { fontSize: "1.2rem", marginTop: "2rem", color: "#f87171" } }, "🔒 Questo test è bloccato!"),
+			React.createElement("p", { style: { marginTop: "1rem", color: "#ccc" } }, `Devi completare prima i giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`)
+		);
+	}
+	
+	return React.createElement("div", { className: "full-screen-modal" },
+		React.createElement("button", { className: "close-button", onClick: () => handleTestSubmit(null) }, "×"),
+		React.createElement("h1", { style: { marginBottom: "0.5rem" } }, `Test ${testNumber}`),
+		React.createElement("p", { style: { color: "#aaa", marginBottom: "2rem" } }, `Giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`),
+		React.createElement("div", { className: "modal-content", style: { maxWidth: "800px", maxHeight: "70vh", overflowY: "auto" } },
+			!isSubmitted ? React.createElement(React.Fragment, null,
+				React.createElement("p", { style: { marginBottom: "2rem", color: "#4ade80" } }, `${Object.keys(testAnswers).length}/${test.questions.length} risposte`),
+				test.questions.map((q, qi) => 
+					React.createElement("div", { key: qi, style: { marginBottom: "2rem", padding: "1.5rem", backgroundColor: "#111", borderRadius: "0.5rem", borderLeft: `4px solid ${testAnswers[qi] ? "#4ade80" : "#666"}` } },
+						React.createElement("div", { style: { marginBottom: "1rem" } },
+							React.createElement("span", { style: { color: "#fff", marginRight: "0.5rem" } }, `${qi + 1}.`),
+							React.createElement("img", { src: q.image, alt: q.name, style: { maxWidth: "200px", height: "auto", verticalAlign: "middle" } })
+						),
+						React.createElement("p", { style: { marginBottom: "1rem", color: "#ccc", fontSize: "0.9rem" } }, q.constellation.description),
+						React.createElement("div", { style: { display: "flex", flexDirection: "column", gap: "0.5rem" } },
+							q.options.map((opt, oi) => 
+								React.createElement("label", { key: oi, style: { display: "flex", alignItems: "center", padding: "0.75rem", backgroundColor: testAnswers[qi] === opt ? "#2d5a6c" : "#222", borderRadius: "0.35rem", cursor: "pointer", transition: "all 0.2s" } },
+									React.createElement("input", { type: "radio", name: `q${qi}`, value: opt, checked: testAnswers[qi] === opt, onChange: () => handleTestAnswerChange(qi, opt), style: { marginRight: "0.75rem" } }),
+									React.createElement("span", null, opt)
+								)
+							)
+						)
+					)
+				)
+			) : React.createElement(React.Fragment, null,
+				React.createElement("div", { style: { textAlign: "center", marginBottom: "2rem" } },
+					React.createElement("h2", { style: { fontSize: "2rem", marginBottom: "1rem" } }, results.percentage >= 80 ? "🎉 Ottimo!" : results.percentage >= 60 ? "👍 Bene!" : "💪 Continua!"),
+					React.createElement("p", { style: { fontSize: "1.8rem", color: "#4ade80", marginBottom: "0.5rem" } }, `${results.correct}/${results.total} corrette`),
+					React.createElement("p", { style: { fontSize: "1.2rem", color: "#fbbf24" } }, `Punteggio: ${results.score}/3 ⭐`)
+				),
+				React.createElement("h3", { style: { marginTop: "2rem", marginBottom: "1rem" } }, "Review"),
+				test.questions.map((q, qi) => {
+					const isCorrect = testAnswers[qi] === q.correctAnswer;
+					return React.createElement("div", { key: qi, style: { marginBottom: "1rem", padding: "1rem", backgroundColor: isCorrect ? "#1a3a1a" : "#3a1a1a", borderLeft: `4px solid ${isCorrect ? "#4ade80" : "#f87171"}`, borderRadius: "0.35rem" } },
+						React.createElement("p", { style: { marginBottom: "0.5rem" } }, (isCorrect ? "✅" : "❌") + ` Domanda ${qi + 1}`),
+						React.createElement("p", { style: { color: "#ccc", marginBottom: "0.5rem" } }, `La tua: ${testAnswers[qi]}`),
+						!isCorrect && React.createElement("p", { style: { color: "#4ade80" } }, `Corretta: ${q.correctAnswer}`)
+					);
+				})
+			),
+			!isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(testNumber), disabled: Object.keys(testAnswers).length < test.questions.length, style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: Object.keys(testAnswers).length < test.questions.length ? "#666" : "#4ade80", color: "#000", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", fontWeight: "bold", cursor: "pointer" } }, "Invia Risposte"),
+			isSubmitted && React.createElement("button", { onClick: () => handleTestSubmit(null), style: { marginTop: "2rem", padding: "1rem 2rem", backgroundColor: "#2d5a6c", color: "#fff", border: "none", borderRadius: "0.5rem", fontSize: "1.1rem", cursor: "pointer" } }, "Chiudi Test")
+		)
+	);
+}
+
+function App() {
+
+	const [initialized, setInitialized] = useState(false);
+	// State per i test periodici
+	const [activeTest, setActiveTest] = useState(null);
+	const [testAnswers, setTestAnswers] = useState({});
+	const [testSubmitted, setTestSubmitted] = useState({});
+	const [testResults, setTestResults] = useState({});
+	
+	// Handlers per i test
+	const handleTestAnswerChange = (questionIndex, selectedAnswer) => {
+		setTestAnswers(prev => ({...prev, [questionIndex]: selectedAnswer}));
+	};
+	
+	const handleTestSubmit = (testNumber) => {
+		if (testNumber === null) {
+			setActiveTest(null);
+			setTestAnswers({});
+			return;
+		}
+		
+		const test = PERIODIC_TESTS[testNumber - 1];
+		let correctCount = 0;
+		test.questions.forEach((question, index) => {
+			if (testAnswers[index] === question.correctAnswer) correctCount++;
+		});
+		
+		const totalQuestions = test.questions.length;
+		const score = Math.round((correctCount / totalQuestions) * 3);
+		const results = { correct: correctCount, total: totalQuestions, score: score, percentage: Math.round((correctCount / totalQuestions) * 100) };
+		
+		setTestResults(prev => ({...prev, [testNumber]: results}));
+		setTestSubmitted(prev => ({...prev, [testNumber]: true}));
+		
+		const testKey = `test_${testNumber}`;
+		const updatedProgress = {...progress, [testKey]: { solved: true, score: results.score, correct: results.correct, total: results.total, completedAt: new Date().toISOString() }};
+		setProgress(updatedProgress);
+		saveDayProgress(testKey, updatedProgress[testKey]);
+		
+		console.log(`✅ Test ${testNumber} inviato! Punteggio: ${results.score}/3`);
+	};
+	
+	
+		const today = new Date();
+		const currentDay = today.getDate();
+		const currentMonth = today.getMonth(); // 0-based (dicembre = 11)
+									
+
+									   
+
+	// ========================================
+	// FUNZIONI PER GESTIRE I TEST PERIODICI
+	// ========================================
+	
+	function isTestDay(dayNumber) {
+		return [5, 10, 15, 20, 25, 30].includes(dayNumber);
+	}
+	
+	function getTestForDay(dayNumber) {
+		const testIndex = Math.floor((dayNumber - 1) / 5);
+		return PERIODIC_TESTS[testIndex] || null;
+	}
+	
+	function calculateTestScore(testAnswers) {
+		const testNumber = this?.testNumber;
+		if (!testNumber) return { correct: 0, total: 0, score: 0 };
+		
+		const test = PERIODIC_TESTS[testNumber - 1];
+		let correctCount = 0;
+		test.questions.forEach((question, index) => {
+			if (testAnswers[index] === question.correctAnswer) correctCount++;
+		});
+		
+		const totalQuestions = test.questions.length;
+		const score = Math.round((correctCount / totalQuestions) * 3);
+		return {
+			correct: correctCount,
+			total: totalQuestions,
+			score: score,
+			percentage: Math.round((correctCount / totalQuestions) * 100)
+		};
+	}
+
+	// ===== GESTIONE BUSTA DEL GUFO (VERSIONE SEMPLIFICATA) =====
+	(function() {
+		const ENVELOPE_VIEWED_KEY = 'owlEnvelopeRead';
+		
+		function markEnvelopeAsRead() {
+			localStorage.setItem(ENVELOPE_VIEWED_KEY, 'true');
+		}
+		
+		function hasBeenRead() {
+			return localStorage.getItem(ENVELOPE_VIEWED_KEY) === 'true';
+		}
+		
+		// Al caricamento: se già letto, nascondi notifica
+		if (hasBeenRead()) {
+			const owlNotification = document.getElementById('owlNotification');
+			if (owlNotification) {
+				owlNotification.classList.add('hidden');
+			}
+		}
+		
+		// Questo è tutto. Il resto è gestito dalla nuova logica della busta
+		// nel primo click del gufo che crea la envelope-modal
+	})();
+
+	// ===== FINE GESTIONE BUSTA DEL GUFO =====
+	const currentYear = today.getFullYear();
+
+
+	// ========================================
+	// CONTROLLO GIORNO
+	// ========================================
+	let maxDay;
+	console.log("📅 Data corrente:", today);
+	console.log("📅 Mese corrente:", currentMonth, "(0=gen, 9=ott, 11=dic)");
+	console.log("📅 Giorno corrente:", currentDay);
+	if (currentMonth === 11 && currentYear === 2025) {
+		// Se siamo a dicembre 2025, sblocca fino al giorno corrente
+		maxDay = currentDay;
+		console.log("🗓️ Modalità dicembre: giorni sbloccati fino al", maxDay);
+	} else if (currentMonth < 11 || currentYear < 2025) { //DA MODIFICARE
+		// Se siamo PRIMA di dicembre (come ora ottobre), sblocca i primi 6 giorni per TESTING
+		maxDay = 31; // FISSO per testing
+		console.log("🧪 Modalità testing PRE-dicembre: giorni sbloccati:", maxDay);
+	} else {
+		// Se siamo DOPO dicembre, sblocca tutto
+		maxDay = 31;
+		console.log("🎉 Modalità post-dicembre: tutti i giorni sbloccati");
+	}
+	console.log("✅ Giorni max disponibili:", maxDay);
+	
+	// FALLBACK DI EMERGENZA come richiesto
+	if (typeof maxDay !== 'number' || isNaN(maxDay) || maxDay < 0) {
+		console.warn("⚠️ FALLBACK ATTIVATO: Logica date fallita, forzando 5 giorni per testing");
+		maxDay = 5;
+	}
+	
+	const [progress, setProgress] = useState(gameProgress);
+
+	useEffect(() => {
+		gameProgress = { ...progress };
+		saveProgressToStorage();
+	}, [progress]);
+	
+	const [activeModal, setActiveModal] = useState(null);
+	const [settingsModal, setSettingsModal] = useState(false);
+	const [initError, setInitError] = useState(null);
+	const [enlargedImage, setEnlargedImage] = useState(null);
+	
+	// Gestione apertura settings da pulsante esterno
+	useEffect(() => {
+		const handleOpenSettings = () => setSettingsModal(true);
+		window.addEventListener('openSettings', handleOpenSettings);
+		return () => window.removeEventListener('openSettings', handleOpenSettings);
+	}, []);
+	
+	const [usedHintsDisplay, setUsedHintsDisplay] = useState({});
+	const [feedback, setFeedback] = useState("");
+	
+	// BUG FIX #2: Traccia TUTTE le risposte sbagliate per ogni giorno
+	const [wrongAnswers, setWrongAnswers] = useState({});
+	
+	const [totalScore, setTotalScore] = useState(0);
+	const [stats, setStats] = useState({});
+	
+	// BUG FIX #1: Stato per opzioni mescolate una sola volta per modal
+	const [shuffledOptions, setShuffledOptions] = useState({});
+	
+	// BUG FIX #1: Traccia TUTTI i tentativi (non solo errori)
+	const [totalAttempts, setTotalAttempts] = useState({});
+
+	// ===== STATE PER MESSAGGI PERIODICI =====
+	const [periodicMessages, setPeriodicMessages] = useState(() => {
+		try {
+			const saved = localStorage.getItem('periodicMessages');
+			return saved ? JSON.parse(saved) : {};
+		} catch {
+			return {};
+		}
+	});
+	
+	const [periodicNotificationVisible, setPeriodicNotificationVisible] = useState({});
+	
+	// Al caricamento, controlla se il giorno 5 è stato completato
+	useEffect(() => {
+		const day5Completed = progress?.solved;  // Giorno 5 è indice 4
+		if (day5Completed && !periodicMessages.day5_milestone) {
+			// Messaggio periodico non è stato visto ancora
+			setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+		}
+	}, [progress]);
+
+
+	// INIZIALIZZAZIONE SEMPLIFICATA
+	useEffect(() => {
+		console.log('🚀 Inizializzando calendario semplificato...');
+	  
+		try {
+			// Carica progresso dalla memoria JavaScript
+			const savedProgress = loadProgress();
+			console.log('✅ Progresso caricato dalla memoria:', Object.keys(savedProgress).length, 'giorni');
+		
+			setProgress(savedProgress);
+			setInitialized(true);
+		
+			if (Object.keys(savedProgress).length > 0) {
+				showToast('💾 Progressi in memoria trovati!', 'success');
+			}
+		
+		} catch (error) {
+			console.error('❌ Errore inizializzazione:', error);
+			setProgress({});
+			setInitialized(true);
+		}
+	}, []);
+
+	// SALVATAGGIO AUTOMATICO IN MEMORIA
+	useEffect(() => {
+		if (!initialized) return;
+	  
+		// Aggiorna lo stato globale in memoria
+		gameProgress = { ...progress };
+		console.log('💾 Progresso aggiornato in memoria JavaScript');
+	}, [progress, initialized]);
+
+	// Calcolo statistiche semplificato
+	useEffect(() => {
+		let score = 0;
+		let completed = 0;
+	  
+		Object.entries(progress).forEach(([dayIndex, entry]) => {
+			const entryScore = entry.finalScore !== undefined ? entry.finalScore : (entry.score || 0);
+			score += entryScore;
+			
+			if (entry.solved) completed++;
+		});
+	  
+		setTotalScore(score);
+	  
+		console.log('📈 Statistiche aggiornate:', {
+			punteggio: score,
+			completati: completed
+	  });
+	}, [progress]);
+
+	// Aggiornamento UI semplificato
+	useEffect(() => {
+		const totalScoreEl = document.getElementById("totalScore");
+	  
+		if (totalScoreEl) {
+			totalScoreEl.innerText = `⭐ Punteggio Totale: ${totalScore}`;
+		}
+	}, [totalScore]);
+
+	// BUG FIX #1 & #2: LOGICA RISPOSTA CORRETTA
+	function handleAnswer(index, choice) {
+		const correct = FULL_CONSTELLATIONS[index].name;
+	  
+		setProgress(prev => {
+			const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+			if (entry.solved) return prev;
+		
+			// BUG FIX #1: INCREMENTA SEMPRE totalAttempts
+			setTotalAttempts(prevAttempts => ({
+				...prevAttempts,
+				[index]: (prevAttempts[index] || 0) + 1
+			}));
+		
+			if (choice === correct) {
+				// Risposta corretta
+				entry.solved = true;
+				entry.attempts = (totalAttempts[index] || 0) + 1; // BUG FIX #1: Salva conteggio corretto
+				entry.finalScore = entry.score;
+				entry.completedAt = new Date().toISOString();
+
+				// 🎉 ATTIVA MESSAGGIO PERIODICO PER GIORNO 5
+				if (index === 4 && choice === correct) {  // Giorno 5 (0-indexed) E RISPOSTA CORRETTA!
+					console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
+
+					// Salva nel localStorage
+					localStorage.setItem('periodic_day5_milestone_triggered', 'true');
+					localStorage.setItem('day5_message_available', 'true');
+
+					// Mostra il pulsante di notifica
+					const periodicNotif = document.getElementById('periodicNotification');
+					if (periodicNotif) {
+						console.log('✅ Notifica periodica impostata su VISIBILE');
+						periodicNotif.style.display = 'flex !important';  // Forza il display
+						periodicNotif.style.animation = 'bounce-gift 0.8s infinite';
+					} else {
+						console.warn('⚠️ Elemento periodicNotification non trovato nel DOM!');
+					}
+
+					showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
+				}
+
+				console.log(`✅ RISPOSTA CORRETTA Giorno ${index + 1}:`, {
+					tentativi_totali: entry.attempts,
+					punteggio_finale: entry.score
+				});
+
+				// 🆕 NUOVO: Controlla se è il giorno 5
+				if (index === 4) {  // Giorno 5 (0-indexed)
+					console.log('🎉 GIORNO 5 COMPLETATO CON RISPOSTA CORRETTA!');
+
+					// Aggiungi il messaggio periodico
+					setPeriodicMessages(prev => {
+						const updated = { ...prev, day5_milestone: true };
+						localStorage.setItem('periodicMessages', JSON.stringify(updated));
+						return updated;
+					});
+
+					// Attiva la notifica
+					setPeriodicNotificationVisible(prev => ({...prev, day5_milestone: true}));
+
+					// Mostra toast di congratulazioni
+					showToast('🎉 Nuovo messaggio dal gufo! Clicca per leggerlo!', 'success');
+				}
+
+				setFeedback("✅ Corretto! Ottimo lavoro!");
+
+				// BUG FIX #2: Pulisci risposte sbagliate per questo giorno
+				setWrongAnswers(prev => ({ ...prev, [index]: [] }));
+
+				const scoreText = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				showToast(`🎆 Giorno ${index + 1} completato! ${scoreText} punti`, 'success');
+		  
+			} else {
+				// Risposta sbagliata
+				entry.score = entry.score - 1;
+
+				// BUG FIX #2: Aggiungi alla lista delle risposte sbagliate
+				setWrongAnswers(prev => ({
+					...prev,
+					[index]: [...(prev[index] || []), choice]
+				}));
+
+				console.log(`❌ RISPOSTA SBAGLIATA Giorno ${index + 1}:`, {
+					risposta_data: choice,
+					risposta_corretta: correct,
+					punti_rimasti: entry.score,
+					tentativi_attuali: (totalAttempts[index] || 0) + 1
+				});
+
+				const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+				setFeedback(`❌ Risposta sbagliata! Punti rimasti: ${scoreDisplay}`);
+			}
+		
+			return { ...prev, [index]: entry };
+		});
+	}
+
+	// LOGICA INDIZI SEMPLIFICATA
+	function useHint(index) {
+		setProgress(prev => {
+			const entry = prev[index] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+			if (entry.solved || entry.usedHints >= 3) return prev;
+
+			entry.score = entry.score - 1;
+			entry.usedHints += 1;
+
+			const hint = FULL_CONSTELLATIONS[index].hints[entry.usedHints - 1];
+			const scoreDisplay = entry.score >= 0 ? `+${entry.score}` : `${entry.score}`;
+
+			// Aggiungi l'indizio alla lista di indizi mostrati
+			setUsedHintsDisplay(prev => ({
+				...prev,
+				[index]: [...(prev[index] || []), hint]
+			}));
+
+			setFeedback(`💡 Indizio: ${hint} (Punti rimasti: ${scoreDisplay})`);
+
+			return { ...prev, [index]: entry };
+		});
+	}
+
+	// Loading screen semplificato
+	if (!initialized) {   
+		return React.createElement('div', { className: 'text-center py-20' }, 
+			React.createElement('div', { className: 'text-2xl mb-4' }, '⭐ Caricamento calendario...'),
+			React.createElement('div', { className: 'text-lg text-gray-300 mt-2' }, 'Preparazione costellazioni...')
+		);
+	}
+	
+	console.log('✅ App completamente caricata, rendering calendario con maxDay:', maxDay);
+
+	return React.createElement(
+		React.Fragment,
+		null,
+	  /*
+		// Banner informativo semplificato
+		React.createElement(
+			"div",
+			{ className: "info-banner mb-4 p-4 bg-gradient-to-r from-blue-900 to-green-900 bg-opacity-70 rounded-xl border-2 border-blue-400 border-opacity-50" },
+			React.createElement("div", { className: "flex items-center gap-3 text-blue-100" },
+				React.createElement("span", { className: "text-2xl" }, "💡"),
+				React.createElement("div", { className: "flex-1" },
+					React.createElement("p", { className: "text-base font-semibold mb-1" }, 
+					"I tuoi progressi vengono salvati automaticamente in questa sessione."
+					),
+					React.createElement("p", { className: "text-sm opacity-90" }, 
+						"I progressi sono salvati in memoria durante questa sessione. Sistema semplificato senza login."
+					)
+				)
+			)
+		),
+		
+	  
+		// Messaggio di stato del calendario
+		React.createElement(
+			"div",
+			{ className: "mb-6 p-4 bg-blue-900 bg-opacity-50 rounded-xl border border-blue-400" },
+			React.createElement("h3", { className: "text-lg font-bold text-blue-200 mb-2" }, "🏆 Stato del Calendario"),
+			React.createElement("p", { className: "text-blue-100" }, 
+				maxDay > 0 
+				? `✨ Hai accesso ai primi ${maxDay} giorni! Clicca su un giorno per iniziare la sfida.`
+				: "🔒 Tutti i giorni sono ancora bloccati. Torna a dicembre per iniziare!"
+			),
+			React.createElement("p", { className: "text-blue-200 text-sm mt-1" }, 
+				`📅 Data corrente: ${today.toLocaleDateString('it-IT')} | Modalità: ${currentMonth < 11 ? 'Testing Pre-Dicembre' : currentMonth === 11 ? 'Dicembre Ufficiale' : 'Post-Dicembre'}`
+			)
+		),
+		*/
+	  
+		// Griglia giorni con layout migliorato
+		React.createElement(
+			"div",
+			{ 
+				id: "calendarGrid",
+				className: "w-full"
+			},
+
+			FULL_CONSTELLATIONS.map((c, i) => {
+				const index = i + 1;
+				const entry = progress[i] || { attempts: 0, solved: false, score: 3, usedHints: 0 };
+				// Controllo se il giorno è bloccato:
+				// 1. Se il giorno è oltre maxDay (non ancora disponibile nel calendario)
+				// 2. Se il giorno precedente non è stato completato (tranne per il giorno 1)
+				const testDays = [5, 10, 15, 20, 25, 30];				  
+				const dayNotYetAvailable = index > maxDay;
+				const previousDayNotCompleted = index > 1 && !(progress[i - 1]?.solved);
+				// Controllo specifico per i giorni successivi ai test
+				const isBlockedByTest = testDays.some(testDay => {
+					return index === testDay + 1 && !progress[testDay - 1]?.solved;
+				});
+				const locked = dayNotYetAvailable || previousDayNotCompleted || isBlockedByTest;
+
+				// Debug per ogni giorno
+				if (i < 10) { // Solo primi 10 giorni per evitare spam
+					console.log(`Giorno ${index}: ${locked ? 'BLOCCATO' : 'SBLOCCATO'} (maxDay=${maxDay})`);
+				}
+
+				function openModal() {
+					if (!locked) {
+						setActiveModal(i);
+						setFeedback("");
+
+						// BUG FIX #1: Mescola opzioni UNA VOLTA all'apertura del modal
+						if (!shuffledOptions[i]) {
+							const mixed = shuffleArray([...FULL_CONSTELLATIONS[i].options]);
+							setShuffledOptions(prev => ({ ...prev, [i]: mixed }));
+							console.log(`🎲 Opzioni mescolate per giorno ${i + 1}:`, mixed);
+						}
+					}
+				}
+
+				return React.createElement(
+					"div",
+					{
+						key: i,
+						className: `calendar-day ${locked ? 'locked' : entry.solved ? 'completed' : 'available'}`,
+						onClick: openModal,
+						'data-day': index
+					},
+					React.createElement("h2", null, `Giorno ${index}`),
+					React.createElement("div", { className: "day-icon" }, 
+						locked ? "🔒" : entry.solved ? "🎆" : "✨"
+					),
+					React.createElement("div", { className: "day-status" },
+						locked 
+						? `Bloccato fino al ${index} dicembre`
+						: entry.solved 
+						? (() => {
+							const finalScore = entry.finalScore !== undefined ? entry.finalScore : entry.score;
+							const displayScore = finalScore >= 0 ? `+${finalScore}` : `${finalScore}`;
+							return `Completato! ⭐ ${displayScore}`;
+						})()
+						: "🔹 Clicca per iniziare!"
+					)
+				);
+			})		  
+		),
+
+		// ========================================
+		// RENDERING TEST PERIODICI
+		// ========================================
+	  
+		// Bottoni per i test
+		React.createElement("div", { style: { marginTop: "3rem", marginBottom: "2rem" } },
+			(() => {
+				// Controlla se c'è almeno un test sbloccato
+				const hasVisibleTests = PERIODIC_TESTS.some(test => test.dayRange.every(day => progress[day - 1]?.solved));
+				if (!hasVisibleTests) {
+				// Se nessun test è sbloccato, non mostrare nulla inclusi titolo e test
+				return null;
+				}
+
+				return React.createElement(React.Fragment, null,
+					React.createElement("h2", { style: { marginBottom: "1.5rem", color: "#fbbf24" } }, "📚 Test Periodici"),
+					React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" } },
+						PERIODIC_TESTS.map((test) => {
+							const testCompleted = testSubmitted[test.testNumber];
+							const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
+							if (!canDoTest) {
+							return null; // Nasconde il test non sbloccato evitando il rendering
+							}
+
+							return React.createElement(
+								"div",
+								{
+									key: `test-${test.testNumber}`,
+									className: `calendar-day ${testCompleted ? 'completed' : canDoTest ? 'available' : 'locked'}`,
+									onClick: () => canDoTest && setActiveTest(test.testNumber),
+									style: { cursor: canDoTest ? "pointer" : "not-allowed" }
+								},
+								React.createElement("h2", null, `Test ${test.testNumber}`),
+								React.createElement("div", { className: "day-icon" }, testCompleted ? "🎓" : canDoTest ? "📝" : "🔒"),
+								React.createElement("div", { className: "day-status" },
+									testCompleted
+									? (() => {
+										const r = testResults[test.testNumber];
+										return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`;
+									})()
+									: canDoTest
+									? `🔹 Clicca!`
+									: `Completa giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`
+								)
+							);
+						})
+					)
+				);
+			})()
+		),
+
+	  
+		// Modal del test
+		activeTest && React.createElement(TestModalComponent, {
+			test: PERIODIC_TESTS[activeTest - 1],
+			testNumber: activeTest,
+			testAnswers: testAnswers,
+			setTestAnswers: setTestAnswers,
+			testSubmitted: testSubmitted,
+			setTestSubmitted: setTestSubmitted,
+			testResults: testResults,
+			setTestResults: setTestResults,
+			progress: progress,
+			handleTestAnswerChange: handleTestAnswerChange,
+			handleTestSubmit: handleTestSubmit,
+			PERIODIC_TESTS: PERIODIC_TESTS
+		}),
+	  
+		// Modal gioco
+		activeModal !== null && React.createElement(
+			"div",
+			{ className: "full-screen-modal" },
+			React.createElement("button", { className: "close-button", onClick: () => setActiveModal(null) }, "×"),
+			React.createElement("div", { className: "modal-content" },
+				React.createElement("h2", { className: "text-3xl font-bold mb-4" }, `✨ Giorno ${activeModal + 1}`),
+				React.createElement("div", { className: "mb-4 text-center" },
+					React.createElement("div", { 
+							className: "w-full max-w-2xl mx-auto rounded-lg flex flex-col items-center justify-center text-white border-2 border-yellow-400 shadow-lg overflow-hidden bg-gray-900 p-4",
+							style: { cursor: FULL_CONSTELLATIONS[activeModal].image ? "pointer" : "default" },
+							onClick: () => {
+								if (FULL_CONSTELLATIONS[activeModal].image) {
+									setEnlargedImage(FULL_CONSTELLATIONS[activeModal].image);
+								}
+							}
+						},
+						FULL_CONSTELLATIONS[activeModal].image ? 
+						React.createElement("img", { 
+							src: FULL_CONSTELLATIONS[activeModal].image,
+							alt: FULL_CONSTELLATIONS[activeModal].name,
+							style: { width: "100%", height: "auto", maxHeight: "500px", objectFit: "contain" }
+						})										
+						:
+						React.createElement(React.Fragment, null,
+							React.createElement("div", { className: "text-6xl mb-2" }, "✨"),
+							React.createElement("div", { className: "text-lg font-bold" }, FULL_CONSTELLATIONS[activeModal].name),
+							React.createElement("div", { className: "text-sm text-gray-300 mt-2 px-4 text-center" }, "Osserva attentamente le stelle di questa costellazione")
+						)
+					)
+				),
+				!progress[activeModal]?.solved && React.createElement(React.Fragment, null,
+					React.createElement("p", { className: "mb-4 text-lg" }, "Quale costellazione è questa?"),
+					React.createElement("div", { className: "flex flex-col gap-3" },
+						// BUG FIX #1 & #2: Opzioni mescolate con risposte multiple sbagliate
+						(shuffledOptions[activeModal] || FULL_CONSTELLATIONS[activeModal].options).map((opt, j) => {
+							const dayWrongAnswers = wrongAnswers[activeModal] || [];
+							const isWrong = dayWrongAnswers.includes(opt);
+							const isCorrect = progress[activeModal]?.solved && opt === FULL_CONSTELLATIONS[activeModal].name;
+
+							return React.createElement("button", {
+								key: j,
+								onClick: () => handleAnswer(activeModal, opt),
+								disabled: progress[activeModal]?.solved || isWrong,
+								className: `option-button px-4 py-2 rounded-lg shadow transition-all ${
+									isCorrect ? 'bg-green-600 hover:bg-green-700 text-white' : 
+									isWrong ? 'bg-red-600 text-white cursor-not-allowed opacity-75' : 
+									'bg-blue-600 hover:bg-blue-700 text-white'
+								}`
+							}, opt);
+						})
+					),
+					feedback && React.createElement("div", { className: `feedback ${feedback.includes('Corretto') ? 'correct' : feedback.includes('sbagliata') ? 'wrong' : ''}` }, feedback),
+					usedHintsDisplay[activeModal] && usedHintsDisplay[activeModal].length > 0 && 
+					React.createElement("div", { className: "mt-4 p-3 bg-yellow-900 rounded-lg border-l-4 border-yellow-400" },
+						React.createElement("div", { className: "text-yellow-300 font-bold mb-2" }, "💡 Indizi usati:"),
+						usedHintsDisplay[activeModal].map((h, i) => 
+							React.createElement("div", { key: i, className: "text-sm text-yellow-100 mb-1" }, `${i+1}. ${h}`)
+						)
+					),
+																					
+					// BUG FIX #2: DISPLAY CORRETTO DEI PUNTI
+					React.createElement("div", { className: "mt-4 p-3 bg-gray-800 rounded-lg text-center" },
+						React.createElement("div", { className: "text-lg font-bold text-yellow-300" }, 
+							(() => {
+								const currentScore = progress[activeModal]?.score ?? 3;
+								const displayScore = currentScore >= 0 ? `+${currentScore}` : `${currentScore}`;  // BUG FIX: NO +-2 ma -2
+								return `⭐ Punti attuali: ${displayScore}`;
+							})()
+						),
+						React.createElement("div", { className: "text-sm text-gray-400 mt-1" }, 
+							(() => {
+								/*
+								const currentScore = progress[activeModal]?.score ?? 3;
+								const hints = progress[activeModal]?.usedHints || 0;
+								const errors = Math.max(0, (progress[activeModal]?.attempts || 0) - (progress[activeModal]?.solved ? 1 : 0));
+								return `Formula: 3 - ${hints} indizi - ${errors} errori = ${currentScore}`;
+								*/
+							})()
+						),
+						progress[activeModal]?.score < 0 && React.createElement("div", { className: "text-sm text-red-400 font-bold mt-1" }, 
+							"⚠️ Attenzione: sei in punteggio negativo!"
+						)
+					),
+					React.createElement("div", { className: "mt-4 flex justify-between items-center" },
+						React.createElement("button", { 
+							onClick: () => useHint(activeModal), 
+							className: "text-sm text-yellow-400 underline hover:text-yellow-300",
+							disabled: (progress[activeModal]?.usedHints || 0) >= 3
+						}, `💡 Usa indizio (${progress[activeModal]?.usedHints || 0}/3)`),
+						React.createElement("p", { className: "text-sm" }, 
+							(() => {
+								const currentScore = progress[activeModal]?.score ?? 3;
+								const displayScore = currentScore >= 0 ? `+${currentScore}` : `${currentScore}`;  // BUG FIX #2
+								return `⭐ Punti: ${displayScore}`;
+							})()
+						)
+					)
+				),
+				progress[activeModal]?.solved && React.createElement("div", { className: "mt-6 text-lg space-y-4" },
+					React.createElement("h3", { className: "text-xl font-bold text-yellow-400" }, FULL_CONSTELLATIONS[activeModal].name),
+					React.createElement("p", { className: "text-gray-300" }, FULL_CONSTELLATIONS[activeModal].description),
+					React.createElement("div", { className: "bg-gray-800 p-4 rounded-lg" },
+					  React.createElement("h4", { className: "font-semibold mb-2" }, "📊 Statistiche:"),
+					  React.createElement("p", { className: "text-sm text-gray-300" }, `❌ Tentativi sbagliati: ${(progress[activeModal]?.attempts || 1) - 1}`),
+					  React.createElement("p", { className: "text-sm text-gray-300" }, `💡 Indizi usati: ${progress[activeModal]?.usedHints || 0}`),
+					  React.createElement("p", { className: "text-sm text-yellow-300 font-semibold" }, `⭐ Punteggio ottenuto: ${progress[activeModal]?.score || 0}`)
+					)
+				)
+			)
+		),
+
+		// Modal immagine ingrandita - INIZIO
+		enlargedImage && React.createElement(
+			"div",
+			{ 
+				className: "fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50",
+				onClick: () => setEnlargedImage(null),
+				style: { backdropFilter: "blur(5px)" }
+			},
+			React.createElement("button", { 
+				className: "absolute top-4 right-4 text-white text-3xl hover:text-red-500 z-51",
+				onClick: () => setEnlargedImage(null)
+			}, "×"),
+			React.createElement("img", {
+				src: enlargedImage,
+				alt: "Immagine ingrandita",
+				style: { maxWidth: "90vw", maxHeight: "90vh", objectFit: "contain" },
+				onClick: (e) => e.stopPropagation()
+			}),
+			React.createElement("div", { 
+				className: "absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm"
+			}, "Clicca per chiudere")
+		),
+		// Modal immagine ingrandita - FINE
+
+	  
+		// Modal impostazioni
+		settingsModal && React.createElement(
+			"div",
+			{ className: "full-screen-modal" },
+			React.createElement("button", { className: "close-button", onClick: () => setSettingsModal(false) }, "×"),
+			React.createElement("div", { className: "modal-content max-w-2xl" },
+				React.createElement("h2", { className: "text-3xl font-bold mb-6" }, "⚙️ Impostazioni"),
+		  
+				// Sezione utente
+				React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "👤 Profilo Utente"),
+					React.createElement("div", { className: "space-y-3" },
+						React.createElement("div", { className: "text-center" },
+							React.createElement("div", { className: "text-lg font-semibold text-white mb-2" }, `👤 ${USERS[username]?.displayName || username}`),
+							React.createElement("p", { className: "text-sm text-gray-400" }, 
+								"Il tuo nome utente e display name sono gestiti dal sistema di login."
+							)
+						)
+					)
+				),
+		  
+				// Statistiche
+				React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "📊 Statistiche"),
+					React.createElement("div", { className: "stats-grid" },
+						React.createElement("div", { className: "stat-card" },
+							React.createElement("div", { className: "text-2xl font-bold text-yellow-400" }, stats.totalScore || 0),
+							React.createElement("div", { className: "text-sm text-gray-400" }, "Punti Totali")
+						),
+						React.createElement("div", { className: "stat-card" },
+							React.createElement("div", { className: "text-2xl font-bold text-green-400" }, stats.completedDays || 0),
+							React.createElement("div", { className: "text-sm text-gray-400" }, "Giorni Completati")
+						),
+						React.createElement("div", { className: "stat-card" },
+							React.createElement("div", { className: "text-2xl font-bold text-blue-400" }, stats.totalAttempts || 0),
+							React.createElement("div", { className: "text-sm text-gray-400" }, "Tentativi Totali")
+						),
+						React.createElement("div", { className: "stat-card" },
+							React.createElement("div", { className: "text-2xl font-bold text-purple-400" }, stats.totalHints || 0),
+							React.createElement("div", { className: "text-sm text-gray-400" }, "Indizi Usati")
+						)
+					)
+				),
+		  
+				// Backup e ripristino
+				React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "💾 Backup &amp; Ripristino"),
+					React.createElement("p", { className: "text-sm text-gray-400 mb-4" }, 
+						"Usa queste funzioni per salvare o ripristinare il tuo progresso su altri dispositivi. I codici di backup sono sicuri e contengono tutti i tuoi dati."
+					),
+					React.createElement("div", { className: "space-y-4" },
+						React.createElement("div", null,
+							React.createElement("button", {
+								onClick: exportUserProgress,
+								className: "w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors mb-2"
+							}, "📤 Genera Codice di Backup"),
+							React.createElement("p", { className: "text-sm text-gray-400" }, "Copia il codice per salvare il tuo progresso")
+						),
+						React.createElement("div", null,
+							React.createElement("input", {
+								id: "import-input",
+								type: "text",
+								placeholder: "Incolla qui il codice di backup",
+								className: "w-full px-3 py-2 bg-gray-700 rounded border border-gray-600 text-white mb-2"
+							}),
+							React.createElement("button", {
+								onClick: () => {
+									const code = document.getElementById('import-input').value;
+									if (code) importUserProgress(code);
+								},
+								className: "w-full px-4 py-3 bg-green-600 hover:bg-green-700 rounded-lg transition-colors"
+							}, "📥 Importa Progresso")
+						),
+						React.createElement("div", null,
+							React.createElement("button", {
+								onClick: resetUserProgress,
+								className: "w-full px-4 py-3 bg-red-600 hover:bg-red-700 rounded-lg transition-colors"
+							}, "🗑️ Reset Completo"),
+							React.createElement("p", { className: "text-sm text-gray-400 mt-1" }, "⚠️ Questa azione cancellerà tutto il progresso in modo permanente")
+						)
+					)
+				),
+		  
+				// Info tecnica
+				React.createElement("div", { className: "backup-section" },
+					React.createElement("h3", { className: "text-xl font-semibold mb-4" }, "ℹ️ Informazioni"),
+					React.createElement("div", { className: "text-sm text-gray-400 space-y-2" },
+						React.createElement("p", null, `🗄️ Salvataggio: ${dataManager.fallbackToMemory ? 'Memoria Temporanea' : 'IndexedDB (Persistente)'}`),
+						React.createElement("p", null, `📅 Ultima sincronizzazione: ${new Date().toLocaleString('it-IT')}`),
+						React.createElement("p", null, `📱 Versione: 2.0 - Calendario Costellazioni`),
+						React.createElement("p", null, `🌟 Giorni disponibili: ${maxDay}/31`)
+					)			
+				)
+			)
+		)
+	);
+}
