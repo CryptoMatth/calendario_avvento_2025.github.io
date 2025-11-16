@@ -46,6 +46,7 @@
 	  
 		<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
 		<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+		<script src="functions.js"></script>
 
 		
 		<script>
@@ -122,33 +123,13 @@
 				const gameModal = document.getElementById('gameModal');
 				const closeModal = document.getElementById('closeModal');
 				const owlNotification = document.getElementById('owlNotification');
-			
-				// Funzione: Nascondi notifica
-				function hideNotification() {
-					if (owlNotification) {
-						owlNotification.classList.add('hidden');
-					}
-				}
-			
-				// Controlla se ci sono messaggi non letti nella casella di posta
-				function updateNotificationVisibility() {
-					const readMessages = JSON.parse(localStorage.getItem('mailbox_read') || '[]');
-					const allMessages = ['welcome', 'day5_milestone', 'day10_milestone', 'day15_milestone', 'day20_milestone', 'day25_milestone', 'day30_milestone', 'day31_milestone']; // Tutti i messaggi possibili
-					const unreadMessages = allMessages.filter(msg => !readMessages.includes(msg));
-
-					if (unreadMessages.length > 0) {
-						// Se ci sono messaggi non letti, mostra la notifica
-						if (owlNotification) {
-							owlNotification.classList.remove('hidden');
-						}
-					} else {
-						// Se tutti i messaggi sono stati letti, nascondi la notifica
-						hideNotification();
-					}
-				}
+				
+				hideNotification(owlNotification);
+				updateNotificationVisibility(owlNotification);
+				
 
 				// Al caricamento pagina
-				updateNotificationVisibility();
+				updateNotificationVisibility(owlNotification);
 
 				//CONTROLLO PERIODICO MESSAGGI NON LETTI
 				setInterval(function() {
@@ -247,7 +228,7 @@
 					} else {
 						console.warn('⚠️ day5_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
   
 					// DAY 10
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day10_milestone) {  // ← CAMBIA a day10_MILESTONE
@@ -264,7 +245,7 @@
 					} else {
 						console.warn('⚠️ day10_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
 					
 					// DAY 15
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day15_milestone) {  // ← CAMBIA a day15_milestone
@@ -281,7 +262,7 @@
 					} else {
 						console.warn('⚠️ day15_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
 					
 					// DAY 20
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day20_milestone) {  // ← CAMBIA a day20_milestone
@@ -298,7 +279,7 @@
 					} else {
 						console.warn('⚠️ day20_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();		
+					updateNotificationVisibility(owlNotification);		
 
 					// DAY 25
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day25_milestone) {  // ← CAMBIA a day25_milestone
@@ -315,7 +296,7 @@
 					} else {
 						console.warn('⚠️ day25_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
 
 					// DAY 30
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day30_milestone) {  // ← CAMBIA a day30_milestone
@@ -332,7 +313,7 @@
 					} else {
 						console.warn('⚠️ day30_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
 
 					// DAY 31
 					if (PERIODIC_MESSAGES && PERIODIC_MESSAGES.day31_milestone) {  // ← CAMBIA a day31_milestone
@@ -349,7 +330,7 @@
 					} else {
 						console.warn('⚠️ day31_milestone non trovato in PERIODIC_MESSAGES');  // ← CAMBIA
 					}
-					updateNotificationVisibility();					
+					updateNotificationVisibility(owlNotification);					
 
 					
 					// Aggiungi sempre il benvenuto
@@ -372,7 +353,7 @@
 						}
 					});
 
-					updateNotificationVisibility();
+					updateNotificationVisibility(owlNotification);
 
 					console.log('📋 Messaggi totali:', messages.length, messages);
   
@@ -426,7 +407,7 @@
 							localStorage.setItem('mailbox_read', JSON.stringify(readMessages));
 							}
 							// Aggiorna la visibilità della notifica dopo aver letto il messaggio
-							updateNotificationVisibility();
+							updateNotificationVisibility(owlNotification);
 
 							icon.innerHTML = '📭';
 
