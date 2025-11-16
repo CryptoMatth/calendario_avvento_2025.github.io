@@ -779,38 +779,52 @@
 					// ========================================
 				  
 					// Bottoni per i test
-					React.createElement("div", { style: { marginTop: "3rem", marginBottom: "2rem" } },
-						React.createElement("h2", { style: { marginBottom: "1.5rem", color: "#fbbf24" } }, "📚 Test Periodici"),
-						React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" } },
-							PERIODIC_TESTS.map((test) => {
-								const testCompleted = testSubmitted[test.testNumber];
-								const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
-								if (!canDoTest) {
-									return null; // Nasconde il test non sbloccato evitando il rendering
-								}
+React.createElement("div", { style: { marginTop: "3rem", marginBottom: "2rem" } },
+  (() => {
+    // Controlla se c'è almeno un test sbloccato
+    const hasVisibleTests = PERIODIC_TESTS.some(test => test.dayRange.every(day => progress[day - 1]?.solved));
+    if (!hasVisibleTests) {
+      // Se nessun test è sbloccato, non mostrare nulla inclusi titolo e test
+      return null;
+    }
 
+    return React.createElement(React.Fragment, null,
+      React.createElement("h2", { style: { marginBottom: "1.5rem", color: "#fbbf24" } }, "📚 Test Periodici"),
+      React.createElement("div", { style: { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem" } },
+        PERIODIC_TESTS.map((test) => {
+          const testCompleted = testSubmitted[test.testNumber];
+          const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
+          if (!canDoTest) {
+            return null; // Nasconde il test non sbloccato evitando il rendering
+          }
 
-								return React.createElement(
-									"div",
-									{
-										key: `test-${test.testNumber}`,
-										className: `calendar-day ${testCompleted ? 'completed' : canDoTest ? 'available' : 'locked'}`,
-										onClick: () => canDoTest && setActiveTest(test.testNumber),
-										style: { cursor: canDoTest ? "pointer" : "not-allowed" }
-									},
-									React.createElement("h2", null, `Test ${test.testNumber}`),
-									React.createElement("div", { className: "day-icon" }, testCompleted ? "🎓" : canDoTest ? "📝" : "🔒"),
-									React.createElement("div", { className: "day-status" },
-										testCompleted
-										? (() => {
-											const r = testResults[test.testNumber];
-											return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`;
-										})()									: canDoTest									  ? `🔹 Clicca!`									  : `Completa giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`
-									)
-								);
-							})
-						)
-					),
+          return React.createElement(
+            "div",
+            {
+              key: `test-${test.testNumber}`,
+              className: `calendar-day ${testCompleted ? 'completed' : canDoTest ? 'available' : 'locked'}`,
+              onClick: () => canDoTest && setActiveTest(test.testNumber),
+              style: { cursor: canDoTest ? "pointer" : "not-allowed" }
+            },
+            React.createElement("h2", null, `Test ${test.testNumber}`),
+            React.createElement("div", { className: "day-icon" }, testCompleted ? "🎓" : canDoTest ? "📝" : "🔒"),
+            React.createElement("div", { className: "day-status" },
+              testCompleted
+                ? (() => {
+                  const r = testResults[test.testNumber];
+                  return `✅ ${r.correct}/${r.total} ⭐ ${r.score}/3`;
+                })()
+                : canDoTest
+                  ? `🔹 Clicca!`
+                  : `Completa giorni ${test.dayRange[0]}-${test.dayRange[test.dayRange.length - 1]}`
+            )
+          );
+        })
+      )
+    );
+  })()
+),
+
 				  
 					// Modal del test
 					activeTest && React.createElement(TestModalComponent, {
