@@ -431,10 +431,12 @@
 			}
 			@media (max-width: 600px) {
 			  .test-image {
-			    max-width: 100vw;
-			    width: 100vw;
+			    max-width: 95vw;
+			    width: 95vw;
+			    height: auto !important;
 			  }
 			}
+
 
 		  /* ===== STILI PER IL MODAL ===== */
 		  .modal-overlay {
