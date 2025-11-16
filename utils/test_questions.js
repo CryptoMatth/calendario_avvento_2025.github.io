@@ -8,7 +8,6 @@ function createTestQuestions(dayRange, constellations) {
 	return {
 	  dayNumber: dayRange[index],
 	  constellation: constellation,
-	  image: constellation.image,
 	  options: shuffledOptions,
 	  correctAnswer: constellation.name
 	};
@@ -27,7 +26,6 @@ function createDetailedTestQuestions(dayRange, constellations) {
 	  dayNumber: dayRange[index],
 	  constellation,
 	  name: constellation.name,
-	  image: constellation.image,
 	  questionText: questionText,
 	  options: shuffledOptions,
 	  correctAnswer: constellation.name,
