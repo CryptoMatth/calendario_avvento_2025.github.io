@@ -82,7 +82,6 @@
 			// NUOVA STRUTTURA: TEST PERIODICI OGNI 5 GIORNI
 			// ========================================
 			
-											 
 			function createTestQuestions(dayRange, constellations) {
 			  return constellations.map((constellation, index) => {
 				const shuffledOptions = shuffleArray(constellation.options);
@@ -786,6 +785,10 @@
 							PERIODIC_TESTS.map((test) => {
 								const testCompleted = testSubmitted[test.testNumber];
 								const canDoTest = test.dayRange.every(day => progress[day - 1]?.solved);
+								if (!canDoTest) {
+									return null; // Nasconde il test non sbloccato evitando il rendering
+								}
+
 
 								return React.createElement(
 									"div",
