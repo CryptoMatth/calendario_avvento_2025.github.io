@@ -39,7 +39,7 @@ function createDetailedTestQuestions(dayRange, constellations) {
 
 
 					  
-const PERIODIC_TESTS = [
+var PERIODIC_TESTS = [
 	{
 		testNumber: 1,
 		dayRange: [1, 2, 3, 4, 5],
