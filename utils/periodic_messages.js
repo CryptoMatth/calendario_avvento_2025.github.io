@@ -34,7 +34,7 @@ const PERIODIC_MESSAGES = {
 		id: 'day30_milestone',
 		title: 'Ci siamo quasi!',
 		description: 'Conoscendoti non saresti così felice: il Natale è finito, il compleanno quasi, tra un po\' toccherà pensare al regalo per Mattia. Che brutto periodo.<br>Spero almeno che questo calendario, così duramente preparato da entrambi, ti possa aver dato un po\' di felicità. Felicità, proprio come il test che ora devi fare.<br>Buon divertimento!',
-		image: 'foto/sherlock_oke_compleanno.png.png'
+		image: 'foto/sherlock_oke_compleanno.png'
 	},
 	day31_milestone: {
 		id: 'day31_milestone',
