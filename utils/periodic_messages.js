@@ -3,7 +3,7 @@ const PERIODIC_MESSAGES = {
 	day5_milestone: {
 		id: 'day5_milestone',
 		title: 'Dove sono le mie crocchette?',
-		description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Li avevo creati ma non ero sicuro di farteli fare, ma ora sono arrabbiato e quindi dovrai eseguire tutti i test!<br>Scendi in fondo alla pagina e inizia.<br>Però sono gentile: dl test puoi prendere un massimo di 3 stelle: se arrivi a un minimo di 10 punti totali, otterrai un regalino!<br>A più tardi, e spero con delle crocchette',
+		description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Allora, per punizione, devi eseguire un test!<br>Scendi in fondo alla pagina e inizia.<br>Però sono gentile: dal test puoi prendere un massimo di 3 stelle: se arrivi a un minimo di 10 punti totali, otterrai un regalino!<br>A più tardi, e spero con delle crocchette',
 		image: 'foto/Sherlock_babbo_natale.png'
 	},
 	day10_milestone: {
@@ -27,13 +27,13 @@ const PERIODIC_MESSAGES = {
 	day25_milestone: {
 		id: 'day25_milestone',
 		title: 'NATALEEEEEEEE',
-		description: 'E\' NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!<br>E mi raccomando: se vuoi l\'ultimo dei tre regalini natalizi, devi ottenere un minimo di 50 punti totali!',
+		description: 'È NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!<br>E mi raccomando: se vuoi l\'ultimo dei tre regalini natalizi, devi ottenere un minimo di 50 punti totali!',
 		image: 'foto/sherlock_oke_natalizio.png'
 	},
 	day30_milestone: {
 		id: 'day30_milestone',
 		title: 'Ci siamo quasi!',
-		description: 'Conoscendoti non saresti così felice: il Natale è fintio, il compleanno quasi, tra un po\' toccherà pensare al regalo per Mattia. Che brutto periodo.<br>Spero almeno che questo clanedario, così duramente preparato da entrambi, ti possa aver dato un po\' di felicità. Felicità, proprio come il test che ora devi fare.<br>Buon divertimento!',
+		description: 'Conoscendoti non saresti così felice: il Natale è finito, il compleanno quasi, tra un po\' toccherà pensare al regalo per Mattia. Che brutto periodo.<br>Spero almeno che questo calendario, così duramente preparato da entrambi, ti possa aver dato un po\' di felicità. Felicità, proprio come il test che ora devi fare.<br>Buon divertimento!',
 		image: 'foto/sherlock_oke_compleanno.png.png'
 	},
 	day31_milestone: {
