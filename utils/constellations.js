@@ -3,9 +3,9 @@ const CONSTELLATIONS = [
 		name: "Cane maggiore",
 		image: "foto/Cane_maggiore.jpg",
 		options: ["Cane maggiore", "Triangolo", "Giraffa", "Cane minore"],
-		description: "Visibile tra gennaio e febbraio. Rappresenta il più grande tra i due di Orione. Contiene Sirio, la stella pùiù brillante del cielo notturno. Sirio veniva chiamata dai romani\"stella canicula\", da cui \"canicola\", il periodo piùcaldo dell'estate.",
+		description: "Visibile tra gennaio e febbraio. Rappresenta il più grande tra i due di Orione. Contiene Sirio, la stella più brillante del cielo notturno. Sirio veniva chiamata dai romani \"stella canicula\", da cui \"canicola\", il periodo più caldo dell'estate.",
 		hints: [
-			"Contiene Sirio, la stella pùiù brillante del cielo notturno",
+			"Contiene Sirio, la stella più brillante del cielo notturno",
 			"È un animale",
 			"Rappresenta il più grande tra i due di Orione"
 		]
@@ -14,9 +14,9 @@ const CONSTELLATIONS = [
 		name: "Giraffa",
 		image: "foto/Giraffa.jpg",
 		options: ["Giraffa", "Cane maggiore", "Vergine", "Pegaso"],
-		description: "Visibile tra gennaio e febbraio. E' una costellazione moderna, introdottanel XVII secolo e molto poco appariscente.",
+		description: "Visibile tra gennaio e febbraio. È una costellazione moderna, introdotta nel XVII secolo e molto poco appariscente.",
 		hints: [
-			"È una costellazione moderna, introdottanel XVII secolo e molto poco appariscente",
+			"È una costellazione moderna, introdotta nel XVII secolo e molto poco appariscente",
 			"È un animale",
 			"Ha un lungo collo"
 		]
@@ -25,7 +25,7 @@ const CONSTELLATIONS = [
 		name: "Gemelli",
 		image: "foto/Gemelli.jpg",
 		options: ["Gemelli", "Idra", "Pegaso", "Scorpione"],
-		description: "Visibile da gennaio a marzo. Ricorda Castore e Polluce, i due Dioscuri della mitologia greca. In realtà le due stelle Castore e Polluce sono molto diverse tra loro: per esepio la prima è singola, las econda è sestupla.",
+		description: "Visibile da gennaio a marzo. Ricorda Castore e Polluce, i due Dioscuri della mitologia greca. In realtà le due stelle Castore e Polluce sono molto diverse tra loro: per esempio la prima è singola, la seconda è sestupla.",
 		hints: [
 			"Castore e Polluce sono due stelle molto diverse tra loro",
 			"È una costellazione zodiacale",
@@ -58,9 +58,9 @@ const CONSTELLATIONS = [
 		name: "Orsa Maggiore",
 		image: "foto/Orsa_Maggiore.jpg",
 		options: ["Orsa Maggiore", "Orsa Minore", "Cassiopea", "Cefeo"],
-		description: "Visibile tra aprile e maggio. Le sette stelle che delineao il Grande Carro costituiscono l'asterisma più conosciuto del cielo boreale. Secondo la mitologia, le due Orse salvarono Zeus dall'ira del padre Crono.",
+		description: "Visibile tra aprile e maggio. Le sette stelle che delineano il Grande Carro costituiscono l'asterisma più conosciuto del cielo boreale. Secondo la mitologia, le due Orse salvarono Zeus dall'ira del padre Crono.",
 		hints: [
-			"E' una costellazione circumpolare",
+			"È una costellazione circumpolare",
 			"Contiene l'asterisma più famoso del cielo boreale",
 			"Tale asterisma è il Grande Carro",
 		]
@@ -80,9 +80,9 @@ const CONSTELLATIONS = [
 		name: "Vergine",
 		image: "foto/Vergine.jpg",
 		options: ["Vergine", "Acquario", "Capricorno", "Corona boreale"],
-		description: "Visibile tra aprile e maggio. Anticamentesi mostrava 1/2 mesi prima di quanto accada oggi (marzo). Per i greci rappresentava Demetra, la dea della fertilità della terra.",
+		description: "Visibile tra aprile e maggio. Anticamente si mostrava 1/2 mesi prima di quanto accada oggi (marzo). Per i greci rappresentava Demetra, la dea della fertilità della terra.",
 		hints: [
-			"Contiene Vega, stella molto brillante",
+			"Contiene Spica, stella molto brillante",
 			"Rappresenta lo strumento musicale di Orfeo",
 			"È piccola ma molto riconoscibile"
 		]
@@ -101,7 +101,7 @@ const CONSTELLATIONS = [
 	{
 		name: "Boote",
 		image: "foto/Boote.jpg",
-		options: ["Boote", "Bilancia", "Bilancia", "Dragone"],
+		options: ["Boote", "Bilancia", "Corona boreale", "Dragone"],
 		description: "Visibile tra maggio e giugno. Si trova dietro la coda dell'Orsa Maggiore e rappresentava, per i greci, il guardiano dell'orsa. Contiene la stella Arturo, che in greco vuol dire \"guardiano dell'orso\".",
 		hints: [
 			"Rappresentava, per i greci, il guardiano dell'orsa",
@@ -137,16 +137,16 @@ const CONSTELLATIONS = [
 		options: ["Dragone", "Giraffa", "Idra", "Boote"],
 		description: "Visibile tra giugno e luglio, si insinua tra le Orse. Contiene Thuban, stella polare del terzo millennio a.C. Secondo la mitologia, rappresenta il drago Ladone che faceva la guardia alle mele d'oro del giardino delle Esperidi, ucciso da Ercole.",
 		hints: [
-			"E' situata tra le due Orse",
+			"È situata tra le due Orse",
 			"Thuban era la stella polare del terzo millennio a.C",
-			"E' alato, e secondo la mitologia faceva la guardia alle mele d'oro del giardino delle Esperidi",
+			"È alato, e secondo la mitologia faceva la guardia alle mele d'oro del giardino delle Esperidi",
 		]
 	},
 	{
 		name: "Acquario",
 		image: "foto/Acquario.jpg",
 		options: ["Acquario", "Pegaso", "Scorpione", "Gemelli"],
-		description: "Visibilie tra settembre e ottobre. La somiglianza con il personaggio rappresentato è sostanzialmente nulla. Il personaggio mitologico è Ganimede, coppiere degli dei, il \"portatore d'acqua\".",
+		description: "Visibile tra settembre e ottobre. La somiglianza con il personaggio rappresentato è sostanzialmente nulla. Il personaggio mitologico è Ganimede, coppiere degli dei, il \"portatore d'acqua\".",
 		hints: [
 			"È un segno zodiacale",
 			"Il personaggio mitologico è Ganimede, coppiere degli dei",
@@ -161,14 +161,14 @@ const CONSTELLATIONS = [
 		hints: [
 			"Nella cultura greca è figlio di Apollo e dio della medicina.",
 			"Rappresenta un uomo che tiene in mano la contigua costellazione del Serpente",
-			"E' anche detto Serpentario"
+			"È anche detto Serpentario"
 		]
 	},
 	{
 		name: "Serpente",
 		image: "foto/Serpente.jpg",
 		options: ["Serpente", "Cassiopea", "Ofiuco", "Gemelli"],
-		description: "Visibileda giugno ad agosto. È l'unica costellazione divisa in due parti separate: la Testa dalla Coda, con l'Ofiuco in mezzo. È il simbolo della guarigione.",
+		description: "Visibile da giugno ad agosto. È l'unica costellazione divisa in due parti separate: la Testa dalla Coda, con l'Ofiuco in mezzo. È il simbolo della guarigione.",
 		hints: [
 			"È il simbolo della guarigione",
 			"È l'unica costellazione divisa in due parti separate",
@@ -179,7 +179,7 @@ const CONSTELLATIONS = [
 		name: "Scorpione",
 		image: "foto/Scorpione.jpg",
 		options: ["Scorpione", "Boote", "Sagittario", "Vergine"],
-		description: "Visibile d giugno ad agosto. Il nome della sua stella più luminosa, Antares, deriva dal greco Anti-Ares (rivale di Marte), per il colore rosso comune ai due corpi celesti. Secondo la mitologia fu l'animale che punse a morte Orione; ecco perché Zeus li collocò in cielo entrmbi.",
+		description: "Visibile da giugno ad agosto. Il nome della sua stella più luminosa, Antares, deriva dal greco Anti-Ares (rivale di Marte), per il colore rosso comune ai due corpi celesti. Secondo la mitologia fu l'animale che punse a morte Orione; ecco perché Zeus li collocò in cielo entrambi.",
 		hints: [
 			"Il nome della sua stella più luminosa, Antares, deriva dal greco Anti-Ares",
 			"È un animale",
@@ -300,10 +300,10 @@ const CONSTELLATIONS = [
 		name: "Lepre",
 		image: "foto/Lepre.jpg",
 		options: ["Lepre", "Orsa Minore", "Cefeo", "Giraffa"],
-		description: "Visibile da dicembre a febbraio. Rappresenta la preda che Orione cacciava con i suoi cani. Arneb è il nome arabo che ha come signficiato il nome della costellazione.",
+		description: "Visibile da dicembre a febbraio. Rappresenta la preda che Orione cacciava con i suoi cani. Arneb è il nome arabo che ha come significato il nome della costellazione.",
 		hints: [
-			"Arneb è il nome arabo che ha come signficiato il nome della costellazione",
-			"È unanimale",
+			"Arneb è il nome arabo che ha come significato il nome della costellazione",
+			"È un animale",
 			"Rappresenta la preda che Orione cacciava con i suoi cani"
 		]
 	},
