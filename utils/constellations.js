@@ -38,7 +38,7 @@ const CONSTELLATIONS = [
 		options: ["Cane minore", "Cane maggiore", "Ercole", "Boote"],
 		description: "Visibile da gennaio a marzo. Rappresenta il più piccolo tra i due di Orione. Contiene Procione, l'ottava stella più brillante del cielo. Il nome procione non è legato all'animale ma deriva dal greco \"prima del cane\" perché sorge prima.",
 		hints: [
-			"Contiene Procione, l'ottava stella più brillante del cielo",
+			"È sempre in coppia",
 			"È un animale",
 			"Rappresenta il più piccolo tra i due di Orione"
 		]
