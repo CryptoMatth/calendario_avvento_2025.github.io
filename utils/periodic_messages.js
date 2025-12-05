@@ -3,7 +3,7 @@ const PERIODIC_MESSAGES = {
 	day5_milestone: {
 		id: 'day5_milestone',
 		title: 'Dove sono le mie crocchette?',
-		description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Allora, per punizione, devi eseguire un test!<br>Scendi in fondo alla pagina e inizia.<br>Però sono gentile: dal test puoi prendere un massimo di 3 stelle: se arrivi a un minimo di 5 punti totali, otterrai un regalino!<br>A più tardi, e spero con delle crocchette',
+		description: 'Perché non mi hai portato le crocchette? Pensi che io sia culone?<br><strong>OK!</strong><br>Allora, per punizione, devi eseguire un test!<br>Scendi in fondo alla pagina e inizia.<br>Però sono gentile: dal test puoi prendere un massimo di 3 stelle: se arrivi a un minimo di 8 punti totali, otterrai un regalino!<br>A più tardi, e spero con delle crocchette',
 		image: 'foto/Sherlock_babbo_natale.png'
 	},
 	day10_milestone: {
