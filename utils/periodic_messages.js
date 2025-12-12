@@ -15,7 +15,7 @@ const PERIODIC_MESSAGES = {
 	day15_milestone: {
 		id: 'day15_milestone',
 		title: 'Ancora Oké',
-		description: 'Ti scrivo velocemente, sono preso con tutti questi regali da confezionare. Chissà se fra questi c\'è anche il tuo?<br>Comunque non ho ancora avuto il tempo di dare le crocchette a Cicci, prometto che gliele darò appena possibile. Lui è un pezzo grosso ormai (guardia del corpo della famiglia di Babbo Natale).<br>Ricorda: se ottieni un minimo di 30 punti totali, otterrai un altro regalino!<br>Buon test!',
+		description: 'Ti scrivo velocemente, sono preso con tutti questi regali da confezionare. Chissà se fra questi c\'è anche il tuo?<br>Comunque non ho ancora avuto il tempo di dare le crocchette a Cicci, prometto che gliele darò appena possibile. Lui è un pezzo grosso ormai (guardia del corpo della famiglia di Babbo Natale).<br>Ricorda: se ottieni un minimo di 40 punti totali, otterrai un altro regalino!<br>Buon test!',
 		image: 'foto/oke_regali.png'
 	},
 	day20_milestone: {
