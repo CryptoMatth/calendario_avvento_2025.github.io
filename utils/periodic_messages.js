@@ -27,7 +27,7 @@ const PERIODIC_MESSAGES = {
 	day25_milestone: {
 		id: 'day25_milestone',
 		title: 'NATALEEEEEEEE',
-		description: 'È NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!<br>E mi raccomando: se vuoi il vero regalo di Natale, devi ottenere un minimo di 65 punti totali!',
+		description: 'È NATALEEEEEE!<br>Che giornata pesante, ma spero che sarai felice quanto lo siamo noi. Mattia è bravo con te? Lo tengo d\'occhio, eh.<br>Quasi quasi non ti faccio fare i test...<br>...<br>Naaah, scherzo. Buon Natale!<br>E mi raccomando: se vuoi il vero regalo di Natale, devi ottenere un minimo di 70 punti totali!',
 		image: 'foto/sherlock_oke_natalizio.png'
 	},
 	day30_milestone: {
