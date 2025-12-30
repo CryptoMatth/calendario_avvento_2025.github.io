@@ -322,7 +322,7 @@ const CONSTELLATIONS = [
 		name: "Perseo",
 		image: "foto/Perseo.jpg",
 		options: ["Perseo", "Orsa Minore", "Cefeo", "Giraffa"],
-		description: Perseo.",
+		description: "Perseo.",
 		hints: [
 			"Arneb è il nome arabo che ha come significato il nome della costellazione",
 			"È un animale",
