@@ -307,6 +307,28 @@ const CONSTELLATIONS = [
 			"Rappresenta la preda che Orione cacciava con i suoi cani"
 		]
 	},
+{
+		name: "Andromeda",
+		image: "foto/Andromeda.jpg",
+		options: ["Andromeda", "Orsa Minore", "Cefeo", "Giraffa"],
+		description: "Andromeda.",
+		hints: [
+			"Arneb è il nome arabo che ha come significato il nome della costellazione",
+			"È un animale",
+			"Rappresenta la preda che Orione cacciava con i suoi cani"
+		]
+	},
+{
+		name: "Perseo",
+		image: "foto/Perseo.jpg",
+		options: ["Perseo", "Orsa Minore", "Cefeo", "Giraffa"],
+		description: Perseo.",
+		hints: [
+			"Arneb è il nome arabo che ha come significato il nome della costellazione",
+			"È un animale",
+			"Rappresenta la preda che Orione cacciava con i suoi cani"
+		]
+	},
 	{
 		name: "Capricorno",
 		image: "foto/Capricorno.jpg",
